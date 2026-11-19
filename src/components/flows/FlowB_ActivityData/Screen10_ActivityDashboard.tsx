@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../../context/AppContext';
 import { ActivityRecord } from '../../../types';
-import { Plus, Search, FileText, AlertCircle, Files, ChevronDown, ArrowUpDown, Building2, ClipboardList, Send, Clock3, BadgeCheck, TriangleAlert } from 'lucide-react';
+import { Plus, Search, FileText, AlertCircle, Files, ChevronDown, ArrowUpDown, Building2, ClipboardList, BadgeCheck, TriangleAlert, Filter, BarChart3 } from 'lucide-react';
 import { StatusBadge } from '../../common/StatusBadge';
 
 export const Screen10_ActivityDashboard: React.FC = () => {
@@ -21,6 +21,7 @@ export const Screen10_ActivityDashboard: React.FC = () => {
   } = useApp();
 
   const [scopeFilter, setScopeFilter] = useState<'all' | 'Scope 1' | 'Scope 2' | 'Scope 3'>('all');
+  const [showStatistics, setShowStatistics] = useState(true);
   const [sortField, setSortField] = useState<'id' | 'date' | 'site' | 'source' | 'quantity' | 'emissions'>('date');
   const [sortAscending, setSortAscending] = useState(false);
   const filteredRecords = records.filter((rec) => {
@@ -53,8 +54,6 @@ export const Screen10_ActivityDashboard: React.FC = () => {
 
   const totalEmissions = records.reduce((sum, record) => sum + record.emissions_tCO2e, 0);
   const calculationBlockers = records.filter((record) => record.status === 'Error' || record.status === 'Sent Back').length;
-  const submittedRecords = records.filter((record) => record.status === 'Submitted').length;
-  const inReviewRecords = records.filter((record) => record.status === 'Under Review').length;
 
   const handleRowClick = (rec: ActivityRecord) => {
     setSelectedRecordId(rec.id);
@@ -66,32 +65,21 @@ export const Screen10_ActivityDashboard: React.FC = () => {
 
   const approvedRecords = records.filter((record) => record.status === 'Approved').length;
   const workflowCards = [
-    { label: 'Activity records', value: records.length, note: `${totalEmissions.toLocaleString(undefined, { maximumFractionDigits: 2 })} tCO₂e total`, status: 'all', color: 'var(--text-secondary)', icon: ClipboardList },
-    { label: 'Submitted', value: submittedRecords, note: 'Awaiting initial review', status: 'Submitted', color: 'var(--status-info)', icon: Send },
-    { label: 'In review', value: inReviewRecords, note: 'Being checked by reviewers', status: 'Under Review', color: 'var(--status-warning)', icon: Clock3 },
-    { label: 'Approved', value: approvedRecords, note: 'Ready for calculation', status: 'Approved', color: 'var(--status-success)', icon: BadgeCheck },
-    { label: 'Needs attention', value: calculationBlockers, note: 'Errors or returned records', status: 'attention', color: 'var(--status-error)', icon: TriangleAlert },
+    { label: 'Activity records', value: records.length, note: `In ${activePeriod.name}`, icon: ClipboardList, color: 'var(--text-secondary)' },
+    { label: 'Total emissions', value: totalEmissions.toLocaleString(undefined, { maximumFractionDigits: 2 }), note: 'tCO₂e recorded', icon: Building2, color: 'var(--scope-1)' },
+    { label: 'Approved', value: approvedRecords, note: 'Ready for calculation', status: 'Approved', icon: BadgeCheck, color: 'var(--status-success)' },
+    { label: 'Needs attention', value: calculationBlockers, note: 'Errors or returned records', status: 'attention', icon: TriangleAlert, color: 'var(--status-error)' },
   ];
 
   return (
-    <div id="screen-10-activity-dashboard" className="w-full space-y-6 pb-12">
-      <header className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
+    <div id="screen-10-activity-dashboard" className="w-full space-y-4 pb-12">
+      <header className="flex flex-col gap-4 border-b border-[#eeeef0] pb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl sm:text-[28px] font-semibold tracking-tight text-[var(--text-primary)]">Carbon inventory</h1>
           <p className="mt-1 text-sm text-[var(--text-secondary)]">{activePeriod.name} <span className="mx-1.5 text-[var(--text-tertiary)]">·</span> {sites.length} facilities <span className="mx-1.5 text-[var(--text-tertiary)]">·</span> GHG inventory</p>
         </div>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
-          <div className="relative w-full sm:w-56">
-            <Search className="w-4 h-4 text-[var(--text-tertiary)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
-            <input type="search" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Search records" aria-label="Search activity records" className="w-full h-10 pl-9 pr-3 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--border-focus)]" />
-          </div>
-          <label className="relative block w-full sm:w-52">
-            <Building2 className="w-4 h-4 text-[var(--text-secondary)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
-            <select aria-label="Filter by facility" value={activeFilterSite} onChange={(event) => setActiveFilterSite(event.target.value)} className="block w-full h-10 appearance-none pl-9 pr-9 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
-              <option value="all">All facilities ({sites.length})</option>{sites.map((site) => <option key={site.id} value={site.id}>{site.name}</option>)}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
-          </label>
+        <div className="flex flex-wrap items-center gap-2">
+          <button type="button" onClick={() => navigateToScreen('21_drill_down', 'FLOW_E')} className="inline-flex h-10 items-center gap-2 rounded-md border border-[var(--border-default)] bg-white px-3.5 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-canvas)]"><BarChart3 className="h-4 w-4" aria-hidden="true" />View analytics</button>
           {currentRole === 'VERIFIER' ? (
             <button type="button" onClick={() => navigateToScreen('32_evidence_trace', 'FLOW_F')} className="enterprise-btn-primary h-10 min-h-10 whitespace-nowrap"><Files className="w-3.5 h-3.5" />Trace docket</button>
           ) : (
@@ -100,50 +88,55 @@ export const Screen10_ActivityDashboard: React.FC = () => {
         </div>
       </header>
 
-      <section aria-label="Inventory workflow summary">
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
-          {workflowCards.map((card) => {
-            const selected = activeFilterStatus === card.status;
-            return <button key={card.label} type="button" onClick={() => setActiveFilterStatus(card.status)} className={`w-full text-left min-h-[126px] p-4 rounded-xl border transition-colors ${selected ? 'border-[var(--action-primary)] bg-[var(--brand-50)]/60' : 'border-[var(--border-default)] bg-white hover:border-[var(--border-strong)]'}`}>
-              <span className="flex items-center justify-between gap-2">
-                <span className="inline-flex items-center text-xs font-medium text-[var(--text-secondary)]">{card.label}</span>
-                <card.icon className="w-[17px] h-[17px] shrink-0" style={{ color: card.color }} strokeWidth={1.7} aria-hidden="true" />
-              </span>
-              <span className="mt-3 block text-3xl font-semibold leading-none tracking-tight text-[var(--text-primary)] tabular-nums">{card.value}</span>
-              <span className="mt-2 block text-[11px] leading-4 text-[var(--text-secondary)]">{card.note}</span>
-            </button>;
-          })}
-        </div>
+      <section aria-label="Activity data controls" className="flex flex-wrap items-center gap-2 py-1">
+        <label className="relative block w-full sm:w-auto">
+          <span className="sr-only">Filter by facility</span><Building2 className="w-4 h-4 text-[var(--text-secondary)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+          <select aria-label="Filter by facility" value={activeFilterSite} onChange={(event) => setActiveFilterSite(event.target.value)} className="block w-full sm:w-[190px] h-10 appearance-none pl-9 pr-8 text-sm border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
+            <option value="all">All facilities ({sites.length})</option>{sites.map((site) => <option key={site.id} value={site.id}>{site.name}</option>)}
+          </select><ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
+        </label>
+        <label className="relative block w-full sm:w-auto">
+          <span className="sr-only">Filter by scope</span><Filter className="w-4 h-4 text-[var(--text-secondary)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+          <select aria-label="Filter by scope" value={scopeFilter} onChange={(event) => setScopeFilter(event.target.value as typeof scopeFilter)} className="block w-full sm:w-[150px] h-10 appearance-none pl-9 pr-8 text-sm border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
+            <option value="all">All scopes</option><option value="Scope 1">Scope 1</option><option value="Scope 2">Scope 2</option><option value="Scope 3">Scope 3</option>
+          </select><ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
+        </label>
+        <label className="relative block w-full sm:w-auto">
+          <span className="sr-only">Filter by status</span>
+          <select aria-label="Filter by status" value={activeFilterStatus} onChange={(event) => setActiveFilterStatus(event.target.value)} className="block w-full sm:w-[160px] h-10 appearance-none pl-3 pr-8 text-sm border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
+            <option value="all">All statuses</option><option value="attention">Needs attention</option><option value="Approved">Approved</option><option value="Submitted">Submitted</option><option value="Under Review">Under review</option><option value="Draft">Draft</option><option value="Error">Error</option><option value="Sent Back">Sent back</option>
+          </select><ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
+        </label>
+        <button type="button" onClick={() => toggleSort(sortField)} className="inline-flex h-10 items-center gap-2 rounded-md border border-[var(--border-default)] bg-white px-3 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-canvas)]"><ArrowUpDown className="h-4 w-4" aria-hidden="true" />Sort</button>
+        <label className="ml-1 inline-flex h-10 cursor-pointer items-center gap-2 text-sm text-[var(--text-primary)] sm:ml-auto">
+          <span>Show statistics</span><input type="checkbox" checked={showStatistics} onChange={(event) => setShowStatistics(event.target.checked)} className="peer sr-only" />
+          <span className="relative h-5 w-10 rounded-full bg-[#c9c9cc] transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:shadow-sm after:transition-transform peer-checked:bg-[var(--brand-coral)] peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--border-focus)]" aria-hidden="true" />
+        </label>
       </section>
+
+      {showStatistics && <section aria-label="Inventory statistics" className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 overflow-hidden rounded-xl border border-[var(--border-default)] bg-white">
+        {workflowCards.map((card, index) => <article key={card.label} className={`min-h-[126px] px-4 py-4 border-[#e9e8ec] ${index > 0 ? 'border-t' : ''} ${index % 2 === 1 ? 'sm:border-l' : ''} ${index > 1 ? 'sm:border-t' : ''} ${index > 0 ? 'xl:border-l' : ''} xl:border-t-0`}>
+          <div className="flex items-center justify-between gap-2 text-xs font-medium text-[var(--text-secondary)]"><span>{card.label}</span><card.icon className="w-[17px] h-[17px] shrink-0" style={{ color: card.color }} strokeWidth={1.7} aria-hidden="true" /></div>
+          <div className="mt-3 text-[28px] font-semibold leading-none tracking-tight text-[var(--text-primary)] tabular-nums">{card.value}</div>
+          <p className="mt-2 text-[11px] leading-4 text-[var(--text-secondary)]">{card.note}</p>
+        </article>)}
+      </section>}
 
       <section aria-label="Recent activity ledger" className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden">
         <div className="p-4 sm:p-5 border-b border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div><h2 className="text-base font-semibold text-[var(--text-primary)]">Recent activity</h2><p className="mt-1 text-xs text-[var(--text-secondary)]">Activity data ledger · {filteredRecords.length} records in {activePeriod.name}</p></div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-[var(--text-secondary)]">Sorted by</span>
-            <span className="px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] bg-[var(--bg-canvas)] border border-[var(--border-default)] rounded-md">{sortField === 'date' ? 'Date' : sortField === 'emissions' ? 'Emissions' : sortField === 'quantity' ? 'Quantity' : sortField === 'site' ? 'Facility' : sortField === 'source' ? 'Activity' : 'Record ID'} {sortAscending ? '↑' : '↓'}</span>
+          <div><h2 className="text-base font-semibold text-[var(--text-primary)]">Activity data ledger</h2><p className="mt-1 text-xs text-[var(--text-secondary)]">{filteredRecords.length} records in {activePeriod.name}</p></div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:ml-auto">
+            <div className="relative w-full sm:w-[210px]">
+              <Search className="w-4 h-4 text-[var(--text-tertiary)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+              <input type="search" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Search records" aria-label="Search activity records" className="w-full h-10 pl-9 pr-3 text-sm border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--border-focus)]" />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-[var(--text-secondary)]">Sorted by</span>
+              <span className="px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] bg-[var(--bg-canvas)] border border-[var(--border-default)] rounded-md whitespace-nowrap">{sortField === 'date' ? 'Date' : sortField === 'emissions' ? 'Emissions' : sortField === 'quantity' ? 'Quantity' : sortField === 'site' ? 'Facility' : sortField === 'source' ? 'Activity' : 'Record ID'} {sortAscending ? '↑' : '↓'}</span>
+            </div>
           </div>
         </div>
-        <div className="px-4 sm:px-5 py-3 bg-[var(--surface-secondary)]/70 border-b border-[var(--border-subtle)]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-2xl">
-            <label className="flex items-center gap-2 min-w-0">
-              <span className="w-16 shrink-0 text-[11px] font-medium text-[var(--text-secondary)]">Scope</span>
-              <span className="relative flex-1 min-w-0">
-                <select aria-label="Filter by scope" value={scopeFilter} onChange={(event) => setScopeFilter(event.target.value as typeof scopeFilter)} className="block w-full h-9 appearance-none pl-3 pr-8 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
-                  <option value="all">All scopes</option><option value="Scope 1">Scope 1</option><option value="Scope 2">Scope 2</option><option value="Scope 3">Scope 3</option>
-                </select><ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
-              </span>
-            </label>
-            <label className="flex items-center gap-2 min-w-0">
-              <span className="w-16 shrink-0 text-[11px] font-medium text-[var(--text-secondary)]">Status</span>
-              <span className="relative flex-1 min-w-0">
-                <select aria-label="Filter by status" value={activeFilterStatus} onChange={(event) => setActiveFilterStatus(event.target.value)} className="block w-full h-9 appearance-none pl-3 pr-8 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
-                  <option value="all">All statuses</option><option value="attention">Needs attention</option><option value="Approved">Approved</option><option value="Submitted">Submitted</option><option value="Under Review">Under review</option><option value="Draft">Draft</option><option value="Error">Error</option><option value="Sent Back">Sent back</option>
-                </select><ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
-              </span>
-            </label>
-          </div>
-        </div>
+
 
         <div className="overflow-x-auto">
           <table className="w-full min-w-[780px] text-left text-xs border-collapse">

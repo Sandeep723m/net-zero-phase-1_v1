@@ -118,6 +118,6 @@ Success measures: six-dot unaided recognition and off-brand asset reduction; ing
 ## Implementation status
 
 - Implemented: global light/dark token foundations, IBM Plex stack, warm light canvas, semantic status palette, reduced-motion rules, six-dot PNG in the runtime, rounded desktop app frame with a light-neutral sidebar, compact outline-icon navigation grouped into Main, Workspace and Support, account role switching, and removal of the global top bar.
-- Dashboard: reference-led inventory view with search and facility controls, workflow status cards, scope/status filters, and a compact sortable activity table.
+- Dashboard: table-first inventory view with facility/scope/status filters, sortable records, a statistics visibility toggle, four inventory summary tiles, and a compact sortable activity ledger.
 - Still needed: a user-facing dark theme switch, a fuller close-readiness model backed by boundary/calculation/review/sign-off data, and theme-aware chart styling in remaining screens.
 - Asset governance: the runtime uses `src/assets/Tula Carbon Dot Grid Logo.png`; preserve the original vector master when available and prepare inverse/monochrome exports for dark surfaces and print.
