@@ -86,7 +86,7 @@ export const Screen29_ReportExport: React.FC = () => {
           <StatusBadge status="Approved" customLabel="Immutable Snapshot" size="sm" />
         }
         contextInfo={
-          <span className="route-path text-xs text-[#8A8F98] font-medium">
+          <span className="route-path text-xs text-[var(--text-tertiary)] font-medium">
             /reports/export/88
           </span>
         }
@@ -113,28 +113,28 @@ export const Screen29_ReportExport: React.FC = () => {
       />
 
       {/* Ready to Download Card (Section 18.1) */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl p-6 space-y-5 shadow-2xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#F1F3F5] gap-3">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl p-6 space-y-5 shadow-2xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border-subtle)] gap-3">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-lg bg-[#E8F5E9] text-[#0F6B48] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-lg bg-[var(--status-success-bg)] text-[var(--status-success)] flex items-center justify-center shrink-0">
               <FileCheck className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xs text-[#0F6B48] font-semibold flex items-center space-x-1 font-sans">
+              <div className="text-xs text-[var(--status-success)] font-semibold flex items-center space-x-1 font-sans">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Ready to download</span>
               </div>
-              <h2 className="text-base font-semibold text-[#17181A] file-hash mt-0.5">
+              <h2 className="text-base font-semibold text-[var(--text-primary)] file-hash mt-0.5">
                 {reportExportDetails.filename}
               </h2>
             </div>
           </div>
 
           <div className="text-right">
-            <div className="text-xs text-[#5F6368] font-sans">
-              File size: <strong className="text-[#17181A] emission-factor font-semibold">{reportExportDetails.fileSize}</strong>
+            <div className="text-xs text-[var(--text-secondary)] font-sans">
+              File size: <strong className="text-[var(--text-primary)] emission-factor font-semibold">{reportExportDetails.fileSize}</strong>
             </div>
-            <div className="text-[11px] text-[#8A8F98] file-hash mt-0.5">
+            <div className="text-[11px] text-[var(--text-tertiary)] file-hash mt-0.5">
               SHA-256: {reportExportDetails.sha256Hash.slice(0, 16)}...
             </div>
           </div>
@@ -142,21 +142,21 @@ export const Screen29_ReportExport: React.FC = () => {
 
         {/* Report Identity Metadata (Section 19.2) */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB] shadow-2xs">
-            <div className="text-[#5F6368] font-sans">Report Type</div>
-            <div className="font-semibold text-[#17181A] mt-0.5 font-sans">{reportExportDetails.title}</div>
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)] shadow-2xs">
+            <div className="text-[var(--text-secondary)] font-sans">Report Type</div>
+            <div className="font-semibold text-[var(--text-primary)] mt-0.5 font-sans">{reportExportDetails.title}</div>
           </div>
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB] shadow-2xs">
-            <div className="text-[#5F6368] font-sans">Reporting Period</div>
-            <div className="font-semibold text-[#17181A] mt-0.5 period-code">{reportExportDetails.period}</div>
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)] shadow-2xs">
+            <div className="text-[var(--text-secondary)] font-sans">Reporting Period</div>
+            <div className="font-semibold text-[var(--text-primary)] mt-0.5 period-code">{reportExportDetails.period}</div>
           </div>
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB] shadow-2xs">
-            <div className="text-[#5F6368] font-sans">Tenant Organization</div>
-            <div className="font-semibold text-[#17181A] mt-0.5 font-sans">{reportExportDetails.tenantName}</div>
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)] shadow-2xs">
+            <div className="text-[var(--text-secondary)] font-sans">Tenant Organization</div>
+            <div className="font-semibold text-[var(--text-primary)] mt-0.5 font-sans">{reportExportDetails.tenantName}</div>
           </div>
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB] shadow-2xs">
-            <div className="text-[#5F6368] font-sans">Timestamp</div>
-            <div className="font-semibold text-[#17181A] mt-0.5 period-code text-[11px]">
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)] shadow-2xs">
+            <div className="text-[var(--text-secondary)] font-sans">Timestamp</div>
+            <div className="font-semibold text-[var(--text-primary)] mt-0.5 period-code text-[11px]">
               {reportExportDetails.generatedDate}
             </div>
           </div>
@@ -182,54 +182,54 @@ export const Screen29_ReportExport: React.FC = () => {
             onClick={() => setEmailModalOpen(true)}
             className="enterprise-btn-secondary h-9 px-4 text-xs inline-flex items-center space-x-2 font-semibold"
           >
-            <Mail className="w-4 h-4 text-[#5F6368]" />
+            <Mail className="w-4 h-4 text-[var(--text-secondary)]" />
             <span>Email to stakeholders</span>
           </button>
         </div>
       </div>
 
       {/* Immutability Requirement Banner (Section 19.1 & FR-29.01 - FR-29.04) */}
-      <div className="p-3.5 bg-[#5141FF]/5 border border-[#5141FF]/20 rounded-xl text-xs text-[#5141FF] flex items-center justify-between shadow-2xs font-data">
+      <div className="p-3.5 bg-[var(--action-primary)]/5 border border-[var(--action-primary)]/20 rounded-xl text-xs text-[var(--action-primary)] flex items-center justify-between shadow-2xs font-data">
         <div className="flex items-center space-x-2">
-          <Lock className="w-4 h-4 shrink-0 text-[#181B27]" />
+          <Lock className="w-4 h-4 shrink-0 text-[var(--text-primary)]" />
           <span>
-            <strong className="font-semibold text-[#17181A]">Immutability Guarantee:</strong> Exported reports are immutable snapshots and will never be overwritten. Re-running a report after underlying data changes creates a new version/snapshot.
+            <strong className="font-semibold text-[var(--text-primary)]">Immutability Guarantee:</strong> Exported reports are immutable snapshots and will never be overwritten. Re-running a report after underlying data changes creates a new version/snapshot.
           </span>
         </div>
         <StatusBadge status="Locked" customLabel="WORM Compliant" size="sm" />
       </div>
 
       {/* Report History Table (Section 19) */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
-        <div className="p-4 border-b border-[#E5E7EB] flex items-center justify-between">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
+        <div className="p-4 border-b border-[var(--border-default)] flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <History className="w-4 h-4 text-[#181B27]" />
-            <h2 className="text-sm font-semibold text-[#17181A] font-sans">Report History</h2>
+            <History className="w-4 h-4 text-[var(--text-primary)]" />
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] font-sans">Report History</h2>
           </div>
-          <span className="text-xs text-[#5F6368] font-data">
+          <span className="text-xs text-[var(--text-secondary)] font-data">
             {reportHistory.length} snapshots retained
           </span>
         </div>
 
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="bg-[#F4F5F6] border-b border-[#E5E7EB] text-[#5F6368]">
+            <tr className="bg-[var(--bg-canvas)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Report</th>
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Generated</th>
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider">By</th>
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider text-right">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F1F3F5]">
+          <tbody className="divide-y divide-[#EEEAF5]">
             {reportHistory.map((row, idx) => (
-              <tr key={idx} className="hover:bg-[#FAFAFB] transition-colors">
-                <td className="py-3 px-4 font-semibold text-[#17181A] font-sans">
+              <tr key={idx} className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="py-3 px-4 font-semibold text-[var(--text-primary)] font-sans">
                   {row.report}
                 </td>
-                <td className="py-3 px-4 text-[#5F6368] period-code">
+                <td className="py-3 px-4 text-[var(--text-secondary)] period-code">
                   {row.generated}
                 </td>
-                <td className="py-3 px-4 text-[#5F6368] font-data">
+                <td className="py-3 px-4 text-[var(--text-secondary)] font-data">
                   {row.by}
                 </td>
                 <td className="py-3 px-4 text-right">
@@ -246,20 +246,20 @@ export const Screen29_ReportExport: React.FC = () => {
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[1px] flex items-center justify-center p-4">
           <form
             onSubmit={handleSendEmail}
-            className="bg-white rounded-xl border border-[#E5E7EB] max-w-md w-full p-5 space-y-4 shadow-xl"
+            className="bg-white rounded-xl border border-[var(--border-default)] max-w-md w-full p-5 space-y-4 shadow-xl"
           >
-            <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F5]">
-              <h3 className="text-sm font-semibold text-[#17181A] font-sans">Email Report to Stakeholders</h3>
+            <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
+              <h3 className="text-sm font-semibold text-[var(--text-primary)] font-sans">Email Report to Stakeholders</h3>
               <button
                 type="button"
                 onClick={() => setEmailModalOpen(false)}
-                className="text-xs text-[#8A8F98] hover:text-[#17181A]"
+                className="text-xs text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
               >
                 ✕
               </button>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#5F6368] mb-1 font-sans">
+              <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1 font-sans">
                 Recipient Email Addresses:
               </label>
               <input
@@ -267,9 +267,9 @@ export const Screen29_ReportExport: React.FC = () => {
                 required
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:border-[#5141FF] focus:outline-none font-sans"
+                className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:border-[var(--action-primary)] focus:outline-none font-sans"
               />
-              <p className="text-[11px] text-[#8A8F98] mt-1 file-hash">
+              <p className="text-[11px] text-[var(--text-tertiary)] mt-1 file-hash">
                 Attached: {reportExportDetails.filename} ({reportExportDetails.fileSize})
               </p>
             </div>

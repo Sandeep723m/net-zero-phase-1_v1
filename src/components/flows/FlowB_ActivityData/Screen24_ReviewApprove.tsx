@@ -158,7 +158,7 @@ export const Screen24_ReviewApprove: React.FC = () => {
           <StatusBadge status="Pending" customLabel="Awaiting Review" size="sm" />
         }
         contextInfo={
-          <span className="route-path text-xs text-[#8A8F98] font-medium">
+          <span className="route-path text-xs text-[var(--text-tertiary)] font-medium">
             /workflow/queue/204
           </span>
         }
@@ -175,28 +175,28 @@ export const Screen24_ReviewApprove: React.FC = () => {
 
       {/* Segregation of Duties Notice when role is DATA_ENTRY or VERIFIER */}
       {!canApprove && (
-        <div className="p-3 bg-[#FFF0F3] border border-[#FFDCE4] rounded-xl flex items-center space-x-2.5 text-xs text-[#FB3256] font-medium">
-          <AlertTriangle className="w-4 h-4 text-[#FB3256] shrink-0" />
+        <div className="p-3 bg-[var(--status-warning-bg)] border border-[var(--status-warning)] rounded-xl flex items-center space-x-2.5 text-xs text-[var(--status-warning)] font-medium">
+          <AlertTriangle className="w-4 h-4 text-[var(--status-warning)] shrink-0" />
           <span>Read-Only: Batch sign-off requires Reviewer or Tenant Admin permissions.</span>
         </div>
       )}
 
       {/* Review Table (FR Section 9.1) */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
-        <div className="p-4 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
+        <div className="p-4 border-b border-[var(--border-default)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center space-x-2">
-            <Building2 className="w-4 h-4 text-[#181B27]" />
-            <h2 className="text-sm font-semibold text-[#17181A] font-sans">Submitted Activity Rows</h2>
+            <Building2 className="w-4 h-4 text-[var(--text-primary)]" />
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] font-sans">Submitted Activity Rows</h2>
           </div>
-          <span className="text-xs text-[#5F6368] font-sans">
-            Submitted by <span className="font-medium text-[#17181A]">{batchDetails.submittedBy}</span> on <span className="period-code font-medium">{batchDetails.submittedDate}</span>
+          <span className="text-xs text-[var(--text-secondary)] font-sans">
+            Submitted by <span className="font-medium text-[var(--text-primary)]">{batchDetails.submittedBy}</span> on <span className="period-code font-medium">{batchDetails.submittedDate}</span>
           </span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-[#F4F5F6] border-b border-[#E5E7EB] text-[#5F6368]">
+              <tr className="bg-[var(--bg-canvas)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
                 <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider">Date</th>
                 <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider">Source</th>
                 <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider text-left">Quantity</th>
@@ -204,30 +204,30 @@ export const Screen24_ReviewApprove: React.FC = () => {
                 <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider">Evidence</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F1F3F5]">
+            <tbody className="divide-y divide-[#EEEAF5]">
               {batchDetails.items.map((item) => (
-                <tr key={item.id} className="hover:bg-[#FAFAFB] transition-colors">
-                  <td className="py-3.5 px-4 period-code text-[#5F6368]">
+                <tr key={item.id} className="hover:bg-[var(--surface-secondary)] transition-colors">
+                  <td className="py-3.5 px-4 period-code text-[var(--text-secondary)]">
                     {item.date}
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-[#17181A]">
+                  <td className="py-3.5 px-4 font-semibold text-[var(--text-primary)]">
                     {item.source}
                   </td>
-                  <td className="py-3.5 px-4 text-left period-code font-medium text-[#17181A]">
+                  <td className="py-3.5 px-4 text-left period-code font-medium text-[var(--text-primary)]">
                     {item.quantity.toLocaleString()}
                   </td>
-                  <td className="py-3.5 px-4 emission-factor text-[#5F6368]">
+                  <td className="py-3.5 px-4 emission-factor text-[var(--text-secondary)]">
                     {item.unit}
                   </td>
                   <td className="py-3.5 px-4">
                     <button
                       type="button"
                       onClick={() => setActiveEvidenceModal(item.evidenceName)}
-                      className="inline-flex items-center space-x-1.5 text-xs text-[#5141FF] hover:underline font-semibold"
+                      className="inline-flex items-center space-x-1.5 text-xs text-[var(--action-primary)] hover:underline font-semibold"
                     >
-                      <FileText className="w-3.5 h-3.5 text-[#5F6368]" />
+                      <FileText className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
                       <span>{item.evidenceCount} file attached</span>
-                      <span className="text-[11px] text-[#8A8F98] file-hash">({item.evidenceName})</span>
+                      <span className="text-[11px] text-[var(--text-tertiary)] file-hash">({item.evidenceName})</span>
                     </button>
                   </td>
                 </tr>
@@ -238,12 +238,12 @@ export const Screen24_ReviewApprove: React.FC = () => {
       </div>
 
       {/* Reviewer Comment Area (Section 10) */}
-      <div className="p-5 bg-white border border-[#E5E7EB] rounded-xl space-y-3 shadow-2xs">
+      <div className="p-5 bg-white border border-[var(--border-default)] rounded-xl space-y-3 shadow-2xs">
         <div>
-          <label className="block text-xs font-semibold text-[#17181A] uppercase tracking-wider mb-1 font-sans">
+          <label className="block text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider mb-1 font-sans">
             Reviewer comment
           </label>
-          <p className="text-[11px] text-[#5F6368] mb-2 font-data">
+          <p className="text-[11px] text-[var(--text-secondary)] mb-2 font-data">
             Field label: Comment · Mandatory on non-approval actions (Return for Correction or Reject).
           </p>
           <textarea
@@ -255,24 +255,24 @@ export const Screen24_ReviewApprove: React.FC = () => {
               if (errorMessage) setErrorMessage(null);
             }}
             placeholder="Add a note (required if returning for correction)"
-            className={`w-full px-3 py-2 text-xs border rounded-lg text-[#17181A] focus:outline-none font-sans ${
+            className={`w-full px-3 py-2 text-xs border rounded-lg text-[var(--text-primary)] focus:outline-none font-sans ${
               errorMessage
-                ? 'border-[#FB3256] bg-[#FEF0EF]/30 focus:border-[#FB3256]'
-                : 'border-[#E5E7EB] focus:border-[#5141FF]'
+                ? 'border-[var(--color-brand-orange-500)] bg-[var(--status-error-bg)]/30 focus:border-[var(--color-brand-orange-500)]'
+                : 'border-[var(--border-default)] focus:border-[var(--action-primary)]'
             }`}
           />
         </div>
 
         {/* Validation error message */}
         {errorMessage && (
-          <div className="p-2.5 bg-[#FEF0EF] border border-[#FB3256]/30 rounded-lg text-xs text-[#FB3256] flex items-center space-x-2 font-data">
+          <div className="p-2.5 bg-[var(--status-error-bg)] border border-[#F46A1F]/30 rounded-lg text-xs text-[var(--status-warning)] flex items-center space-x-2 font-data">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>{errorMessage}</span>
           </div>
         )}
 
         {/* Actions (Section 10.1 & 10.2) */}
-        <div className="pt-3 border-t border-[#F1F3F5] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             {/* Reject (Destructive) */}
             <button
@@ -282,8 +282,8 @@ export const Screen24_ReviewApprove: React.FC = () => {
               disabled={!canApprove}
               className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors text-center ${
                 canApprove
-                  ? 'bg-white border border-[#FB3256] text-[#FB3256] hover:bg-[#FEF0EF]'
-                  : 'bg-[#F4F5F6] border border-[#E5E7EB] text-[#8A8F98] cursor-not-allowed opacity-60'
+                  ? 'bg-white border border-[var(--color-brand-orange-500)] text-[var(--status-warning)] hover:bg-[var(--status-error-bg)]'
+                  : 'bg-[var(--bg-canvas)] border border-[var(--border-default)] text-[var(--text-tertiary)] cursor-not-allowed opacity-60'
               }`}
             >
               Reject
@@ -297,8 +297,8 @@ export const Screen24_ReviewApprove: React.FC = () => {
               disabled={!canApprove}
               className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors text-center ${
                 canApprove
-                  ? 'bg-white border border-[#F79009] text-[#B54708] hover:bg-[#FEF0C7]'
-                  : 'bg-[#F4F5F6] border border-[#E5E7EB] text-[#8A8F98] cursor-not-allowed opacity-60'
+                  ? 'bg-white border border-[#9A4F00] text-[var(--status-warning)] hover:bg-[var(--status-warning-bg)]'
+                  : 'bg-[var(--bg-canvas)] border border-[var(--border-default)] text-[var(--text-tertiary)] cursor-not-allowed opacity-60'
               }`}
             >
               Return for Correction
@@ -314,7 +314,7 @@ export const Screen24_ReviewApprove: React.FC = () => {
             className={`h-9 px-6 text-xs inline-flex items-center justify-center space-x-1.5 shadow-xs font-semibold rounded-lg transition-colors ${
               canApprove
                 ? 'enterprise-btn-primary'
-                : 'bg-[#E5E7EB] text-[#8A8F98] cursor-not-allowed opacity-60'
+                : 'bg-[var(--border-default)] text-[var(--text-tertiary)] cursor-not-allowed opacity-60'
             }`}
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
@@ -325,34 +325,34 @@ export const Screen24_ReviewApprove: React.FC = () => {
       </div>
 
       {/* Audit Requirement Note (Section 10.3) */}
-      <div className="p-3.5 bg-white border border-[#E5E7EB] rounded-xl text-xs text-[#5F6368] flex items-start space-x-2.5 shadow-2xs font-data">
-        <ShieldCheck className="w-4 h-4 text-[#181B27] shrink-0 mt-0.5" />
+      <div className="p-3.5 bg-white border border-[var(--border-default)] rounded-xl text-xs text-[var(--text-secondary)] flex items-start space-x-2.5 shadow-2xs font-data">
+        <ShieldCheck className="w-4 h-4 text-[var(--text-primary)] shrink-0 mt-0.5" />
         <div>
-          <strong className="text-[#17181A] font-semibold">Audit Requirement:</strong> Every workflow action writes to an append-only audit trail recording: <em>Who ({currentUser.name} as {currentRole === 'TENANT_ADMIN' ? 'Tenant Admin' : 'Reviewer'}), When, What, and Why</em>. Recorded events are permanently preserved for verifier inspection.
+          <strong className="text-[var(--text-primary)] font-semibold">Audit Requirement:</strong> Every workflow action writes to an append-only audit trail recording: <em>Who ({currentUser.name} as {currentRole === 'TENANT_ADMIN' ? 'Tenant Admin' : 'Reviewer'}), When, What, and Why</em>. Recorded events are permanently preserved for verifier inspection.
         </div>
       </div>
 
       {/* Evidence Viewer Dialog Simulation */}
       {activeEvidenceModal && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[1px] flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl border border-[#E5E7EB] max-w-lg w-full p-5 space-y-4 shadow-xl">
-            <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F5]">
+          <div className="bg-white rounded-xl border border-[var(--border-default)] max-w-lg w-full p-5 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
               <div className="flex items-center space-x-2">
-                <FileText className="w-4 h-4 text-[#181B27]" />
-                <h3 className="text-sm font-semibold text-[#17181A] font-sans">{activeEvidenceModal}</h3>
+                <FileText className="w-4 h-4 text-[var(--text-primary)]" />
+                <h3 className="text-sm font-semibold text-[var(--text-primary)] font-sans">{activeEvidenceModal}</h3>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveEvidenceModal(null)}
-                className="text-xs text-[#8A8F98] hover:text-[#17181A]"
+                className="text-xs text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
               >
                 ✕ Close
               </button>
             </div>
-            <div className="p-6 bg-[#FAFAFB] border border-[#E5E7EB] rounded-lg font-data text-xs text-[#5F6368] text-center space-y-2">
-              <div className="font-semibold text-[#17181A]">Primary Utility Evidence Document</div>
+            <div className="p-6 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-lg font-data text-xs text-[var(--text-secondary)] text-center space-y-2">
+              <div className="font-semibold text-[var(--text-primary)]">Primary Utility Evidence Document</div>
               <div className="file-hash">Source File: {activeEvidenceModal}</div>
-              <div className="text-[11px] text-[#0F6B48] font-semibold">Verified & attached from document repository</div>
+              <div className="text-[11px] text-[var(--status-success)] font-semibold">Verified & attached from document repository</div>
             </div>
             <div className="flex justify-end">
               <button

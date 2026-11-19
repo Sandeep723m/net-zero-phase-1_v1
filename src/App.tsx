@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppProvider, useApp } from './context/AppContext';
-import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 
 // Flow A — Onboarding & Organisation Setup
@@ -161,13 +160,11 @@ const MainAppContent: React.FC = () => {
   }
 
   return (
-    <div className="h-screen ambient-glow-bg flex flex-col overflow-hidden">
-      <Header />
-
-      <div className="flex-1 flex overflow-hidden min-h-0">
+    <div className="h-screen bg-[#e9eaec] p-0 md:p-3 lg:p-5 overflow-hidden">
+      <div className="h-full min-h-0 flex overflow-hidden rounded-none md:rounded-[24px] border-0 md:border md:border-[#dedfe2] bg-white shadow-none md:shadow-[0_8px_32px_rgba(30,30,35,0.08)]">
         <Sidebar />
 
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 min-w-0 w-full">
+        <main className={`flex-1 overflow-y-auto bg-white px-4 sm:px-6 lg:px-8 pt-16 md:pt-6 pb-6 min-w-0 w-full ${currentScreen === '10_activity_dashboard' ? 'scrollbar-hidden' : ''}`}>
           {renderActiveScreen()}
         </main>
       </div>

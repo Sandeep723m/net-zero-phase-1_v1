@@ -75,20 +75,20 @@ export const Screen14_ValidationResults: React.FC = () => {
       />
 
       {/* 4-Step Progress */}
-      <div className="flex items-center space-x-2 text-xs font-data bg-white p-3 rounded-xl border border-[#E5E7EB] shadow-2xs">
-        <span className="px-2.5 py-1 rounded-lg bg-[#FAFAFB] text-[#5F6368] border border-[#E5E7EB]">
+      <div className="flex items-center space-x-2 text-xs font-data bg-white p-3 rounded-xl border border-[var(--border-default)] shadow-2xs">
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
           1. Upload File
         </span>
-        <span className="text-[#8A8F98]">→</span>
-        <span className="px-2.5 py-1 rounded-lg bg-[#FAFAFB] text-[#5F6368] border border-[#E5E7EB]">
+        <span className="text-[var(--text-tertiary)]">→</span>
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
           2. Map Columns
         </span>
-        <span className="text-[#8A8F98]">→</span>
-        <span className="px-2.5 py-1 rounded-lg bg-[#5141FF]/10 text-[#181B27] font-bold border border-[#5141FF]/20">
+        <span className="text-[var(--text-tertiary)]">→</span>
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--action-primary)]/10 text-[var(--text-primary)] font-bold border border-[var(--action-primary)]/20">
           3. Validate
         </span>
-        <span className="text-[#8A8F98]">→</span>
-        <span className="px-2.5 py-1 rounded-lg bg-[#FAFAFB] text-[#5F6368] border border-[#E5E7EB]">
+        <span className="text-[var(--text-tertiary)]">→</span>
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
           4. Confirm
         </span>
       </div>
@@ -127,26 +127,26 @@ export const Screen14_ValidationResults: React.FC = () => {
       </div>
 
       {/* Prominent Warning Message Banner */}
-      <div className="p-4 bg-[#FB3256]/5 border border-[#FB3256]/20 rounded-xl flex items-start space-x-3 text-xs">
-        <AlertCircle className="w-5 h-5 text-[#FB3256] shrink-0 mt-0.5" />
-        <div className="text-[#17181A]">
-          <p className="font-semibold text-[#FB3256]">
+      <div className="p-4 bg-[var(--color-brand-orange-500)]/5 border border-[var(--color-brand-orange-500)]/20 rounded-xl flex items-start space-x-3 text-xs">
+        <AlertCircle className="w-5 h-5 text-[var(--status-warning)] shrink-0 mt-0.5" />
+        <div className="text-[var(--text-primary)]">
+          <p className="font-semibold text-[var(--status-warning)]">
             44 rows will be skipped unless corrected. You can still import the 1,798 valid rows now and fix the rest later.
           </p>
-          <p className="text-[#5F6368] mt-1 font-data">
+          <p className="text-[var(--text-secondary)] mt-1 font-data">
             Flagged items are quarantined in the error staging ledger and will not reach the calculation engine until resolved.
           </p>
         </div>
       </div>
 
       {/* Error Breakdown Table */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-2xs space-y-0">
-        <div className="p-4 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <h2 className="text-sm font-semibold text-[#17181A]">Flagged Error Sample (Showing 3 of 44 rows)</h2>
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-2xs space-y-0">
+        <div className="p-4 border-b border-[var(--border-default)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h2 className="text-sm font-semibold text-[var(--text-primary)]">Flagged Error Sample (Showing 3 of 44 rows)</h2>
           <button
             type="button"
             onClick={handleDownloadErrorReport}
-            className="enterprise-btn-secondary h-8 px-3 text-xs font-semibold inline-flex items-center space-x-1.5 text-[#181B27] shrink-0"
+            className="enterprise-btn-secondary h-8 px-3 text-xs font-semibold inline-flex items-center space-x-1.5 text-[var(--text-primary)] shrink-0"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Download error report (import_errors_job88.csv)</span>
@@ -155,28 +155,28 @@ export const Screen14_ValidationResults: React.FC = () => {
 
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368]">
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Row</th>
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Error</th>
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Field</th>
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Value</th>
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A] text-right">Action</th>
+            <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Row</th>
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Error</th>
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Field</th>
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Value</th>
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)] text-right">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F1F3F5]">
+          <tbody className="divide-y divide-[#EEEAF5]">
             {errorRows.map((err, idx) => (
-              <tr key={idx} className="hover:bg-[#FAFAFB]">
-                <td className="py-3 px-4 font-data font-medium text-[#17181A]">
+              <tr key={idx} className="hover:bg-[var(--surface-secondary)]">
+                <td className="py-3 px-4 font-data font-medium text-[var(--text-primary)]">
                   {err.rowNumber}
                 </td>
                 <td className="py-3 px-4">
                   <StatusBadge status="Rejected" customLabel={err.error} size="sm" />
                 </td>
-                <td className="py-3 px-4 text-[#5F6368] font-medium">
+                <td className="py-3 px-4 text-[var(--text-secondary)] font-medium">
                   {err.field}
                 </td>
-                <td className="py-3 px-4 font-data text-[11px] text-[#17181A]">
-                  <code className="bg-[#FAFAFB] border border-[#E5E7EB] px-2 py-0.5 rounded text-[#FB3256] font-data">
+                <td className="py-3 px-4 font-data text-[11px] text-[var(--text-primary)]">
+                  <code className="bg-[var(--surface-secondary)] border border-[var(--border-default)] px-2 py-0.5 rounded text-[var(--status-warning)] font-data">
                     {err.value}
                   </code>
                 </td>
@@ -184,7 +184,7 @@ export const Screen14_ValidationResults: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => navigateToScreen('15_fix_detail_view', 'FLOW_C')}
-                    className="inline-flex items-center space-x-1 text-[#5141FF] hover:underline font-semibold text-xs"
+                    className="inline-flex items-center space-x-1 text-[var(--action-primary)] hover:underline font-semibold text-xs"
                   >
                     <span>Fix Row</span>
                     <ExternalLink className="w-3 h-3" />
@@ -197,7 +197,7 @@ export const Screen14_ValidationResults: React.FC = () => {
       </div>
 
       {/* Actions */}
-      <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+      <div className="p-4 bg-white border border-[var(--border-default)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
         <button
           type="button"
           onClick={() => navigateToScreen('13_column_mapping', 'FLOW_C')}
@@ -211,7 +211,7 @@ export const Screen14_ValidationResults: React.FC = () => {
             id="btn-fix-flagged-rows"
             type="button"
             onClick={() => navigateToScreen('15_fix_detail_view', 'FLOW_C')}
-            className="enterprise-btn-secondary h-9 px-4 text-xs font-semibold inline-flex items-center space-x-1.5 text-[#181B27]"
+            className="enterprise-btn-secondary h-9 px-4 text-xs font-semibold inline-flex items-center space-x-1.5 text-[var(--text-primary)]"
           >
             <Wrench className="w-3.5 h-3.5" />
             <span>Fix Flagged Rows</span>

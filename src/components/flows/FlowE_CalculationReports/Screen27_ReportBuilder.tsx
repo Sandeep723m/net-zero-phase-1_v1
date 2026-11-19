@@ -45,7 +45,7 @@ export const Screen27_ReportBuilder: React.FC = () => {
           <StatusBadge status="Active" customLabel="Phase 1 Ready" size="sm" />
         }
         contextInfo={
-          <span className="route-path text-xs text-[#8A8F98] font-medium">
+          <span className="route-path text-xs text-[var(--text-tertiary)] font-medium">
             /reports/new
           </span>
         }
@@ -61,31 +61,31 @@ export const Screen27_ReportBuilder: React.FC = () => {
       />
 
       {/* Scope Guidance Panel (Section 16.2) */}
-      <div className="p-3.5 bg-[#FEF0C7]/40 border border-[#F79009]/30 rounded-xl text-xs text-[#7A271A] flex items-start space-x-2.5 shadow-2xs font-data">
-        <Info className="w-4 h-4 text-[#B54708] shrink-0 mt-0.5" />
+      <div className="p-3.5 bg-[var(--status-warning-bg)]/40 border border-[#9A4F00]/30 rounded-xl text-xs text-[#7A271A] flex items-start space-x-2.5 shadow-2xs font-data">
+        <Info className="w-4 h-4 text-[var(--status-warning)] shrink-0 mt-0.5" />
         <div>
-          <strong className="font-semibold text-[#17181A]">Product Scope Guidance:</strong> PCAF, ISO 14067, CBAM and CCTS report types are Phase 2/3 — <strong>GHG Inventory</strong> is the Phase 1 output.
+          <strong className="font-semibold text-[var(--text-primary)]">Product Scope Guidance:</strong> PCAF, ISO 14067, CBAM and CCTS report types are Phase 2/3 — <strong>GHG Inventory</strong> is the Phase 1 output.
         </div>
       </div>
 
       {/* Form Structure (Section 16.1 & FR-27.01 - FR-27.04) */}
       <form onSubmit={handleGeneratePreview} className="space-y-6">
-        <div className="p-6 bg-white border border-[#E5E7EB] rounded-xl space-y-5 shadow-2xs">
-          <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F5]">
-            <h2 className="text-sm font-semibold text-[#17181A] font-sans">Report Parameters</h2>
+        <div className="p-6 bg-white border border-[var(--border-default)] rounded-xl space-y-5 shadow-2xs">
+          <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] font-sans">Report Parameters</h2>
             <StatusBadge status="Approved" customLabel="Locked Period Data Active" size="sm" />
           </div>
 
           {/* Reporting Period */}
           <div>
-            <label className="block text-xs font-semibold text-[#17181A] mb-1 font-sans">
-              Reporting period <span className="text-[#D92D20]">*</span>
+            <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1 font-sans">
+              Reporting period <span className="text-[var(--status-error)]">*</span>
             </label>
             <div className="relative">
               <select
                 value={reportingPeriod}
                 onChange={(e) => setReportingPeriod(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] focus:outline-none focus:border-[#5141FF] font-sans"
+                className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--action-primary)] font-sans"
               >
                 <option value="FY 2025–26">FY 2025–26 (Apr 2025 – Mar 2026) — Default</option>
                 <option value="FY 2024–25">FY 2024–25 (Historical Snapshot)</option>
@@ -95,13 +95,13 @@ export const Screen27_ReportBuilder: React.FC = () => {
 
           {/* Report Type */}
           <div>
-            <label className="block text-xs font-semibold text-[#17181A] mb-1 font-sans">
-              Report type <span className="text-[#D92D20]">*</span>
+            <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1 font-sans">
+              Report type <span className="text-[var(--status-error)]">*</span>
             </label>
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] focus:outline-none focus:border-[#5141FF] font-sans"
+              className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--action-primary)] font-sans"
             >
               <option value="GHG Inventory (Scope 1+2)">
                 GHG Inventory (Scope 1+2) — Phase 1 Standard
@@ -120,13 +120,13 @@ export const Screen27_ReportBuilder: React.FC = () => {
 
           {/* Sites Included */}
           <div>
-            <label className="block text-xs font-semibold text-[#17181A] mb-1 font-sans">
-              Sites included <span className="text-[#D92D20]">*</span>
+            <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1 font-sans">
+              Sites included <span className="text-[var(--status-error)]">*</span>
             </label>
             <select
               value={sitesIncluded}
               onChange={(e) => setSitesIncluded(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] focus:outline-none focus:border-[#5141FF] font-sans"
+              className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--action-primary)] font-sans"
             >
               <option value="All Sites">All Sites (Chennai Plant 1, Pune Warehouse, Hyderabad HQ)</option>
               <option value="Chennai Plant 1">Chennai Plant 1 Only</option>
@@ -137,13 +137,13 @@ export const Screen27_ReportBuilder: React.FC = () => {
 
           {/* Format */}
           <div>
-            <label className="block text-xs font-semibold text-[#17181A] mb-1 font-sans">
-              Format <span className="text-[#D92D20]">*</span>
+            <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1 font-sans">
+              Format <span className="text-[var(--status-error)]">*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <label
                 className={`p-3 border rounded-xl flex items-center space-x-3 cursor-pointer transition-all ${
-                  format === 'PDF' ? 'border-[#5141FF] bg-[#5141FF]/5 shadow-2xs' : 'border-[#E5E7EB] hover:bg-[#FAFAFB]'
+                  format === 'PDF' ? 'border-[var(--action-primary)] bg-[var(--action-primary)]/5 shadow-2xs' : 'border-[var(--border-default)] hover:bg-[var(--surface-secondary)]'
                 }`}
               >
                 <input
@@ -152,11 +152,11 @@ export const Screen27_ReportBuilder: React.FC = () => {
                   value="PDF"
                   checked={format === 'PDF'}
                   onChange={() => setFormat('PDF')}
-                  className="text-[#181B27] accent-[#01153C]"
+                  className="text-[var(--text-primary)] accent-[#5625B8]"
                 />
                 <div>
-                  <div className="text-xs font-semibold text-[#17181A] font-sans">PDF Document</div>
-                  <div className="text-[11px] text-[#5F6368] font-data">
+                  <div className="text-xs font-semibold text-[var(--text-primary)] font-sans">PDF Document</div>
+                  <div className="text-[11px] text-[var(--text-secondary)] font-data">
                     Formal audit-ready disclosure format with cryptographic timestamp
                   </div>
                 </div>
@@ -164,7 +164,7 @@ export const Screen27_ReportBuilder: React.FC = () => {
 
               <label
                 className={`p-3 border rounded-xl flex items-center space-x-3 cursor-pointer transition-all ${
-                  format === 'Excel' ? 'border-[#5141FF] bg-[#5141FF]/5 shadow-2xs' : 'border-[#E5E7EB] hover:bg-[#FAFAFB]'
+                  format === 'Excel' ? 'border-[var(--action-primary)] bg-[var(--action-primary)]/5 shadow-2xs' : 'border-[var(--border-default)] hover:bg-[var(--surface-secondary)]'
                 }`}
               >
                 <input
@@ -173,11 +173,11 @@ export const Screen27_ReportBuilder: React.FC = () => {
                   value="Excel"
                   checked={format === 'Excel'}
                   onChange={() => setFormat('Excel')}
-                  className="text-[#181B27] accent-[#01153C]"
+                  className="text-[var(--text-primary)] accent-[#5625B8]"
                 />
                 <div>
-                  <div className="text-xs font-semibold text-[#17181A] font-sans">Excel / CSV Workbook</div>
-                  <div className="text-[11px] text-[#5F6368] font-data">
+                  <div className="text-xs font-semibold text-[var(--text-primary)] font-sans">Excel / CSV Workbook</div>
+                  <div className="text-[11px] text-[var(--text-secondary)] font-data">
                     Tabular activity records with emission factors applied
                   </div>
                 </div>

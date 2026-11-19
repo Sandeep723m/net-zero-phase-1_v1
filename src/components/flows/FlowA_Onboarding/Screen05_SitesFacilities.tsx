@@ -96,7 +96,7 @@ export const Screen05_SitesFacilities: React.FC = () => {
                 onClick={() => setIsCsvModalOpen(true)}
                 className="enterprise-btn-secondary h-9 px-3 text-xs inline-flex items-center space-x-1.5 font-semibold"
               >
-                <Upload className="w-3.5 h-3.5 text-[#5F6368]" />
+                <Upload className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
                 <span>Import CSV</span>
               </button>
 
@@ -109,8 +109,8 @@ export const Screen05_SitesFacilities: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="flex items-center space-x-2 text-xs text-[#5F6368] font-data bg-[#FAFAFB] px-3 py-1.5 rounded-lg border border-[#E5E7EB]">
-              <Lock className="w-3.5 h-3.5 text-[#8A8F98]" />
+            <div className="flex items-center space-x-2 text-xs text-[var(--text-secondary)] font-data bg-[var(--surface-secondary)] px-3 py-1.5 rounded-lg border border-[var(--border-default)]">
+              <Lock className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
               <span>Boundary managed by Tenant Admin</span>
             </div>
           )
@@ -118,23 +118,23 @@ export const Screen05_SitesFacilities: React.FC = () => {
       />
 
       {/* Filter Controls Bar */}
-      <div className="p-3.5 bg-white border border-[#E5E7EB] rounded-xl shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3 font-sans">
+      <div className="p-3.5 bg-white border border-[var(--border-default)] rounded-xl shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3 font-sans">
         <div className="flex flex-1 items-center space-x-2">
           <div className="relative flex-1 max-w-sm">
-            <Search className="w-3.5 h-3.5 text-[#8A8F98] absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-[var(--text-tertiary)] absolute left-3 top-2.5" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search site name, location or state…"
-              className="w-full pl-8 pr-3 py-1.5 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+              className="w-full pl-8 pr-3 py-1.5 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
             />
           </div>
 
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-2.5 py-1.5 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A]"
+            className="px-2.5 py-1.5 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)]"
           >
             <option value="all">All Types</option>
             <option value="Manufacturing">Manufacturing</option>
@@ -146,7 +146,7 @@ export const Screen05_SitesFacilities: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-2.5 py-1.5 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A]"
+            className="px-2.5 py-1.5 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)]"
           >
             <option value="all">All Statuses</option>
             <option value="Active">Active</option>
@@ -154,54 +154,54 @@ export const Screen05_SitesFacilities: React.FC = () => {
           </select>
         </div>
 
-        <div className="text-xs text-[#5F6368] font-data">
+        <div className="text-xs text-[var(--text-secondary)] font-data">
           Showing {filteredSites.length} of {sites.length} sites
         </div>
       </div>
 
       {/* Sites Data Table */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-2xs font-sans">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-2xs font-sans">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368]">
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Site Name</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Location / State</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Facility Type</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A] text-center">Emission Sources</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Manager</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Status</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A] text-right">Actions</th>
+              <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Site Name</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Location / State</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Facility Type</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)] text-center">Emission Sources</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Manager</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Status</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)] text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F1F3F5]">
+            <tbody className="divide-y divide-[#EEEAF5]">
               {filteredSites.map((site) => (
-                <tr key={site.id} className="hover:bg-[#FAFAFB] transition-colors">
+                <tr key={site.id} className="hover:bg-[var(--surface-secondary)] transition-colors">
                   <td className="py-3 px-4">
-                    <div className="font-semibold text-[#17181A]">{site.name}</div>
-                    <div className="text-[11px] text-[#8A8F98] activity-id font-medium">{site.id}</div>
+                    <div className="font-semibold text-[var(--text-primary)]">{site.name}</div>
+                    <div className="text-[11px] text-[var(--text-tertiary)] activity-id font-medium">{site.id}</div>
                   </td>
-                  <td className="py-3 px-4 text-[#5F6368]">
+                  <td className="py-3 px-4 text-[var(--text-secondary)]">
                     <div className="flex items-center space-x-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#8A8F98] shrink-0" />
+                      <MapPin className="w-3.5 h-3.5 text-[var(--text-tertiary)] shrink-0" />
                       <span className="truncate max-w-[220px] font-sans">{site.location}</span>
                     </div>
-                    <div className="text-[11px] text-[#8A8F98] pl-4.5 font-data">{site.state}, {site.country}</div>
+                    <div className="text-[11px] text-[var(--text-tertiary)] pl-4.5 font-data">{site.state}, {site.country}</div>
                   </td>
-                  <td className="py-3 px-4 text-[#5F6368]">
-                    <span className="px-2 py-0.5 rounded-md bg-[#FAFAFB] text-[#17181A] text-[11px] border border-[#E5E7EB] font-data">
+                  <td className="py-3 px-4 text-[var(--text-secondary)]">
+                    <span className="px-2 py-0.5 rounded-md bg-[var(--surface-secondary)] text-[var(--text-primary)] text-[11px] border border-[var(--border-default)] font-data">
                       {site.type}
                     </span>
                   </td>
                   <td className="py-3 px-4 text-center">
                     <button
                       onClick={() => navigateToScreen('07_emission_sources', 'FLOW_A')}
-                      className="text-xs text-[#5141FF] hover:underline font-semibold"
+                      className="text-xs text-[var(--action-primary)] hover:underline font-semibold"
                     >
                       {site.emissionSourcesCount} configured →
                     </button>
                   </td>
-                  <td className="py-3 px-4 text-[#5F6368] font-sans">{site.manager}</td>
+                  <td className="py-3 px-4 text-[var(--text-secondary)] font-sans">{site.manager}</td>
                   <td className="py-3 px-4">
                     <StatusBadge
                       status={site.status === 'Active' ? 'Approved' : 'Under Review'}
@@ -212,7 +212,7 @@ export const Screen05_SitesFacilities: React.FC = () => {
                   <td className="py-3 px-4 text-right">
                     <button
                       onClick={() => navigateToScreen('07_emission_sources', 'FLOW_A')}
-                      className="px-2.5 py-1 text-[11px] text-[#181B27] hover:bg-[#5141FF]/10 rounded-md transition-colors font-semibold"
+                      className="px-2.5 py-1 text-[11px] text-[var(--text-primary)] hover:bg-[var(--action-primary)]/10 rounded-md transition-colors font-semibold"
                     >
                       Sources
                     </button>
@@ -225,8 +225,8 @@ export const Screen05_SitesFacilities: React.FC = () => {
       </div>
 
       {/* Flow Sequence Progression Bar */}
-      <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl flex items-center justify-between text-xs shadow-2xs font-sans">
-        <div className="text-[#5F6368] font-data">
+      <div className="p-4 bg-white border border-[var(--border-default)] rounded-xl flex items-center justify-between text-xs shadow-2xs font-sans">
+        <div className="text-[var(--text-secondary)] font-data">
           Once operational sites are established, configure the reporting periods.
         </div>
         <button
@@ -241,15 +241,15 @@ export const Screen05_SitesFacilities: React.FC = () => {
       {/* Add Site Drawer */}
       {isDrawerOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex justify-end">
-          <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col border-l border-[#E5E7EB] font-sans animate-in slide-in-from-right duration-200">
-            <div className="p-4 border-b border-[#E5E7EB] flex items-center justify-between bg-[#F4F5F6]">
+          <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col border-l border-[var(--border-default)] font-sans animate-in slide-in-from-right duration-200">
+            <div className="p-4 border-b border-[var(--border-default)] flex items-center justify-between bg-[var(--bg-canvas)]">
               <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-[#181B27]" />
-                <h3 className="text-sm font-semibold text-[#17181A]">Add New Facility / Site</h3>
+                <MapPin className="w-4 h-4 text-[var(--text-primary)]" />
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">Add New Facility / Site</h3>
               </div>
               <button
                 onClick={() => setIsDrawerOpen(false)}
-                className="p-1 text-[#8A8F98] hover:text-[#17181A] rounded"
+                className="p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] rounded"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -257,8 +257,8 @@ export const Screen05_SitesFacilities: React.FC = () => {
 
             <form onSubmit={handleCreateSite} className="p-4 flex-1 overflow-y-auto space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">
-                  Site Name <span className="text-[#FB3256]">*</span>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">
+                  Site Name <span className="text-[var(--status-warning)]">*</span>
                 </label>
                 <input
                   type="text"
@@ -266,13 +266,13 @@ export const Screen05_SitesFacilities: React.FC = () => {
                   value={siteName}
                   onChange={(e) => setSiteName(e.target.value)}
                   placeholder="e.g. Coimbatore Casting Plant"
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">
-                  Physical Address / Location <span className="text-[#FB3256]">*</span>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">
+                  Physical Address / Location <span className="text-[var(--status-warning)]">*</span>
                 </label>
                 <textarea
                   required
@@ -280,27 +280,27 @@ export const Screen05_SitesFacilities: React.FC = () => {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Street, Industrial Area, City"
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#17181A] mb-1">State / Province</label>
+                  <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">State / Province</label>
                   <input
                     type="text"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     placeholder="e.g. Tamil Nadu"
-                    className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                    className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#17181A] mb-1">Facility Type</label>
+                  <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">Facility Type</label>
                   <select
                     value={siteType}
                     onChange={(e) => setSiteType(e.target.value as any)}
-                    className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                    className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                   >
                     <option value="Manufacturing">Manufacturing</option>
                     <option value="Storage">Storage</option>
@@ -311,29 +311,29 @@ export const Screen05_SitesFacilities: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">Facility Manager</label>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">Facility Manager</label>
                 <input
                   type="text"
                   value={manager}
                   onChange={(e) => setManager(e.target.value)}
                   placeholder="e.g. K. Sundaram"
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">Status</label>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">Status</label>
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as any)}
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 >
                   <option value="Active">Active (Ready for emissions recording)</option>
                   <option value="Draft">Draft (Preliminary planning)</option>
                 </select>
               </div>
 
-              <div className="pt-4 border-t border-[#F1F3F5] flex items-center justify-end space-x-2">
+              <div className="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-end space-x-2">
                 <button
                   type="button"
                   onClick={() => setIsDrawerOpen(false)}
@@ -356,43 +356,43 @@ export const Screen05_SitesFacilities: React.FC = () => {
       {/* CSV Import Modal */}
       {isCsvModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5E7EB] p-5 font-sans">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F1F3F5]">
+          <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[var(--border-default)] p-5 font-sans">
+            <div className="flex items-center justify-between pb-3 border-b border-[var(--border-subtle)]">
               <div className="flex items-center space-x-2">
-                <FileSpreadsheet className="w-4 h-4 text-[#181B27]" />
-                <h3 className="text-sm font-semibold text-[#17181A]">Import Sites via CSV</h3>
+                <FileSpreadsheet className="w-4 h-4 text-[var(--text-primary)]" />
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">Import Sites via CSV</h3>
               </div>
               <button
                 onClick={() => setIsCsvModalOpen(false)}
-                className="p-1 text-[#8A8F98] hover:text-[#17181A]"
+                className="p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="py-4 space-y-3">
-              <div className="p-6 border-2 border-dashed border-[#E5E7EB] rounded-xl text-center bg-[#FAFAFB]">
-                <Upload className="w-6 h-6 text-[#8A8F98] mx-auto mb-2" />
-                <p className="text-xs text-[#17181A] font-semibold">
+              <div className="p-6 border-2 border-dashed border-[var(--border-default)] rounded-xl text-center bg-[var(--surface-secondary)]">
+                <Upload className="w-6 h-6 text-[var(--text-tertiary)] mx-auto mb-2" />
+                <p className="text-xs text-[var(--text-primary)] font-semibold">
                   Drag and drop your sites CSV file here
                 </p>
-                <p className="text-[11px] text-[#5F6368] mt-1 font-data">
+                <p className="text-[11px] text-[var(--text-secondary)] mt-1 font-data">
                   Required columns: Site Name, Location, State, Facility Type
                 </p>
               </div>
 
-              <div className="text-[11px] text-[#5F6368] bg-[#FAFAFB] p-2.5 rounded-lg border border-[#E5E7EB] flex items-center justify-between font-data">
+              <div className="text-[11px] text-[var(--text-secondary)] bg-[var(--surface-secondary)] p-2.5 rounded-lg border border-[var(--border-default)] flex items-center justify-between font-data">
                 <span>Need our standardized CSV template?</span>
                 <button
                   onClick={() => showToast('Template Downloaded', 'sites_import_template.csv saved.', 'info')}
-                  className="text-[#5141FF] hover:underline font-semibold font-sans"
+                  className="text-[var(--action-primary)] hover:underline font-semibold font-sans"
                 >
                   Download template (.csv)
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-end space-x-2 pt-3 border-t border-[#F1F3F5]">
+            <div className="flex items-center justify-end space-x-2 pt-3 border-t border-[var(--border-subtle)]">
               <button
                 onClick={() => setIsCsvModalOpen(false)}
                 className="enterprise-btn-secondary h-9 px-3 text-xs font-semibold"

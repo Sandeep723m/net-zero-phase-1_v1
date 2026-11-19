@@ -1,26 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../../context/AppContext';
 import { ActivityRecord } from '../../../types';
-import {
-  Plus,
-  ScanLine,
-  Search,
-  FileText,
-  Clock,
-  AlertCircle,
-  Database,
-  ShieldCheck,
-  Files,
-  ArrowRight,
-  CheckCircle2,
-  BarChart3,
-  Layers,
-  Flame,
-  Zap,
-  Building2,
-  TrendingDown,
-  ChevronRight,
-} from 'lucide-react';
+import { Plus, Search, FileText, AlertCircle, Files, ChevronDown, ArrowUpDown, Building2, ClipboardList, Send, Clock3, BadgeCheck, TriangleAlert } from 'lucide-react';
 import { StatusBadge } from '../../common/StatusBadge';
 
 export const Screen10_ActivityDashboard: React.FC = () => {
@@ -40,412 +21,172 @@ export const Screen10_ActivityDashboard: React.FC = () => {
   } = useApp();
 
   const [scopeFilter, setScopeFilter] = useState<'all' | 'Scope 1' | 'Scope 2' | 'Scope 3'>('all');
-
+  const [sortField, setSortField] = useState<'id' | 'date' | 'site' | 'source' | 'quantity' | 'emissions'>('date');
+  const [sortAscending, setSortAscending] = useState(false);
   const filteredRecords = records.filter((rec) => {
     const matchesSite = activeFilterSite === 'all' || rec.siteId === activeFilterSite;
-    const matchesStatus = activeFilterStatus === 'all' || rec.status === activeFilterStatus;
+    const matchesStatus = activeFilterStatus === 'all' ||
+      (activeFilterStatus === 'attention' ? rec.status === 'Error' || rec.status === 'Sent Back' : rec.status === activeFilterStatus);
     const matchesScope = scopeFilter === 'all' || rec.scope === scopeFilter;
-    const matchesSearch =
-      rec.sourceName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rec.siteName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rec.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rec.date.includes(searchQuery);
-
+    const matchesSearch = rec.sourceName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      rec.siteName.toLowerCase().includes(searchQuery.toLowerCase()) || rec.id.toLowerCase().includes(searchQuery.toLowerCase()) || rec.date.includes(searchQuery);
     return matchesSite && matchesStatus && matchesScope && matchesSearch;
   });
+  const sortedRecords = [...filteredRecords].sort((a, b) => {
+    let comparison = 0;
+    if (sortField === 'quantity') comparison = a.quantity - b.quantity;
+    else if (sortField === 'emissions') comparison = a.emissions_tCO2e - b.emissions_tCO2e;
+    else if (sortField === 'site') comparison = a.siteName.localeCompare(b.siteName);
+    else if (sortField === 'source') comparison = a.sourceName.localeCompare(b.sourceName);
+    else if (sortField === 'id') comparison = a.id.localeCompare(b.id);
+    else comparison = new Date(a.date).getTime() - new Date(b.date).getTime();
+    return sortAscending ? comparison : -comparison;
+  });
 
-  const handleRowClick = (rec: ActivityRecord) => {
-    setSelectedRecordId(rec.id);
-    if (currentRole === 'VERIFIER') {
-      navigateToScreen('32_evidence_trace', 'FLOW_F');
-    } else if (rec.status === 'Submitted') {
-      navigateToScreen('24_review_approve', 'FLOW_B');
-    } else if (rec.status === 'Error' || rec.status === 'Sent Back') {
-      navigateToScreen('15_fix_detail_view', 'FLOW_C');
-    } else {
-      navigateToScreen('16_attach_evidence', 'FLOW_B');
+  const toggleSort = (field: typeof sortField) => {
+    if (sortField === field) setSortAscending((ascending) => !ascending);
+    else {
+      setSortField(field);
+      setSortAscending(field !== 'date');
     }
   };
 
+  const totalEmissions = records.reduce((sum, record) => sum + record.emissions_tCO2e, 0);
+  const calculationBlockers = records.filter((record) => record.status === 'Error' || record.status === 'Sent Back').length;
+  const submittedRecords = records.filter((record) => record.status === 'Submitted').length;
+  const inReviewRecords = records.filter((record) => record.status === 'Under Review').length;
+
+  const handleRowClick = (rec: ActivityRecord) => {
+    setSelectedRecordId(rec.id);
+    if (currentRole === 'VERIFIER') navigateToScreen('32_evidence_trace', 'FLOW_F');
+    else if (rec.status === 'Submitted') navigateToScreen('24_review_approve', 'FLOW_B');
+    else if (rec.status === 'Error' || rec.status === 'Sent Back') navigateToScreen('15_fix_detail_view', 'FLOW_C');
+    else navigateToScreen('16_attach_evidence', 'FLOW_B');
+  };
+
+  const approvedRecords = records.filter((record) => record.status === 'Approved').length;
+  const workflowCards = [
+    { label: 'Activity records', value: records.length, note: `${totalEmissions.toLocaleString(undefined, { maximumFractionDigits: 2 })} tCO₂e total`, status: 'all', color: 'var(--text-secondary)', icon: ClipboardList },
+    { label: 'Submitted', value: submittedRecords, note: 'Awaiting initial review', status: 'Submitted', color: 'var(--status-info)', icon: Send },
+    { label: 'In review', value: inReviewRecords, note: 'Being checked by reviewers', status: 'Under Review', color: 'var(--status-warning)', icon: Clock3 },
+    { label: 'Approved', value: approvedRecords, note: 'Ready for calculation', status: 'Approved', color: 'var(--status-success)', icon: BadgeCheck },
+    { label: 'Needs attention', value: calculationBlockers, note: 'Errors or returned records', status: 'attention', color: 'var(--status-error)', icon: TriangleAlert },
+  ];
+
   return (
     <div id="screen-10-activity-dashboard" className="w-full space-y-6 pb-12">
-      {/* Clean, Redesigned Page Header (Left Content Div Fixed & Streamlined) */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-1">
+      <header className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
         <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-[#181B27] font-sans leading-tight">
-              Carbon Accounting Dashboard
-            </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E8F7EF] text-[#16845B] border border-[#16845B]/20 shrink-0">
-              ISO 14064 Active
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-[#858CA0] mt-1.5">
-            <span className="font-semibold text-[#5141FF] bg-[#F2F0FF] px-2 py-0.5 rounded-md border border-[#E5E0FF] text-[11px]">
-              {activePeriod.name}
-            </span>
-            <span>·</span>
-            <span className="font-medium text-[#181B27]">3 Operational Facilities</span>
-            <span>·</span>
-            <span>IPCC AR6 / CEA v19 Lineage</span>
-          </div>
+          <h1 className="text-2xl sm:text-[28px] font-semibold tracking-tight text-[var(--text-primary)]">Carbon inventory</h1>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">{activePeriod.name} <span className="mx-1.5 text-[var(--text-tertiary)]">·</span> {sites.length} facilities <span className="mx-1.5 text-[var(--text-tertiary)]">·</span> GHG inventory</p>
         </div>
-
-        {/* Clean, Focused Action Buttons on the Right */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          <button
-            type="button"
-            onClick={() => window.location.assign('https://tula-karbon-ze-d1.vercel.app/')}
-            className="enterprise-btn-secondary shadow-xs"
-          >
-            <BarChart3 className="w-3.5 h-3.5" />
-            <span>View Results Dashboard</span>
-          </button>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+          <div className="relative w-full sm:w-56">
+            <Search className="w-4 h-4 text-[var(--text-tertiary)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+            <input type="search" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Search records" aria-label="Search activity records" className="w-full h-10 pl-9 pr-3 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--border-focus)]" />
+          </div>
+          <label className="relative block w-full sm:w-52">
+            <Building2 className="w-4 h-4 text-[var(--text-secondary)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+            <select aria-label="Filter by facility" value={activeFilterSite} onChange={(event) => setActiveFilterSite(event.target.value)} className="block w-full h-10 appearance-none pl-9 pr-9 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
+              <option value="all">All facilities ({sites.length})</option>{sites.map((site) => <option key={site.id} value={site.id}>{site.name}</option>)}
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
+          </label>
           {currentRole === 'VERIFIER' ? (
-            <button
-              onClick={() => navigateToScreen('32_evidence_trace', 'FLOW_F')}
-              className="enterprise-btn-primary shadow-xs"
-            >
-              <Files className="w-3.5 h-3.5" />
-              <span>Trace Docket</span>
-            </button>
+            <button type="button" onClick={() => navigateToScreen('32_evidence_trace', 'FLOW_F')} className="enterprise-btn-primary h-10 min-h-10 whitespace-nowrap"><Files className="w-3.5 h-3.5" />Trace docket</button>
           ) : (
-            <>
-              <button
-                onClick={() => navigateToScreen('11_entry_form', 'FLOW_B')}
-                className="enterprise-btn-primary shadow-xs"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Ingest Activity Data</span>
-              </button>
-            </>
+            <button type="button" onClick={() => navigateToScreen('11_entry_form', 'FLOW_B')} className="enterprise-btn-primary h-10 min-h-10 whitespace-nowrap"><Plus className="w-3.5 h-3.5" />Add activity</button>
           )}
         </div>
-      </div>
+      </header>
 
-      {/* 4 Core KPI Summary Cards: Balanced 4-Column Grid, Clean Hierarchy, Squircle Fill BG & Glow */}
-      <section aria-label="Key operational metrics" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
-        
-        {/* Card 1: Boundary Completeness */}
-        <div
-          onClick={() => navigateToScreen('11_entry_form', 'FLOW_B')}
-          className="group bg-white rounded-2xl border border-[#EEF0F6] hover:border-[#5141FF]/40 transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden shadow-[0_2px_12px_rgba(28,31,58,0.04)] hover:shadow-[0_10px_24px_rgba(81,65,255,0.12)] hover:-translate-y-0.5"
-        >
-          {/* Top Chamber: Title + Subtitle on Left, Compact Glowing Squircle Icon on Right */}
-          <div className="p-4 sm:p-5 flex items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <h3 className="text-[15px] font-bold text-[#181B27] tracking-tight truncate group-hover:text-[#5141FF] transition-colors">
-                Boundary Completeness
-              </h3>
-              <p className="text-xs font-normal text-[#D97706] mt-1 truncate">
-                Pune: 1 bill unlogged
-              </p>
-            </div>
-
-            {/* Glowing Royal Purple Squircle Icon */}
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#6C5CE7] via-[#5141FF] to-[#3B28CC] shadow-[0_8px_18px_-3px_rgba(81,65,255,0.45)] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-1/2 bg-white/25 rounded-t-xl pointer-events-none" />
-              <Database className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-white relative z-10 drop-shadow-xs" />
-            </div>
-          </div>
-
-          {/* Full-width Divider Line */}
-          <div className="border-t border-[#F0F2F6]" />
-
-          {/* Bottom Chamber: Number on Left, Action on Right with generous space */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 bg-white">
-            <span className="text-[18px] sm:text-[19px] font-bold font-sans text-[#181B27] tracking-tight truncate">
-              96.4%
-            </span>
-
-            <span className="text-xs font-medium text-[#8C93A4] group-hover:text-[#5141FF] transition-colors shrink-0 whitespace-nowrap pl-1 flex items-center gap-1">
-              <span>Upload Invoice</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </div>
-        </div>
-
-        {/* Card 2: Calculation Blockers */}
-        <div
-          onClick={() => setActiveFilterStatus('Error')}
-          className="group bg-white rounded-2xl border border-[#EEF0F6] hover:border-[#FB3256]/40 transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden shadow-[0_2px_12px_rgba(28,31,58,0.04)] hover:shadow-[0_10px_24px_rgba(251,50,86,0.12)] hover:-translate-y-0.5"
-        >
-          {/* Top Chamber */}
-          <div className="p-4 sm:p-5 flex items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <h3 className="text-[15px] font-bold text-[#181B27] tracking-tight truncate group-hover:text-[#FB3256] transition-colors">
-                Calculation Blockers
-              </h3>
-              <p className="text-xs font-normal text-[#EF4444] mt-1 truncate">
-                Diesel density required
-              </p>
-            </div>
-
-            {/* Glowing Coral Red Squircle Icon */}
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#FF5C7A] via-[#FB3256] to-[#E51F45] shadow-[0_8px_18px_-3px_rgba(251,50,86,0.45)] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-1/2 bg-white/25 rounded-t-xl pointer-events-none" />
-              <AlertCircle className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-white relative z-10 drop-shadow-xs" />
-            </div>
-          </div>
-
-          {/* Full-width Divider Line */}
-          <div className="border-t border-[#F0F2F6]" />
-
-          {/* Bottom Chamber */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 bg-white">
-            <div className="flex items-baseline space-x-1.5 min-w-0 truncate">
-              <span className="text-[18px] sm:text-[19px] font-bold font-sans text-[#DC2626] tracking-tight truncate">
-                3
+      <section aria-label="Inventory workflow summary">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+          {workflowCards.map((card) => {
+            const selected = activeFilterStatus === card.status;
+            return <button key={card.label} type="button" onClick={() => setActiveFilterStatus(card.status)} className={`w-full text-left min-h-[126px] p-4 rounded-xl border transition-colors ${selected ? 'border-[var(--action-primary)] bg-[var(--brand-50)]/60' : 'border-[var(--border-default)] bg-white hover:border-[var(--border-strong)]'}`}>
+              <span className="flex items-center justify-between gap-2">
+                <span className="inline-flex items-center text-xs font-medium text-[var(--text-secondary)]">{card.label}</span>
+                <card.icon className="w-[17px] h-[17px] shrink-0" style={{ color: card.color }} strokeWidth={1.7} aria-hidden="true" />
               </span>
-              <span className="text-xs font-semibold text-[#DC2626] uppercase font-mono shrink-0">
-                Blockers
-              </span>
-            </div>
-
-            <span className="text-xs font-medium text-[#8C93A4] group-hover:text-[#FB3256] transition-colors shrink-0 whitespace-nowrap pl-1 flex items-center gap-1">
-              <span>Resolve Errors</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </div>
+              <span className="mt-3 block text-3xl font-semibold leading-none tracking-tight text-[var(--text-primary)] tabular-nums">{card.value}</span>
+              <span className="mt-2 block text-[11px] leading-4 text-[var(--text-secondary)]">{card.note}</span>
+            </button>;
+          })}
         </div>
-
-        {/* Card 3: Review Queue */}
-        <div
-          onClick={() => navigateToScreen('24_review_approve', 'FLOW_B')}
-          className="group bg-white rounded-2xl border border-[#EEF0F6] hover:border-[#F59E0B]/40 transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden shadow-[0_2px_12px_rgba(28,31,58,0.04)] hover:shadow-[0_10px_24px_rgba(245,158,11,0.12)] hover:-translate-y-0.5"
-        >
-          {/* Top Chamber */}
-          <div className="p-4 sm:p-5 flex items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <h3 className="text-[15px] font-bold text-[#181B27] tracking-tight truncate group-hover:text-[#F59E0B] transition-colors">
-                Review Queue
-              </h3>
-              <p className="text-xs font-normal text-[#64748B] mt-1 truncate">
-                Awaiting site reviewer
-              </p>
-            </div>
-
-            {/* Glowing Amber Orange Squircle Icon */}
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#FBBF24] via-[#F59E0B] to-[#D97706] shadow-[0_8px_18px_-3px_rgba(245,158,11,0.45)] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-1/2 bg-white/25 rounded-t-xl pointer-events-none" />
-              <Clock className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-white relative z-10 drop-shadow-xs" />
-            </div>
-          </div>
-
-          {/* Full-width Divider Line */}
-          <div className="border-t border-[#F0F2F6]" />
-
-          {/* Bottom Chamber */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 bg-white">
-            <div className="flex items-baseline space-x-1.5 min-w-0 truncate">
-              <span className="text-[18px] sm:text-[19px] font-bold font-sans text-[#D97706] tracking-tight truncate">
-                12
-              </span>
-              <span className="text-xs font-semibold text-[#D97706] uppercase font-mono shrink-0">
-                Pending
-              </span>
-            </div>
-
-            <span className="text-xs font-medium text-[#8C93A4] group-hover:text-[#F59E0B] transition-colors shrink-0 whitespace-nowrap pl-1 flex items-center gap-1">
-              <span>Review Queue</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </div>
-        </div>
-
-        {/* Card 4: Audit Evidence */}
-        <div
-          onClick={() => navigateToScreen('22_trace_docket', 'FLOW_E')}
-          className="group bg-white rounded-2xl border border-[#EEF0F6] hover:border-[#10B981]/40 transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden shadow-[0_2px_12px_rgba(28,31,58,0.04)] hover:shadow-[0_10px_24px_rgba(16,185,129,0.12)] hover:-translate-y-0.5"
-        >
-          {/* Top Chamber */}
-          <div className="p-4 sm:p-5 flex items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <h3 className="text-[15px] font-bold text-[#181B27] tracking-tight truncate group-hover:text-[#10B981] transition-colors">
-                Audit Evidence
-              </h3>
-              <p className="text-xs font-normal text-[#16845B] mt-1 truncate">
-                Target: ≥95% (ISO 14064)
-              </p>
-            </div>
-
-            {/* Glowing Emerald Green Squircle Icon */}
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#34D399] via-[#10B981] to-[#059669] shadow-[0_8px_18px_-3px_rgba(16,185,129,0.45)] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-1/2 bg-white/25 rounded-t-xl pointer-events-none" />
-              <CheckCircle2 className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-white relative z-10 drop-shadow-xs" />
-            </div>
-          </div>
-
-          {/* Full-width Divider Line */}
-          <div className="border-t border-[#F0F2F6]" />
-
-          {/* Bottom Chamber */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 bg-white">
-            <span className="text-[18px] sm:text-[19px] font-bold font-sans text-[#16845B] tracking-tight truncate">
-              94.2%
-            </span>
-
-            <span className="text-xs font-medium text-[#8C93A4] group-hover:text-[#10B981] transition-colors shrink-0 whitespace-nowrap pl-1 flex items-center gap-1">
-              <span>Trace Docket</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </div>
-        </div>
-
       </section>
 
-      {/* Activity Ingestion Ledger View (Operational Table + Filters) */}
-      <div className="space-y-4 pt-2">
-        <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-[#181B27]">Activity Data Ingestion Ledger</h2>
-          <span className="text-xs font-mono font-semibold text-[#62697C] bg-white px-2.5 py-1 rounded-xl border border-[#E2E5EF]">
-            {filteredRecords.length} records in {activePeriod.name}
-          </span>
-        </div>
-
-        {/* Operational Filter Bar: Search on left, 3 Dropdowns on right with space-between */}
-        <div className="p-3 bg-white border border-[#E2E5EF] rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-[0_2px_8px_rgba(28,31,58,0.03)]">
-          {/* Left Side: Search Bar with reduced stroke & subtle border-radius */}
-          <div className="relative w-full md:w-80 max-w-sm">
-            <Search className="w-3.5 h-3.5 text-[#858CA0] absolute left-3 top-3 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search source, site, invoice or ID…"
-              className="w-full h-9 pl-9 pr-3 text-xs border border-[#E2E5EF] hover:border-[#9AA5BE] rounded-lg focus:outline-none focus:border-[#5141FF] focus:ring-1 focus:ring-[#5141FF]/20 bg-white text-[#181B27] placeholder:text-[#858CA0] transition-colors"
-            />
+      <section aria-label="Recent activity ledger" className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden">
+        <div className="p-4 sm:p-5 border-b border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div><h2 className="text-base font-semibold text-[var(--text-primary)]">Recent activity</h2><p className="mt-1 text-xs text-[var(--text-secondary)]">Activity data ledger · {filteredRecords.length} records in {activePeriod.name}</p></div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-[var(--text-secondary)]">Sorted by</span>
+            <span className="px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] bg-[var(--bg-canvas)] border border-[var(--border-default)] rounded-md">{sortField === 'date' ? 'Date' : sortField === 'emissions' ? 'Emissions' : sortField === 'quantity' ? 'Quantity' : sortField === 'site' ? 'Facility' : sortField === 'source' ? 'Activity' : 'Record ID'} {sortAscending ? '↑' : '↓'}</span>
           </div>
-
-          {/* Right Side: Three Dropdowns with matching subtle rounded-lg and clean 1px border stroke */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <select
-              value={activeFilterSite}
-              onChange={(e) => setActiveFilterSite(e.target.value)}
-              className="h-9 px-3 text-xs border border-[#E2E5EF] hover:border-[#9AA5BE] rounded-lg bg-white text-[#181B27] focus:outline-none focus:border-[#5141FF] focus:ring-1 focus:ring-[#5141FF]/20 transition-colors cursor-pointer"
-            >
-              <option value="all">All Facilities (3 Sites)</option>
-              {sites.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={scopeFilter}
-              onChange={(e) => setScopeFilter(e.target.value as any)}
-              className="h-9 px-3 text-xs border border-[#E2E5EF] hover:border-[#9AA5BE] rounded-lg bg-white text-[#181B27] focus:outline-none focus:border-[#5141FF] focus:ring-1 focus:ring-[#5141FF]/20 transition-colors cursor-pointer"
-            >
-              <option value="all">All Scopes</option>
-              <option value="Scope 1">Scope 1 (Direct)</option>
-              <option value="Scope 2">Scope 2 (Electricity)</option>
-              <option value="Scope 3">Scope 3 (Value Chain)</option>
-            </select>
-
-            <select
-              value={activeFilterStatus}
-              onChange={(e) => setActiveFilterStatus(e.target.value)}
-              className="h-9 px-3 text-xs border border-[#E2E5EF] hover:border-[#9AA5BE] rounded-lg bg-white text-[#181B27] focus:outline-none focus:border-[#5141FF] focus:ring-1 focus:ring-[#5141FF]/20 transition-colors cursor-pointer"
-            >
-              <option value="all">All Statuses</option>
-              <option value="Approved">Approved</option>
-              <option value="Submitted">Submitted (Pending Review)</option>
-              <option value="Draft">Draft</option>
-              <option value="Error">Flagged Error</option>
-              <option value="Sent Back">Sent Back</option>
-            </select>
+        </div>
+        <div className="px-4 sm:px-5 py-3 bg-[var(--surface-secondary)]/70 border-b border-[var(--border-subtle)]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-2xl">
+            <label className="flex items-center gap-2 min-w-0">
+              <span className="w-16 shrink-0 text-[11px] font-medium text-[var(--text-secondary)]">Scope</span>
+              <span className="relative flex-1 min-w-0">
+                <select aria-label="Filter by scope" value={scopeFilter} onChange={(event) => setScopeFilter(event.target.value as typeof scopeFilter)} className="block w-full h-9 appearance-none pl-3 pr-8 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
+                  <option value="all">All scopes</option><option value="Scope 1">Scope 1</option><option value="Scope 2">Scope 2</option><option value="Scope 3">Scope 3</option>
+                </select><ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
+              </span>
+            </label>
+            <label className="flex items-center gap-2 min-w-0">
+              <span className="w-16 shrink-0 text-[11px] font-medium text-[var(--text-secondary)]">Status</span>
+              <span className="relative flex-1 min-w-0">
+                <select aria-label="Filter by status" value={activeFilterStatus} onChange={(event) => setActiveFilterStatus(event.target.value)} className="block w-full h-9 appearance-none pl-3 pr-8 text-xs border border-[var(--border-default)] rounded-md bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-focus)]">
+                  <option value="all">All statuses</option><option value="attention">Needs attention</option><option value="Approved">Approved</option><option value="Submitted">Submitted</option><option value="Under Review">Under review</option><option value="Draft">Draft</option><option value="Error">Error</option><option value="Sent Back">Sent back</option>
+                </select><ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]" aria-hidden="true" />
+              </span>
+            </label>
           </div>
         </div>
 
-        {/* Activity Data Table */}
-        <section aria-label="Activity records ledger" className="glass-card-strong overflow-hidden shadow-2xs">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-[#F7F8FC]/80 border-b border-[#E2E5EF] text-[#62697C] normal-case">
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] normal-case">Record ID</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] normal-case">Date</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] normal-case">Facility</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] normal-case">Emission Source</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] text-left normal-case">Quantity</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] normal-case">Unit</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] text-left normal-case">Calculated tCO₂e</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] text-center normal-case">Evidence</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] normal-case">Audit Status</th>
-                  <th scope="col" className="py-3 px-4 font-semibold text-[#181B27] text-left normal-case">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#E2E5EF]/60">
-                {filteredRecords.map((record) => {
-                  const hasEvidence = record.evidenceFiles && record.evidenceFiles.length > 0;
-                  return (
-                    <tr
-                      key={record.id}
-                      onClick={() => handleRowClick(record)}
-                      className="hover:bg-[#F2F0FF]/30 transition-colors cursor-pointer group"
-                    >
-                      <td className="py-3 px-4 font-mono font-semibold text-[#5141FF]">
-                        {record.id}
-                      </td>
-                      <td className="py-3 px-4 text-[#62697C] font-mono">{record.date}</td>
-                      <td className="py-3 px-4 text-[#181B27] font-semibold">{record.siteName}</td>
-                      <td className="py-3 px-4">
-                        <div className="text-[#181B27] font-medium">{record.sourceName}</div>
-                        <span className="text-[10px] text-[#62697C] font-mono">{record.scope}</span>
-                      </td>
-                      <td className="py-3 px-4 text-left font-mono text-[#181B27] font-semibold">
-                        {record.quantity.toLocaleString()}
-                      </td>
-                      <td className="py-3 px-4 text-[#62697C] font-mono">{record.unit}</td>
-                      <td className="py-3 px-4 text-left font-mono text-[#181B27] font-bold">
-                        {record.emissions_tCO2e.toFixed(3)}
-                      </td>
-                      <td className="py-3 px-4 text-center">
-                        {hasEvidence ? (
-                          <span className="text-xs text-[#5141FF] font-semibold inline-flex items-center gap-1 bg-[#F2F0FF] px-2 py-0.5 rounded-full">
-                            <FileText className="w-3 h-3 text-[#5141FF]" />
-                            <span>{record.evidenceFiles.length} docs</span>
-                          </span>
-                        ) : (
-                          <span className="text-xs text-[#C52238] font-medium bg-[#FFF0F1] px-2 py-0.5 rounded-full">
-                            Missing
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-3 px-4">
-                        <StatusBadge
-                          status={
-                            record.status === 'Approved'
-                              ? 'Approved'
-                              : record.status === 'Submitted'
-                              ? 'Submitted'
-                              : record.status === 'Under Review'
-                              ? 'Under Review'
-                              : record.status === 'Draft'
-                              ? 'Draft'
-                              : record.status === 'Error' || record.status === 'Sent Back'
-                              ? 'Rejected'
-                              : 'Approved'
-                          }
-                          customLabel={record.status}
-                          size="sm"
-                        />
-                      </td>
-                      <td className="py-3 px-4 text-left">
-                        <span className="text-xs text-[#5141FF] group-hover:underline font-semibold inline-flex items-center gap-1">
-                          <span>Details</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[780px] text-left text-xs border-collapse">
+            <thead className="bg-[var(--bg-canvas)] border-b border-[var(--border-subtle)]">
+              <tr>
+                {[
+                  { field: 'id' as const, label: 'Record ID', align: 'left' },
+                  { field: 'source' as const, label: 'Activity', align: 'left' },
+                  { field: 'site' as const, label: 'Facility', align: 'left' },
+                  { field: 'quantity' as const, label: 'Quantity', align: 'right' },
+                  { field: 'emissions' as const, label: 'Emissions', align: 'right' },
+                  { field: null, label: 'Evidence', align: 'left' },
+                  { field: null, label: 'Status', align: 'left' },
+                ].map((column) => <th key={column.label} scope="col" className={`px-4 py-3 text-[10px] font-semibold uppercase tracking-wide text-[var(--text-secondary)] ${column.align === 'right' ? 'text-right' : ''}`}>
+                  {column.field ? <button type="button" onClick={() => toggleSort(column.field!)} className={`inline-flex items-center gap-1.5 ${column.align === 'right' ? 'ml-auto' : ''} hover:text-[var(--text-primary)]`} aria-label={`Sort by ${column.label}`}>
+                    {column.label}<ArrowUpDown className={`w-3 h-3 ${sortField === column.field ? 'text-[var(--action-primary)]' : 'text-[var(--text-tertiary)]'}`} aria-hidden="true" />
+                  </button> : column.label}
+                </th>)}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[var(--border-subtle)]">
+              {sortedRecords.map((record) => {
+                const hasEvidence = record.evidenceFiles.length > 0;
+                return <tr key={record.id} onClick={() => handleRowClick(record)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); handleRowClick(record); } }} tabIndex={0} role="button" aria-label={`Open activity record ${record.id}`} className="group cursor-pointer hover:bg-[var(--bg-canvas)] focus-visible:outline-none focus-visible:bg-[var(--brand-50)]">
+                  <td className="px-4 py-3.5"><span className="block font-mono font-semibold text-[var(--text-primary)]">{record.id}</span><span className="mt-1 block text-[10px] text-[var(--text-secondary)]">{record.date}</span></td>
+                  <td className="px-4 py-3.5"><span className="block font-medium text-[var(--text-primary)]">{record.sourceName}</span><span className="mt-1 inline-flex items-center gap-1.5 text-[10px] text-[var(--text-secondary)]"><span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: record.scope === 'Scope 1' ? 'var(--scope-1)' : record.scope === 'Scope 2' ? 'var(--scope-2)' : 'var(--scope-3)' }} />{record.scope}</span></td>
+                  <td className="px-4 py-3.5 text-[var(--text-primary)]">{record.siteName}</td>
+                  <td className="px-4 py-3.5 text-right font-mono tabular-nums text-[var(--text-primary)]">{record.quantity.toLocaleString()} <span className="text-[10px] text-[var(--text-secondary)]">{record.unit}</span></td>
+                  <td className="px-4 py-3.5 text-right"><span className="font-mono font-semibold tabular-nums text-[var(--text-primary)]">{record.emissions_tCO2e.toFixed(3)}</span><span className="block mt-1 text-[10px] text-[var(--text-secondary)]">tCO₂e</span></td>
+                  <td className="px-4 py-3.5">{hasEvidence ? <span className="inline-flex items-center gap-1.5 text-[var(--status-success)]"><FileText className="w-3.5 h-3.5" /><span>{record.evidenceFiles.length} attached</span></span> : <span className="inline-flex items-center gap-1.5 text-[var(--status-warning)]"><AlertCircle className="w-3.5 h-3.5" /><span>Missing</span></span>}</td>
+                  <td className="px-4 py-3.5"><StatusBadge status={record.status} size="sm" /></td>
+                </tr>;
+              })}
+              {!sortedRecords.length && <tr><td colSpan={7} className="px-4 py-12 text-center text-sm text-[var(--text-secondary)]">No activity records match these filters.</td></tr>}
+            </tbody>
+          </table>
+        </div>
+        <div className="px-4 py-3 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px] text-[var(--text-secondary)]">
+          <span>Showing {sortedRecords.length} of {records.length} records</span>
+          <span className="hidden sm:inline">Select a row to review its evidence and calculation trail</span>
+        </div>
+      </section>
+
     </div>
   );
 };

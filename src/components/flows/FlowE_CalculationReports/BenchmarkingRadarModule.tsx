@@ -425,19 +425,19 @@ export const BenchmarkingRadarModule: React.FC = () => {
         ]}
         title="Industry Decarbonization Radar"
         contextInfo={
-          <div className="flex items-center gap-2 text-xs text-[#4B5563]">
-            <span className="font-semibold text-[#181B27]">{activeSector.sectorName}</span>
+          <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+            <span className="font-semibold text-[var(--text-primary)]">{activeSector.sectorName}</span>
             <span>·</span>
             <span>{activeSector.peerCount} Peers</span>
             <span>·</span>
-            <span className="font-semibold text-[#0F6B48]">Rank #{activeSector.cohortRank}</span>
+            <span className="font-semibold text-[var(--status-success)]">Rank #{activeSector.cohortRank}</span>
           </div>
         }
         actions={
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={handleExportReport}
-              className="h-9 px-3.5 text-xs font-semibold text-[#4B5563] hover:text-[#5141FF] bg-white border border-[#E5E7EB] rounded-lg transition-all flex items-center gap-1.5 shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5141FF]"
+              className="h-9 px-3.5 text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--action-primary)] bg-white border border-[var(--border-default)] rounded-lg transition-all flex items-center gap-1.5 shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]"
               aria-label="Export benchmark scorecard to CSV"
             >
               <Download className="w-3.5 h-3.5" />
@@ -445,7 +445,7 @@ export const BenchmarkingRadarModule: React.FC = () => {
             </button>
             <button
               onClick={() => navigateToScreen('36_scenario_builder', 'FLOW_E')}
-              className="h-9 px-4 text-xs font-semibold text-white bg-[#5141FF] hover:bg-[#4232E8] rounded-lg transition-all flex items-center gap-1.5 shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5141FF]"
+              className="h-9 px-4 text-xs font-semibold text-white bg-[var(--action-primary)] hover:bg-[var(--action-primary-hover)] rounded-lg transition-all flex items-center gap-1.5 shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]"
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>What-If Simulator</span>
@@ -455,10 +455,10 @@ export const BenchmarkingRadarModule: React.FC = () => {
       />
 
       {/* Cohort Selector Bar */}
-      <section aria-labelledby="cohort-heading" className="bg-white border border-[#E5E7EB] rounded-xl p-3 md:p-3.5 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <section aria-labelledby="cohort-heading" className="bg-white border border-[var(--border-default)] rounded-xl p-3 md:p-3.5 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <Factory className="w-4 h-4 text-[#181B27] shrink-0" />
-          <span id="cohort-heading" className="text-xs font-bold text-[#171A1F] uppercase tracking-wider">
+          <Factory className="w-4 h-4 text-[var(--text-primary)] shrink-0" />
+          <span id="cohort-heading" className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
             Sector Cohort:
           </span>
           <div className="flex flex-wrap gap-1">
@@ -466,10 +466,10 @@ export const BenchmarkingRadarModule: React.FC = () => {
               <button
                 key={sec.sectorId}
                 onClick={() => setSelectedSectorKey(sec.sectorId)}
-                className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[#5141FF] ${
+                className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] ${
                   selectedSectorKey === sec.sectorId
-                    ? 'bg-[#5141FF] text-white shadow-2xs'
-                    : 'bg-[#F8F9FB] text-[#4B5563] hover:text-[#5141FF] hover:bg-[#F1F3F5] border border-[#E5E7EB]'
+                    ? 'bg-[var(--action-primary)] text-white shadow-2xs'
+                    : 'bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--action-primary)] hover:bg-[var(--bg-subtle)] border border-[var(--border-default)]'
                 }`}
               >
                 {sec.shortName}
@@ -478,54 +478,54 @@ export const BenchmarkingRadarModule: React.FC = () => {
           </div>
         </div>
 
-        <div className="text-[11px] text-[#4B5563]">
+        <div className="text-[11px] text-[var(--text-secondary)]">
           Source: {activeSector.dataSource}
         </div>
       </section>
 
       {/* KPI Cards */}
       <section aria-label="Cohort standing metrics" className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-3.5 shadow-2xs">
-          <div className="text-[11px] text-[#4B5563] font-medium">Decarbonization Percentile</div>
-          <div className="text-xl font-bold text-[#181B27] mt-1 font-mono flex items-center gap-1">
-            <Award className="w-4 h-4 text-[#D97706]" />
+        <div className="bg-white border border-[var(--border-default)] rounded-xl p-3.5 shadow-2xs">
+          <div className="text-[11px] text-[var(--text-secondary)] font-medium">Decarbonization Percentile</div>
+          <div className="text-xl font-bold text-[var(--text-primary)] mt-1 font-mono flex items-center gap-1">
+            <Award className="w-4 h-4 text-[var(--status-warning)]" />
             {activeSector.percentileOverall}th
           </div>
-          <div className="text-[10px] font-bold text-[#0F6B48]">Top Quartile (Q1)</div>
+          <div className="text-[10px] font-bold text-[var(--status-success)]">Top Quartile (Q1)</div>
         </div>
 
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-3.5 shadow-2xs">
-          <div className="text-[11px] text-[#4B5563] font-medium">Cohort Standing</div>
-          <div className="text-xl font-bold text-[#181B27] mt-1 font-mono">
-            #{activeSector.cohortRank} <span className="text-xs font-normal text-[#4B5563]">/ {activeSector.peerCount}</span>
+        <div className="bg-white border border-[var(--border-default)] rounded-xl p-3.5 shadow-2xs">
+          <div className="text-[11px] text-[var(--text-secondary)] font-medium">Cohort Standing</div>
+          <div className="text-xl font-bold text-[var(--text-primary)] mt-1 font-mono">
+            #{activeSector.cohortRank} <span className="text-xs font-normal text-[var(--text-secondary)]">/ {activeSector.peerCount}</span>
           </div>
-          <div className="text-[10px] text-[#4B5563]">In {activeSector.shortName} cohort</div>
+          <div className="text-[10px] text-[var(--text-secondary)]">In {activeSector.shortName} cohort</div>
         </div>
 
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-3.5 shadow-2xs">
-          <div className="text-[11px] text-[#4B5563] font-medium">Strongest Dimension</div>
-          <div className="text-sm font-bold text-[#0F6B48] mt-1 truncate">
+        <div className="bg-white border border-[var(--border-default)] rounded-xl p-3.5 shadow-2xs">
+          <div className="text-[11px] text-[var(--text-secondary)] font-medium">Strongest Dimension</div>
+          <div className="text-sm font-bold text-[var(--status-success)] mt-1 truncate">
             Audit Assurance
           </div>
-          <div className="text-[10px] text-[#4B5563]">94.2% (Top Decile)</div>
+          <div className="text-[10px] text-[var(--text-secondary)]">94.2% (Top Decile)</div>
         </div>
 
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-3.5 shadow-2xs">
-          <div className="text-[11px] text-[#4B5563] font-medium">Primary Opportunity Gap</div>
-          <div className="text-sm font-bold text-[#D97706] mt-1 truncate">
+        <div className="bg-white border border-[var(--border-default)] rounded-xl p-3.5 shadow-2xs">
+          <div className="text-[11px] text-[var(--text-secondary)] font-medium">Primary Opportunity Gap</div>
+          <div className="text-sm font-bold text-[var(--status-warning)] mt-1 truncate">
             Renewable Power %
           </div>
-          <div className="text-[10px] font-bold text-[#D97706]">63.6% gap to Leader</div>
+          <div className="text-[10px] font-bold text-[var(--status-warning)]">63.6% gap to Leader</div>
         </div>
       </section>
 
       {/* Main 2-Column Responsive Layout: Tablet and Desktop Optimized */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-5 items-start">
         {/* Left Column: Recharts Radar (7 cols on lg) */}
-        <div className="lg:col-span-7 bg-white border border-[#E5E7EB] rounded-xl p-4 md:p-5 shadow-2xs space-y-4">
-          <div className="flex items-center justify-between border-b border-[#F1F3F5] pb-2.5">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-[#171A1F] uppercase tracking-wider">
-              <Compass className="w-3.5 h-3.5 text-[#181B27]" />
+        <div className="lg:col-span-7 bg-white border border-[var(--border-default)] rounded-xl p-4 md:p-5 shadow-2xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
+              <Compass className="w-3.5 h-3.5 text-[var(--text-primary)]" />
               Comparative Radar (Scores 0–100)
             </div>
           </div>
@@ -533,17 +533,17 @@ export const BenchmarkingRadarModule: React.FC = () => {
           <div className="h-64 sm:h-72 md:h-80 lg:h-96 w-full flex items-center justify-center">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={radarChartData} margin={{ top: 15, right: 25, bottom: 15, left: 25 }}>
-                <PolarGrid stroke="#E5E7EB" />
+                <PolarGrid stroke="#D8D2DF" />
                 <PolarAngleAxis
                   dataKey="subject"
-                  tick={{ fill: '#171A1F', fontSize: 11, fontWeight: 600 }}
+                  tick={{ fill: '#15131A', fontSize: 11, fontWeight: 600 }}
                 />
-                <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#4B5563" fontSize={9} />
+                <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#667085" fontSize={9} />
                 <RechartsTooltip
                   formatter={(val: any, name: any) => [`${val} / 100`, name]}
                   contentStyle={{
                     backgroundColor: '#FFFFFF',
-                    borderColor: '#E5E7EB',
+                    borderColor: '#D8D2DF',
                     borderRadius: '8px',
                     fontSize: '11px',
                   }}
@@ -552,16 +552,16 @@ export const BenchmarkingRadarModule: React.FC = () => {
                 <Radar
                   name="Your Org"
                   dataKey="Your Org"
-                  stroke="#01153C"
-                  fill="#01153C"
+                  stroke="#5625B8"
+                  fill="#5625B8"
                   fillOpacity={0.35}
                   strokeWidth={2}
                 />
                 <Radar
                   name="Industry Avg"
                   dataKey="Industry Avg"
-                  stroke="#D97706"
-                  fill="#D97706"
+                  stroke="#9A4F00"
+                  fill="#9A4F00"
                   fillOpacity={0.12}
                   strokeWidth={1.5}
                   strokeDasharray="3 3"
@@ -569,8 +569,8 @@ export const BenchmarkingRadarModule: React.FC = () => {
                 <Radar
                   name="Sector Leader"
                   dataKey="Sector Leader"
-                  stroke="#0F6B48"
-                  fill="#0F6B48"
+                  stroke="#147A5A"
+                  fill="#147A5A"
                   fillOpacity={0.15}
                   strokeWidth={2}
                 />
@@ -579,8 +579,8 @@ export const BenchmarkingRadarModule: React.FC = () => {
           </div>
 
           {/* Dimension Selector Buttons */}
-          <div className="pt-2 border-t border-[#F1F3F5]">
-            <div className="text-[10px] font-bold text-[#4B5563] uppercase tracking-wider mb-1.5">
+          <div className="pt-2 border-t border-[var(--border-subtle)]">
+            <div className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1.5">
               Select Axis to Inspect:
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -590,16 +590,16 @@ export const BenchmarkingRadarModule: React.FC = () => {
                   <button
                     key={dim.id}
                     onClick={() => setSelectedDimensionId(dim.id)}
-                    className={`px-2.5 py-1 text-xs rounded-md transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[#5141FF] ${
+                    className={`px-2.5 py-1 text-xs rounded-md transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] ${
                       isSelected
-                        ? 'bg-[#5141FF] text-white font-semibold shadow-2xs'
-                        : 'bg-[#F8F9FB] text-[#171A1F] hover:bg-[#F1F3F5] border border-[#E5E7EB]'
+                        ? 'bg-[var(--action-primary)] text-white font-semibold shadow-2xs'
+                        : 'bg-[var(--bg-canvas)] text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-[var(--border-default)]'
                     }`}
                   >
                     <span>{dim.shortName}</span>
                     <span
                       className={`text-[10px] font-mono px-1 rounded ${
-                        isSelected ? 'bg-white/20 text-white' : 'bg-[#E5E7EB] text-[#4B5563]'
+                        isSelected ? 'bg-white/20 text-white' : 'bg-[var(--border-default)] text-[var(--text-secondary)]'
                       }`}
                     >
                       {dim.yourScore}
@@ -613,18 +613,18 @@ export const BenchmarkingRadarModule: React.FC = () => {
 
         {/* Right Column: Concise Dimension Detail (5 cols on lg) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="bg-white border border-[#E5E7EB] rounded-xl p-4 md:p-5 shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#F1F3F5] pb-2.5">
-              <span className="text-[10px] font-bold text-[#181B27] uppercase tracking-wider bg-[#F2F0FF] px-2 py-0.5 rounded">
+          <div className="bg-white border border-[var(--border-default)] rounded-xl p-4 md:p-5 shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+              <span className="text-[10px] font-bold text-[var(--text-primary)] uppercase tracking-wider bg-[var(--brand-50)] px-2 py-0.5 rounded">
                 {activeDimension.category}
               </span>
               <span
                 className={`text-[11px] font-bold px-2 py-0.5 rounded ${
                   activeDimension.quartile === 'Top 10%'
-                    ? 'bg-[#E8F8EE] text-[#0F6B48]'
+                    ? 'bg-[var(--status-success-bg)] text-[var(--status-success)]'
                     : activeDimension.quartile === 'Top 25%'
-                    ? 'bg-[#F2F0FF] text-[#5141FF]'
-                    : 'bg-[#FEF6EE] text-[#D97706]'
+                    ? 'bg-[var(--brand-50)] text-[var(--action-primary)]'
+                    : 'bg-[var(--status-warning-bg)] text-[var(--status-warning)]'
                 }`}
               >
                 {activeDimension.quartile}
@@ -632,35 +632,35 @@ export const BenchmarkingRadarModule: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-[#171A1F]">
+              <h3 className="text-sm font-bold text-[var(--text-primary)]">
                 {activeDimension.shortName}
               </h3>
             </div>
 
             {/* 3 Metrics Strip */}
             <div className="grid grid-cols-3 gap-2">
-              <div className="p-2.5 bg-[#F2F0FF] rounded-lg">
-                <div className="text-[10px] font-bold text-[#181B27]">Your Org</div>
-                <div className="text-base font-bold text-[#181B27] mt-0.5 font-mono">
+              <div className="p-2.5 bg-[var(--brand-50)] rounded-lg">
+                <div className="text-[10px] font-bold text-[var(--text-primary)]">Your Org</div>
+                <div className="text-base font-bold text-[var(--text-primary)] mt-0.5 font-mono">
                   {activeDimension.yourRawValue}
                 </div>
-                <div className="text-[10px] text-[#4B5563]">{activeDimension.unit}</div>
+                <div className="text-[10px] text-[var(--text-secondary)]">{activeDimension.unit}</div>
               </div>
 
-              <div className="p-2.5 bg-[#F8F9FB] border border-[#E5E7EB] rounded-lg">
-                <div className="text-[10px] font-bold text-[#4B5563]">Peer Avg</div>
-                <div className="text-base font-bold text-[#171A1F] mt-0.5 font-mono">
+              <div className="p-2.5 bg-[var(--bg-canvas)] border border-[var(--border-default)] rounded-lg">
+                <div className="text-[10px] font-bold text-[var(--text-secondary)]">Peer Avg</div>
+                <div className="text-base font-bold text-[var(--text-primary)] mt-0.5 font-mono">
                   {activeDimension.peerAverageRaw}
                 </div>
-                <div className="text-[10px] text-[#4B5563]">{activeDimension.unit}</div>
+                <div className="text-[10px] text-[var(--text-secondary)]">{activeDimension.unit}</div>
               </div>
 
-              <div className="p-2.5 bg-[#E8F8EE] rounded-lg">
-                <div className="text-[10px] font-bold text-[#0F6B48]">Leader</div>
-                <div className="text-base font-bold text-[#0F6B48] mt-0.5 font-mono">
+              <div className="p-2.5 bg-[var(--status-success-bg)] rounded-lg">
+                <div className="text-[10px] font-bold text-[var(--status-success)]">Leader</div>
+                <div className="text-base font-bold text-[var(--status-success)] mt-0.5 font-mono">
                   {activeDimension.leaderRaw}
                 </div>
-                <div className="text-[10px] text-[#0F6B48]">{activeDimension.unit}</div>
+                <div className="text-[10px] text-[var(--status-success)]">{activeDimension.unit}</div>
               </div>
             </div>
 
@@ -668,12 +668,12 @@ export const BenchmarkingRadarModule: React.FC = () => {
             <div className="space-y-2 pt-1">
               <div className="space-y-1">
                 <div className="flex justify-between text-[11px]">
-                  <span className="text-[#5141FF] font-semibold">Your Org</span>
-                  <span className="font-mono font-bold text-[#181B27]">{activeDimension.yourScore}</span>
+                  <span className="text-[var(--action-primary)] font-semibold">Your Org</span>
+                  <span className="font-mono font-bold text-[var(--text-primary)]">{activeDimension.yourScore}</span>
                 </div>
-                <div className="w-full bg-[#E5E7EB] h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-[var(--border-default)] h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-[#5141FF] h-full rounded-full transition-all"
+                    className="bg-[var(--action-primary)] h-full rounded-full transition-all"
                     style={{ width: `${activeDimension.yourScore}%` }}
                   />
                 </div>
@@ -681,12 +681,12 @@ export const BenchmarkingRadarModule: React.FC = () => {
 
               <div className="space-y-1">
                 <div className="flex justify-between text-[11px]">
-                  <span className="text-[#D97706] font-semibold">Peer Avg</span>
-                  <span className="font-mono font-bold text-[#D97706]">{activeDimension.industryAverage}</span>
+                  <span className="text-[var(--status-warning)] font-semibold">Peer Avg</span>
+                  <span className="font-mono font-bold text-[var(--status-warning)]">{activeDimension.industryAverage}</span>
                 </div>
-                <div className="w-full bg-[#E5E7EB] h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-[var(--border-default)] h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-[#D97706] h-full rounded-full transition-all"
+                    className="bg-[var(--status-warning)] h-full rounded-full transition-all"
                     style={{ width: `${activeDimension.industryAverage}%` }}
                   />
                 </div>
@@ -694,12 +694,12 @@ export const BenchmarkingRadarModule: React.FC = () => {
 
               <div className="space-y-1">
                 <div className="flex justify-between text-[11px]">
-                  <span className="text-[#0F6B48] font-semibold">Leader</span>
-                  <span className="font-mono font-bold text-[#0F6B48]">{activeDimension.topDecileLeader}</span>
+                  <span className="text-[var(--status-success)] font-semibold">Leader</span>
+                  <span className="font-mono font-bold text-[var(--status-success)]">{activeDimension.topDecileLeader}</span>
                 </div>
-                <div className="w-full bg-[#E5E7EB] h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-[var(--border-default)] h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-[#0F6B48] h-full rounded-full transition-all"
+                    className="bg-[var(--status-success)] h-full rounded-full transition-all"
                     style={{ width: `${activeDimension.topDecileLeader}%` }}
                   />
                 </div>
@@ -707,14 +707,14 @@ export const BenchmarkingRadarModule: React.FC = () => {
             </div>
 
             {/* Direct Action Card */}
-            <div className="p-3 bg-[#F8F9FB] border border-[#E5E7EB] rounded-lg space-y-1 text-xs">
-              <div className="font-semibold text-[#181B27]">{activeDimension.gapToLeader}</div>
-              <div className="text-[#4B5563]">{activeDimension.recommendation}</div>
+            <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-default)] rounded-lg space-y-1 text-xs">
+              <div className="font-semibold text-[var(--text-primary)]">{activeDimension.gapToLeader}</div>
+              <div className="text-[var(--text-secondary)]">{activeDimension.recommendation}</div>
             </div>
 
             <button
               onClick={() => navigateToScreen('36_scenario_builder', 'FLOW_E')}
-              className="w-full py-2.5 px-3 text-xs font-bold text-white bg-[#5141FF] hover:bg-[#4232E8] rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-2xs focus-visible:ring-2 focus-visible:ring-[#5141FF]"
+              className="w-full py-2.5 px-3 text-xs font-bold text-white bg-[var(--action-primary)] hover:bg-[var(--action-primary-hover)] rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-2xs focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]"
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>Simulate Closing Gap in What-If Builder</span>
@@ -724,17 +724,17 @@ export const BenchmarkingRadarModule: React.FC = () => {
       </div>
 
       {/* Concise Scorecard Table */}
-      <section aria-labelledby="scorecard-heading" className="bg-white border border-[#E5E7EB] rounded-xl p-4 md:p-5 shadow-2xs space-y-3">
-        <div className="flex items-center justify-between border-b border-[#F1F3F5] pb-2.5">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-[#171A1F] uppercase tracking-wider">
-            <BarChart2 className="w-3.5 h-3.5 text-[#181B27]" />
-            <h2 id="scorecard-heading" className="text-xs font-bold text-[#171A1F] uppercase tracking-wider">
+      <section aria-labelledby="scorecard-heading" className="bg-white border border-[var(--border-default)] rounded-xl p-4 md:p-5 shadow-2xs space-y-3">
+        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
+            <BarChart2 className="w-3.5 h-3.5 text-[var(--text-primary)]" />
+            <h2 id="scorecard-heading" className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
               Complete Benchmark Scorecard
             </h2>
           </div>
           <button
             onClick={handleExportReport}
-            className="text-xs font-semibold text-[#5141FF] hover:underline flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-[#5141FF]"
+            className="text-xs font-semibold text-[var(--action-primary)] hover:underline flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]"
           >
             <Download className="w-3 h-3" />
             <span>Download CSV</span>
@@ -743,7 +743,7 @@ export const BenchmarkingRadarModule: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-[#F8F9FB] text-[#4B5563] font-semibold uppercase tracking-wider border-y border-[#E5E7EB]">
+            <thead className="bg-[var(--bg-canvas)] text-[var(--text-secondary)] font-semibold uppercase tracking-wider border-y border-[var(--border-default)]">
               <tr>
                 <th className="py-2.5 px-3">Metric</th>
                 <th className="py-2.5 px-3">Category</th>
@@ -754,7 +754,7 @@ export const BenchmarkingRadarModule: React.FC = () => {
                 <th className="py-2.5 px-3">Standing</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5E7EB]">
+            <tbody className="divide-y divide-[#D8D2DF]">
               {activeSector.dimensions.map((dim) => {
                 const isSelected = selectedDimensionId === dim.id;
                 return (
@@ -762,31 +762,31 @@ export const BenchmarkingRadarModule: React.FC = () => {
                     key={dim.id}
                     onClick={() => setSelectedDimensionId(dim.id)}
                     className={`cursor-pointer transition-colors ${
-                      isSelected ? 'bg-[#F2F0FF]/60 font-medium' : 'hover:bg-[#FAFAFB]'
+                      isSelected ? 'bg-[var(--brand-50)]/60 font-medium' : 'hover:bg-[var(--surface-secondary)]'
                     }`}
                   >
-                    <td className="py-2.5 px-3 font-semibold text-[#171A1F]">{dim.shortName}</td>
-                    <td className="py-2.5 px-3 text-[#4B5563]">{dim.category}</td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-[#181B27]">
+                    <td className="py-2.5 px-3 font-semibold text-[var(--text-primary)]">{dim.shortName}</td>
+                    <td className="py-2.5 px-3 text-[var(--text-secondary)]">{dim.category}</td>
+                    <td className="py-2.5 px-3 font-mono font-bold text-[var(--text-primary)]">
                       {dim.yourRawValue} {dim.unit}
                     </td>
-                    <td className="py-2.5 px-3 font-mono text-[#4B5563]">
+                    <td className="py-2.5 px-3 font-mono text-[var(--text-secondary)]">
                       {dim.peerAverageRaw} {dim.unit}
                     </td>
-                    <td className="py-2.5 px-3 font-mono font-semibold text-[#0F6B48]">
+                    <td className="py-2.5 px-3 font-mono font-semibold text-[var(--status-success)]">
                       {dim.leaderRaw} {dim.unit}
                     </td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-[#181B27]">
+                    <td className="py-2.5 px-3 font-mono font-bold text-[var(--text-primary)]">
                       {dim.yourScore} / 100
                     </td>
                     <td className="py-2.5 px-3">
                       <span
                         className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                           dim.quartile === 'Top 10%'
-                            ? 'bg-[#E8F8EE] text-[#0F6B48]'
+                            ? 'bg-[var(--status-success-bg)] text-[var(--status-success)]'
                             : dim.quartile === 'Top 25%'
-                            ? 'bg-[#F2F0FF] text-[#5141FF]'
-                            : 'bg-[#FEF6EE] text-[#D97706]'
+                            ? 'bg-[var(--brand-50)] text-[var(--action-primary)]'
+                            : 'bg-[var(--status-warning-bg)] text-[var(--status-warning)]'
                         }`}
                       >
                         {dim.quartile}

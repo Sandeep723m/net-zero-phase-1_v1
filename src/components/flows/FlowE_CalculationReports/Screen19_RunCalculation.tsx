@@ -137,22 +137,22 @@ export const Screen19_RunCalculation: React.FC = () => {
           <button
             type="button"
             onClick={() => navigateToScreen('20_results_summary', 'FLOW_E')}
-            className="px-3.5 py-2 text-xs font-semibold text-[#17181A] bg-white border border-[#E5E7EB] rounded-lg hover:bg-[#FAFAFB] hover:border-[#D5D8DD] shadow-2xs inline-flex items-center space-x-1.5 transition-all"
+            className="px-3.5 py-2 text-xs font-semibold text-[var(--text-primary)] bg-white border border-[var(--border-default)] rounded-lg hover:bg-[var(--surface-secondary)] hover:border-[var(--border-default)] shadow-2xs inline-flex items-center space-x-1.5 transition-all"
           >
-            <ArrowLeft className="w-3.5 h-3.5 text-[#5F6368]" />
+            <ArrowLeft className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
             <span>Back to Ledger</span>
           </button>
         }
       />
 
       {/* 6-Step Engine Workflow Stepper Visualizer */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl p-4 sm:p-5 shadow-2xs space-y-3">
-        <div className="flex items-center justify-between border-b border-[#F1F3F5] pb-2.5">
-          <span className="text-xs font-bold text-[#171A1F] uppercase tracking-wider flex items-center gap-1.5">
-            <Calculator className="w-4 h-4 text-[#181B27]" />
+      <div className="bg-white border border-[var(--border-default)] rounded-xl p-4 sm:p-5 shadow-2xs space-y-3">
+        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+          <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider flex items-center gap-1.5">
+            <Calculator className="w-4 h-4 text-[var(--text-primary)]" />
             Calculation Workflow (Steps 1–6)
           </span>
-          <span className="text-[11px] font-mono text-[#5141FF] bg-[#F2F0FF] px-2 py-0.5 rounded font-semibold">
+          <span className="text-[11px] font-mono text-[var(--action-primary)] bg-[var(--brand-50)] px-2 py-0.5 rounded font-semibold">
             Deterministic &middot; Auditable Lineage
           </span>
         </div>
@@ -168,22 +168,22 @@ export const Screen19_RunCalculation: React.FC = () => {
                 key={idx}
                 className={`p-2.5 rounded-lg border transition-all ${
                   isCurrent
-                    ? 'bg-[#5141FF] text-white border-[#5141FF] ring-2 ring-[#01153C]/20'
+                    ? 'bg-[var(--action-primary)] text-white border-[var(--action-primary)] ring-2 ring-[#5625B8]/20'
                     : isCompleted
-                    ? 'bg-[#F8F9FB] text-[#171A1F] border-[#E5E7EB]'
-                    : 'bg-white text-[#8A8F98] border-[#E5E7EB]'
+                    ? 'bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-default)]'
+                    : 'bg-white text-[var(--text-tertiary)] border-[var(--border-default)]'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className={`text-[10px] font-bold ${isCurrent ? 'text-[#FFD166]' : 'text-[#181B27]'}`}>
+                  <span className={`text-[10px] font-bold ${isCurrent ? 'text-[var(--status-warning)]' : 'text-[var(--text-primary)]'}`}>
                     Step {stepNum}
                   </span>
                   {isCurrent ? (
                     <RefreshCw className="w-3 h-3 animate-spin text-white" />
                   ) : isCompleted ? (
-                    <CheckCircle2 className="w-3 h-3 text-[#0F6B48]" />
+                    <CheckCircle2 className="w-3 h-3 text-[var(--status-success)]" />
                   ) : (
-                    <span className="w-2 h-2 rounded-full bg-[#E5E7EB]" />
+                    <span className="w-2 h-2 rounded-full bg-[var(--border-default)]" />
                   )}
                 </div>
                 <div className="font-semibold text-[11px] truncate">{step.title.split('. ')[1]}</div>
@@ -195,10 +195,10 @@ export const Screen19_RunCalculation: React.FC = () => {
 
       {/* Main Execution Setup Form */}
       <form onSubmit={handleRunCalculation} className="space-y-6">
-        <div className="p-6 bg-white border border-[#E5E7EB] rounded-xl shadow-2xs space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#F1F3F5]">
-            <h2 className="text-sm font-semibold text-[#17181A] font-sans">Calculation Configuration & Boundaries</h2>
-            <span className="text-[11px] font-data font-semibold text-[#181B27] bg-[#5141FF]/10 px-2.5 py-1 rounded-full">
+        <div className="p-6 bg-white border border-[var(--border-default)] rounded-xl shadow-2xs space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-[var(--border-subtle)]">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] font-sans">Calculation Configuration & Boundaries</h2>
+            <span className="text-[11px] font-data font-semibold text-[var(--text-primary)] bg-[var(--action-primary)]/10 px-2.5 py-1 rounded-full">
               Consolidation: Operational Control
             </span>
           </div>
@@ -206,30 +206,30 @@ export const Screen19_RunCalculation: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Reporting Period Field */}
             <div>
-              <label className="block text-xs font-semibold text-[#5F6368] uppercase tracking-wider font-sans mb-1.5">
-                Reporting period <span className="text-[#B42318]">*</span>
+              <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider font-sans mb-1.5">
+                Reporting period <span className="text-[var(--status-error)]">*</span>
               </label>
               <div className="relative">
                 <input
                   type="text"
                   readOnly
                   value={`${period} (Apr 2025 – Mar 2026)`}
-                  className="w-full px-3.5 py-2.5 text-xs border border-[#E5E7EB] rounded-lg bg-[#FAFAFB] text-[#17181A] font-medium font-sans cursor-not-allowed"
+                  className="w-full px-3.5 py-2.5 text-xs border border-[var(--border-default)] rounded-lg bg-[var(--surface-secondary)] text-[var(--text-primary)] font-medium font-sans cursor-not-allowed"
                 />
-                <Calendar className="w-4 h-4 text-[#8A8F98] absolute right-3.5 top-3" />
+                <Calendar className="w-4 h-4 text-[var(--text-tertiary)] absolute right-3.5 top-3" />
               </div>
             </div>
 
             {/* Boundary Selection */}
             <div>
-              <label className="block text-xs font-semibold text-[#5F6368] uppercase tracking-wider font-sans mb-1.5">
-                Organizational Boundary <span className="text-[#B42318]">*</span>
+              <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider font-sans mb-1.5">
+                Organizational Boundary <span className="text-[var(--status-error)]">*</span>
               </label>
               <select
                 value={boundary}
                 disabled={isCalculating}
                 onChange={(e) => setBoundary(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] font-sans focus:outline-none focus:border-[#5141FF]"
+                className="w-full px-3.5 py-2.5 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] font-sans focus:outline-none focus:border-[var(--action-primary)]"
               >
                 <option value="All configured sites (3)">
                   All configured sites (3) — Chennai, Pune, Hyderabad
@@ -242,14 +242,14 @@ export const Screen19_RunCalculation: React.FC = () => {
 
             {/* GWP Standard */}
             <div>
-              <label className="block text-xs font-semibold text-[#5F6368] uppercase tracking-wider font-sans mb-1.5">
-                GWP 100-Year Standard <span className="text-[#B42318]">*</span>
+              <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider font-sans mb-1.5">
+                GWP 100-Year Standard <span className="text-[var(--status-error)]">*</span>
               </label>
               <select
                 value={gwpStandard}
                 disabled={isCalculating}
                 onChange={(e) => setGwpStandard(e.target.value as 'AR5' | 'AR6')}
-                className="w-full px-3.5 py-2.5 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] font-sans focus:outline-none focus:border-[#5141FF]"
+                className="w-full px-3.5 py-2.5 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] font-sans focus:outline-none focus:border-[var(--action-primary)]"
               >
                 <option value="AR5">IPCC AR5 (CH4: 28, N2O: 265) — Corporate Default</option>
                 <option value="AR6">IPCC AR6 (CH4: 27.9, N2O: 273) — Latest Refinement</option>
@@ -260,10 +260,10 @@ export const Screen19_RunCalculation: React.FC = () => {
           {/* Core Calculation Formulas Selection (C-01 to C-12) */}
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-semibold text-[#5F6368] uppercase tracking-wider font-sans">
+              <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider font-sans">
                 Emissions Modules & Formulas to Execute (TC-DOM-002a Sheet 06)
               </label>
-              <span className="text-[11px] text-[#5F6368]">
+              <span className="text-[11px] text-[var(--text-secondary)]">
                 {Object.values(selectedCalculations).filter(Boolean).length} modules active
               </span>
             </div>
@@ -272,21 +272,21 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-01 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-01'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-01'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-01']}
                   onChange={() => toggleCalculation('C-01')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F] flex items-center gap-1.5">
-                    <Flame className="w-3.5 h-3.5 text-[#FB3256]" />
+                  <div className="font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                    <Flame className="w-3.5 h-3.5 text-[var(--status-warning)]" />
                     <span>C-01: Stationary Fossil</span>
                   </div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Coal, furnace oil, diesel generators, boilers. Multi-gas CO2, CH4, N2O.
                   </div>
                 </div>
@@ -295,21 +295,21 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-06 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-06'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-06'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-06']}
                   onChange={() => toggleCalculation('C-06')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F] flex items-center gap-1.5">
-                    <Zap className="w-3.5 h-3.5 text-[#181B27]" />
+                  <div className="font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-[var(--text-primary)]" />
                     <span>C-06: Scope 2 Grid (Location)</span>
                   </div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Purchased electricity mapped to regional CEA Baseline v19 (0.708 kg/kWh).
                   </div>
                 </div>
@@ -318,21 +318,21 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-05 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-05'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-05'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-05']}
                   onChange={() => toggleCalculation('C-05')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F] flex items-center gap-1.5">
-                    <Layers className="w-3.5 h-3.5 text-[#5144C9]" />
+                  <div className="font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-[var(--action-primary)]" />
                     <span>C-05: Refrigerants & F-Gas</span>
                   </div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Chiller top-ups, HVAC leakage (HFC-134a, R-410A) with GWP conversion.
                   </div>
                 </div>
@@ -341,21 +341,21 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-03 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-03'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-03'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-03']}
                   onChange={() => toggleCalculation('C-03')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F] flex items-center gap-1.5">
-                    <Truck className="w-3.5 h-3.5 text-[#D97706]" />
+                  <div className="font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                    <Truck className="w-3.5 h-3.5 text-[var(--status-warning)]" />
                     <span>C-03: Mobile Combustion</span>
                   </div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Logistics trucks, corporate fleet diesel with density normalization.
                   </div>
                 </div>
@@ -364,18 +364,18 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-07 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-07'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-07'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-07']}
                   onChange={() => toggleCalculation('C-07')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F]">C-07: Scope 2 (Market-Based)</div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="font-bold text-[var(--text-primary)]">C-07: Scope 2 (Market-Based)</div>
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Contractual renewable PPA accounting + residual mix factor.
                   </div>
                 </div>
@@ -384,21 +384,21 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-02 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-02'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-02'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-02']}
                   onChange={() => toggleCalculation('C-02')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F] flex items-center gap-1.5">
-                    <Leaf className="w-3.5 h-3.5 text-[#0F6B48]" />
+                  <div className="font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                    <Leaf className="w-3.5 h-3.5 text-[var(--status-success)]" />
                     <span>C-02: Biomass Combustion</span>
                   </div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Rice husk / bagasse biogenic CO2 segregated per GHG Protocol.
                   </div>
                 </div>
@@ -407,18 +407,18 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-04 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-04'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-04'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-04']}
                   onChange={() => toggleCalculation('C-04')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F]">C-04: Process Mineral</div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="font-bold text-[var(--text-primary)]">C-04: Process Mineral</div>
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Limestone calcination stoichiometric assay yield (CaCO3).
                   </div>
                 </div>
@@ -427,18 +427,18 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-08 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-08'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-08'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-08']}
                   onChange={() => toggleCalculation('C-08')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F]">C-08: Removals & CCUS</div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="font-bold text-[var(--text-primary)]">C-08: Removals & CCUS</div>
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Metered geological storage permanence deduction balance.
                   </div>
                 </div>
@@ -447,18 +447,18 @@ export const Screen19_RunCalculation: React.FC = () => {
               {/* C-11 */}
               <label
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 cursor-pointer transition-colors ${
-                  selectedCalculations['C-11'] ? 'bg-[#F2F0FF] border-[#5141FF]/30' : 'bg-white border-[#E5E7EB]'
+                  selectedCalculations['C-11'] ? 'bg-[var(--brand-50)] border-[var(--action-primary)]/30' : 'bg-white border-[var(--border-default)]'
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={selectedCalculations['C-11']}
                   onChange={() => toggleCalculation('C-11')}
-                  className="mt-0.5 rounded text-[#181B27] focus:ring-[#5141FF]"
+                  className="mt-0.5 rounded text-[var(--text-primary)] focus:ring-[var(--border-focus)]"
                 />
                 <div>
-                  <div className="font-bold text-[#171A1F]">C-11: Product Footprint (A1–A3)</div>
-                  <div className="text-[11px] text-[#5F6368] mt-0.5 leading-relaxed">
+                  <div className="font-bold text-[var(--text-primary)]">C-11: Product Footprint (A1–A3)</div>
+                  <div className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
                     Cradle-to-gate intensity per declared unit for CBAM & EPD.
                   </div>
                 </div>
@@ -467,12 +467,12 @@ export const Screen19_RunCalculation: React.FC = () => {
           </div>
 
           {/* Pre-Flight Validation Verification Banner */}
-          <div className="p-4 bg-[#F2F0FF] border border-[#E5E0FF] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center space-x-2.5 text-[#181B27]">
-              <ShieldCheck className="w-5 h-5 shrink-0 text-[#0F6B48]" />
+          <div className="p-4 bg-[var(--brand-50)] border border-[var(--brand-100)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div className="flex items-center space-x-2.5 text-[var(--text-primary)]">
+              <ShieldCheck className="w-5 h-5 shrink-0 text-[var(--status-success)]" />
               <div>
                 <strong className="font-semibold">Pre-Flight Validation Check: Passed (0 Blockers)</strong>
-                <p className="text-[11px] text-[#5F6368] mt-0.5">
+                <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
                   All active units normalized &middot; Liquid fuel densities confirmed &middot; Factor vintages frozen for {period}.
                 </p>
               </div>
@@ -486,7 +486,7 @@ export const Screen19_RunCalculation: React.FC = () => {
           <button
             type="button"
             onClick={() => navigateToScreen('20_results_summary', 'FLOW_E')}
-            className="px-4 py-2 bg-white border border-[#E5E7EB] hover:bg-[#FAFAFB] text-xs font-semibold text-[#17181A] rounded-lg transition-colors shadow-2xs"
+            className="px-4 py-2 bg-white border border-[var(--border-default)] hover:bg-[var(--surface-secondary)] text-xs font-semibold text-[var(--text-primary)] rounded-lg transition-colors shadow-2xs"
           >
             Cancel
           </button>
@@ -495,7 +495,7 @@ export const Screen19_RunCalculation: React.FC = () => {
             id="btn-trigger-run-calculation"
             type="submit"
             disabled={isCalculating}
-            className="px-6 py-2.5 bg-[#5141FF] hover:bg-[#4232E8] text-white text-xs font-semibold rounded-lg transition-colors flex items-center space-x-2 shadow-sm disabled:opacity-50"
+            className="px-6 py-2.5 bg-[var(--action-primary)] hover:bg-[var(--action-primary-hover)] text-white text-xs font-semibold rounded-lg transition-colors flex items-center space-x-2 shadow-sm disabled:opacity-50"
           >
             {isCalculating ? (
               <>

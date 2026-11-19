@@ -138,17 +138,17 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
   return (
     <div id="screen-32-evidence-trace-view" className="w-full space-y-6">
       {/* Verifier Read-Only Header Bar */}
-      <div className="bg-[#17181A] text-white px-4 py-2.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2 border border-[#2D3339]">
+      <div className="bg-[var(--text-primary)] text-white px-4 py-2.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2 border border-[#2D3339]">
         <div className="flex items-center space-x-2">
-          <ShieldCheck className="w-4 h-4 text-[#9E77ED]" />
+          <ShieldCheck className="w-4 h-4 text-[var(--color-brand-violet-300)]" />
           <span className="font-semibold text-white">Verifier Trace View</span>
-          <span className="text-[#8A8F98]">·</span>
-          <span className="text-[#D9DDE3]">Read-Only Lineage</span>
+          <span className="text-[var(--text-tertiary)]">·</span>
+          <span className="text-[#D8D2DF]">Read-Only Lineage</span>
         </div>
-        <div className="flex items-center space-x-3 text-[11px] text-[#A2A9B4]">
+        <div className="flex items-center space-x-3 text-[11px] text-[var(--text-tertiary)]">
           <span>Lead Verifier: Dr. V. Raman</span>
-          <span className="text-[#8A8F98]">·</span>
-          <span className="text-[#9E77ED] font-semibold">ISO 14064-3 Lineage</span>
+          <span className="text-[var(--text-tertiary)]">·</span>
+          <span className="text-[var(--color-brand-violet-300)] font-semibold">ISO 14064-3 Lineage</span>
         </div>
       </div>
 
@@ -167,7 +167,7 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
               onClick={handleDownloadEvidence}
               className="enterprise-btn-secondary h-9 px-3 text-xs inline-flex items-center space-x-1.5 font-semibold rounded-xl"
             >
-              <Download className="w-3.5 h-3.5 text-[#5F6368]" />
+              <Download className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
               <span>Download Evidence</span>
             </button>
 
@@ -183,76 +183,76 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
       />
 
       {/* Trace Lineage Chain */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-4 shadow-xs">
-        <div className="text-xs font-bold text-[#181B27] uppercase tracking-wider mb-3">
+      <div className="bg-white border border-[var(--border-default)] rounded-2xl p-4 shadow-xs">
+        <div className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider mb-3">
           Emission Lineage Trace
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {/* 1. Scope Total */}
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB]">
-            <div className="text-[10px] uppercase text-[#8A8F98] tracking-wider font-semibold">
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)]">
+            <div className="text-[10px] uppercase text-[var(--text-tertiary)] tracking-wider font-semibold">
               1. Scope Total
             </div>
-            <div className="text-xs font-semibold text-[#17181A] mt-1">{traceLineage.scope}</div>
-            <div className="text-sm text-[#181B27] mt-0.5 font-bold">
+            <div className="text-xs font-semibold text-[var(--text-primary)] mt-1">{traceLineage.scope}</div>
+            <div className="text-sm text-[var(--text-primary)] mt-0.5 font-bold">
               {traceLineage.scopeTotal}
             </div>
           </div>
 
           {/* 2. Category Total */}
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB]">
-            <div className="text-[10px] uppercase text-[#8A8F98] tracking-wider font-semibold">
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)]">
+            <div className="text-[10px] uppercase text-[var(--text-tertiary)] tracking-wider font-semibold">
               2. Category Total
             </div>
-            <div className="text-xs font-semibold text-[#17181A] mt-1">{traceLineage.category}</div>
-            <div className="text-sm text-[#181B27] mt-0.5 font-bold">
+            <div className="text-xs font-semibold text-[var(--text-primary)] mt-1">{traceLineage.category}</div>
+            <div className="text-sm text-[var(--text-primary)] mt-0.5 font-bold">
               {traceLineage.categoryTotal}
             </div>
           </div>
 
           {/* 3. Site Total */}
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB]">
-            <div className="text-[10px] uppercase text-[#8A8F98] tracking-wider font-semibold">
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)]">
+            <div className="text-[10px] uppercase text-[var(--text-tertiary)] tracking-wider font-semibold">
               3. Site Allocation
             </div>
-            <div className="text-xs font-semibold text-[#17181A] mt-1">{traceLineage.site}</div>
-            <div className="text-sm text-[#181B27] mt-0.5 font-bold">
+            <div className="text-xs font-semibold text-[var(--text-primary)] mt-1">{traceLineage.site}</div>
+            <div className="text-sm text-[var(--text-primary)] mt-0.5 font-bold">
               {traceLineage.siteTotal}
             </div>
           </div>
 
           {/* 4. Activity Row */}
-          <div className="p-3 bg-[#5141FF]/5 rounded-xl border border-[#5141FF]/30">
-            <div className="text-[10px] uppercase text-[#181B27] tracking-wider font-bold">
+          <div className="p-3 bg-[var(--action-primary)]/5 rounded-xl border border-[var(--action-primary)]/30">
+            <div className="text-[10px] uppercase text-[var(--text-primary)] tracking-wider font-bold">
               4. Active Row
             </div>
-            <div className="text-xs font-semibold text-[#17181A] mt-1">{selectedRecord.rowRef}</div>
-            <div className="text-sm font-bold text-[#17181A] mt-0.5">
+            <div className="text-xs font-semibold text-[var(--text-primary)] mt-1">{selectedRecord.rowRef}</div>
+            <div className="text-sm font-bold text-[var(--text-primary)] mt-0.5">
               {selectedRecord.quantity.toLocaleString()} {selectedRecord.unit}
             </div>
           </div>
 
           {/* 5. Emission Factor */}
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB]">
-            <div className="text-[10px] uppercase text-[#8A8F98] tracking-wider font-semibold">
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)]">
+            <div className="text-[10px] uppercase text-[var(--text-tertiary)] tracking-wider font-semibold">
               5. Emission Factor
             </div>
-            <div className="text-xs font-semibold text-[#17181A] mt-1">CEA India v19</div>
-            <div className="text-sm font-bold text-[#027A48] mt-0.5">
+            <div className="text-xs font-semibold text-[var(--text-primary)] mt-1">CEA India v19</div>
+            <div className="text-sm font-bold text-[var(--status-success)] mt-0.5">
               {selectedRecord.factorValue} kg/kWh
             </div>
           </div>
 
           {/* 6. Primary Evidence */}
-          <div className="p-3 bg-[#FAFAFB] rounded-xl border border-[#E5E7EB]">
-            <div className="text-[10px] uppercase text-[#8A8F98] tracking-wider font-semibold">
+          <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)]">
+            <div className="text-[10px] uppercase text-[var(--text-tertiary)] tracking-wider font-semibold">
               6. Source Document
             </div>
-            <div className="text-xs font-semibold text-[#17181A] mt-1 truncate" title={selectedRecord.evidenceFilename}>
+            <div className="text-xs font-semibold text-[var(--text-primary)] mt-1 truncate" title={selectedRecord.evidenceFilename}>
               {selectedRecord.evidenceFilename}
             </div>
-            <div className="text-xs text-[#027A48] font-semibold mt-0.5">
+            <div className="text-xs text-[var(--status-success)] font-semibold mt-0.5">
               {selectedRecord.fileSize} · Verified
             </div>
           </div>
@@ -262,18 +262,18 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
       {/* Main Split: Activity Rows Table + Evidence File Viewer */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left: Activity Records Table (5 cols on lg) */}
-        <div className="lg:col-span-5 bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden shadow-xs space-y-0">
-          <div className="px-4 py-3.5 border-b border-[#E5E7EB] bg-[#FAFAFB] flex items-center justify-between">
+        <div className="lg:col-span-5 bg-white border border-[var(--border-default)] rounded-2xl overflow-hidden shadow-xs space-y-0">
+          <div className="px-4 py-3.5 border-b border-[var(--border-default)] bg-[var(--surface-secondary)] flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <FileText className="w-4 h-4 text-[#181B27]" />
-              <span className="text-xs font-bold text-[#17181A]">Activity Records</span>
+              <FileText className="w-4 h-4 text-[var(--text-primary)]" />
+              <span className="text-xs font-bold text-[var(--text-primary)]">Activity Records</span>
             </div>
-            <span className="text-[11px] font-semibold text-[#5F6368]">
+            <span className="text-[11px] font-semibold text-[var(--text-secondary)]">
               {activityRows.length} entries
             </span>
           </div>
 
-          <div className="divide-y divide-[#F1F3F5] max-h-[640px] overflow-y-auto">
+          <div className="divide-y divide-[#EEEAF5] max-h-[640px] overflow-y-auto">
             {activityRows.map((row) => {
               const isSelected = row.id === selectedRowId;
               return (
@@ -282,13 +282,13 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
                   onClick={() => setSelectedRowId(row.id)}
                   className={`p-3.5 transition-colors cursor-pointer text-xs ${
                     isSelected
-                      ? 'bg-[#5141FF]/5 border-l-4 border-l-[#01153C]'
-                      : 'hover:bg-[#FAFAFB] border-l-4 border-l-transparent'
+                      ? 'bg-[var(--action-primary)]/5 border-l-4 border-l-[#5625B8]'
+                      : 'hover:bg-[var(--surface-secondary)] border-l-4 border-l-transparent'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-[#17181A] activity-id">{row.rowRef}</span>
-                    <span className="text-[11px] text-[#8A8F98] flex items-center space-x-1 font-data">
+                    <span className="font-medium text-[var(--text-primary)] activity-id">{row.rowRef}</span>
+                    <span className="text-[11px] text-[var(--text-tertiary)] flex items-center space-x-1 font-data">
                       <Clock className="w-3 h-3" />
                       <span>{row.date}</span>
                     </span>
@@ -296,22 +296,22 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
 
                   <div className="grid grid-cols-2 gap-2 mt-2 text-[11px]">
                     <div>
-                      <span className="text-[#8A8F98]">Consumption:</span>
-                      <span className="font-semibold text-[#17181A] ml-1 font-sans">
+                      <span className="text-[var(--text-tertiary)]">Consumption:</span>
+                      <span className="font-semibold text-[var(--text-primary)] ml-1 font-sans">
                         {row.quantity.toLocaleString()} {row.unit}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[#8A8F98]">Emissions:</span>
-                      <span className="font-medium text-[#181B27] ml-1 emission-factor">
+                      <span className="text-[var(--text-tertiary)]">Emissions:</span>
+                      <span className="font-medium text-[var(--text-primary)] ml-1 emission-factor">
                         {row.calculatedEmissions.toFixed(3)} tCO2e
                       </span>
                     </div>
                   </div>
 
-                  <div className="mt-2.5 pt-2 border-t border-[#F1F3F5] flex items-center justify-between text-[11px]">
-                    <div className="flex items-center space-x-1 text-[#5F6368] truncate max-w-[180px] font-sans">
-                      <FileCheck className="w-3.5 h-3.5 text-[#027A48]" />
+                  <div className="mt-2.5 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px]">
+                    <div className="flex items-center space-x-1 text-[var(--text-secondary)] truncate max-w-[180px] font-sans">
+                      <FileCheck className="w-3.5 h-3.5 text-[var(--status-success)]" />
                       <span className="truncate">{row.evidenceFilename}</span>
                     </div>
                     <StatusBadge status="Approved" customLabel={row.status} size="sm" />
@@ -321,59 +321,59 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
             })}
           </div>
 
-          <div className="p-3 bg-[#FAFAFB] border-t border-[#E5E7EB] text-[11px] text-[#5F6368] flex items-center justify-between font-data">
+          <div className="p-3 bg-[var(--surface-secondary)] border-t border-[var(--border-default)] text-[11px] text-[var(--text-secondary)] flex items-center justify-between font-data">
             <span>Read-only: {activityRows.length} entries for Chennai Plant 1</span>
-            <span className="font-semibold text-[#17181A] font-sans">Total: 145,550 kWh</span>
+            <span className="font-semibold text-[var(--text-primary)] font-sans">Total: 145,550 kWh</span>
           </div>
         </div>
 
         {/* Right: Evidence Viewer & Calculation Lineage (7 cols on lg) */}
         <div className="lg:col-span-7 space-y-4">
           {/* Calculation Formula Card (PRD Step 5) */}
-          <div className="bg-white border border-[#E5E7EB] rounded-xl p-4 shadow-2xs space-y-3">
-            <div className="flex items-center justify-between border-b border-[#F1F3F5] pb-2">
+          <div className="bg-white border border-[var(--border-default)] rounded-xl p-4 shadow-2xs space-y-3">
+            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
               <div className="flex items-center space-x-2">
-                <Activity className="w-4 h-4 text-[#181B27]" />
-                <h3 className="text-xs font-semibold text-[#17181A] uppercase tracking-wider font-sans">
+                <Activity className="w-4 h-4 text-[var(--text-primary)]" />
+                <h3 className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider font-sans">
                   Verified Calculation Formula
                 </h3>
               </div>
               <StatusBadge status="Verified" customLabel="Deterministically Verified" size="sm" />
             </div>
 
-            <div className="p-3 bg-[#FAFAFB] border border-[#E5E7EB] rounded-xl formula-metric text-xs text-[#17181A] space-y-1.5">
-              <div className="text-[11px] text-[#5F6368] font-sans">
+            <div className="p-3 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl formula-metric text-xs text-[var(--text-primary)] space-y-1.5">
+              <div className="text-[11px] text-[var(--text-secondary)] font-sans">
                 Emissions (tCO2e) = Activity Data (kWh) × Emission Factor (kg CO2e/kWh) ÷ 1,000
               </div>
-              <div className="text-[#181B27] font-medium text-sm">
+              <div className="text-[var(--text-primary)] font-medium text-sm">
                 {selectedRecord.quantity.toLocaleString()} × {selectedRecord.factorValue} ÷ 1,000 ={' '}
-                <span className="underline decoration-[#01153C] font-medium">{selectedRecord.calculatedEmissions.toFixed(3)} tCO2e</span>
+                <span className="underline decoration-[#5625B8] font-medium">{selectedRecord.calculatedEmissions.toFixed(3)} tCO2e</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#5F6368]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[var(--text-secondary)]">
               <div>
-                <span className="font-semibold text-[#17181A] font-sans">Factor Reference:</span>{' '}
+                <span className="font-semibold text-[var(--text-primary)] font-sans">Factor Reference:</span>{' '}
                 <span className="text-[11px] font-data">{selectedRecord.factorCitation}</span>
               </div>
               <div>
-                <span className="font-semibold text-[#17181A] font-sans">Approved By:</span>{' '}
+                <span className="font-semibold text-[var(--text-primary)] font-sans">Approved By:</span>{' '}
                 <span className="text-[11px] font-data">{selectedRecord.approvedBy} on {selectedRecord.approvedAt}</span>
               </div>
             </div>
           </div>
 
           {/* Primary Evidence Document Viewer (PRD Step 6) */}
-          <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-2xs">
+          <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-2xs">
             {/* Document Viewer Header */}
-            <div className="px-4 py-3 bg-[#17181A] text-white flex items-center justify-between">
+            <div className="px-4 py-3 bg-[var(--text-primary)] text-white flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <FileCheck className="w-4 h-4 text-[#9E77ED]" />
+                <FileCheck className="w-4 h-4 text-[var(--color-brand-violet-300)]" />
                 <div>
                   <div className="text-xs font-semibold text-white truncate max-w-[240px] font-sans">
                     {selectedRecord.evidenceFilename}
                   </div>
-                  <div className="text-[10px] text-[#A2A9B4] font-data">
+                  <div className="text-[10px] text-[var(--text-tertiary)] font-data">
                     Size: {selectedRecord.fileSize} • Immutable Cloud Archive
                   </div>
                 </div>
@@ -383,22 +383,22 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
               <div className="flex items-center space-x-1.5 text-xs">
                 <button
                   onClick={() => setPreviewZoom((z) => Math.max(z - 15, 70))}
-                  className="p-1.5 text-[#A2A9B4] hover:text-white rounded-md hover:bg-[#242A33] transition-colors"
+                  className="p-1.5 text-[var(--text-tertiary)] hover:text-white rounded-md hover:bg-[var(--bg-elevated)] transition-colors"
                   title="Zoom Out"
                 >
                   <ZoomOut className="w-3.5 h-3.5" />
                 </button>
-                <span className="text-[11px] font-data text-[#A2A9B4] px-1">{previewZoom}%</span>
+                <span className="text-[11px] font-data text-[var(--text-tertiary)] px-1">{previewZoom}%</span>
                 <button
                   onClick={() => setPreviewZoom((z) => Math.min(z + 15, 160))}
-                  className="p-1.5 text-[#A2A9B4] hover:text-white rounded-md hover:bg-[#242A33] transition-colors"
+                  className="p-1.5 text-[var(--text-tertiary)] hover:text-white rounded-md hover:bg-[var(--bg-elevated)] transition-colors"
                   title="Zoom In"
                 >
                   <ZoomIn className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => setPreviewRotation((r) => (r + 90) % 360)}
-                  className="p-1.5 text-[#A2A9B4] hover:text-white rounded-md hover:bg-[#242A33] transition-colors"
+                  className="p-1.5 text-[var(--text-tertiary)] hover:text-white rounded-md hover:bg-[var(--bg-elevated)] transition-colors"
                   title="Rotate Document"
                 >
                   <RotateCw className="w-3.5 h-3.5" />
@@ -407,13 +407,13 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
             </div>
 
             {/* Document Tabs */}
-            <div className="flex items-center border-b border-[#E5E7EB] bg-[#FAFAFB] px-4 text-xs font-semibold font-sans">
+            <div className="flex items-center border-b border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 text-xs font-semibold font-sans">
               <button
                 onClick={() => setActiveTab('preview')}
                 className={`py-2.5 px-3 border-b-2 transition-colors ${
                   activeTab === 'preview'
-                    ? 'border-[#5141FF] text-[#181B27]'
-                    : 'border-transparent text-[#5F6368] hover:text-[#17181A]'
+                    ? 'border-[var(--action-primary)] text-[var(--text-primary)]'
+                    : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 Document Scan
@@ -422,8 +422,8 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
                 onClick={() => setActiveTab('ocr')}
                 className={`py-2.5 px-3 border-b-2 transition-colors ${
                   activeTab === 'ocr'
-                    ? 'border-[#5141FF] text-[#181B27]'
-                    : 'border-transparent text-[#5F6368] hover:text-[#17181A]'
+                    ? 'border-[var(--action-primary)] text-[var(--text-primary)]'
+                    : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 Extracted OCR Data
@@ -432,8 +432,8 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
                 onClick={() => setActiveTab('metadata')}
                 className={`py-2.5 px-3 border-b-2 transition-colors ${
                   activeTab === 'metadata'
-                    ? 'border-[#5141FF] text-[#181B27]'
-                    : 'border-transparent text-[#5F6368] hover:text-[#17181A]'
+                    ? 'border-[var(--action-primary)] text-[var(--text-primary)]'
+                    : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 Integrity & Hash
@@ -441,7 +441,7 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
             </div>
 
             {/* Document Content View */}
-            <div className="p-4 bg-[#F4F5F6] min-h-[380px] flex items-center justify-center overflow-auto">
+            <div className="p-4 bg-[var(--bg-canvas)] min-h-[380px] flex items-center justify-center overflow-auto">
               {activeTab === 'preview' && (
                 <div
                   style={{
@@ -449,33 +449,33 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
                     transformOrigin: 'top center',
                     transition: 'transform 0.2s ease-out',
                   }}
-                  className="w-full max-w-[520px] bg-white border border-[#E5E7EB] rounded-xl shadow-md p-6 text-xs text-[#17181A] space-y-4 font-sans"
+                  className="w-full max-w-[520px] bg-white border border-[var(--border-default)] rounded-xl shadow-md p-6 text-xs text-[var(--text-primary)] space-y-4 font-sans"
                 >
                   {/* Simulated High-Voltage Utility Bill */}
-                  <div className="border-b-2 border-[#17181A] pb-3 flex justify-between items-start">
+                  <div className="border-b-2 border-[#15131A] pb-3 flex justify-between items-start">
                     <div>
-                      <div className="font-bold text-sm tracking-tight text-[#17181A]">
+                      <div className="font-bold text-sm tracking-tight text-[var(--text-primary)]">
                         TAMIL NADU GENERATION & DISTRIBUTION CORP. (TANGEDCO)
                       </div>
-                      <div className="text-[10px] text-[#5F6368]">
+                      <div className="text-[10px] text-[var(--text-secondary)]">
                         High Tension Electricity Supply Bill — Form HT-1
                       </div>
                     </div>
                     <div className="text-right text-[11px]">
-                      <div className="font-bold text-[#181B27] font-sans">HT BILL CARD</div>
-                      <div className="text-[10px] text-[#5F6368] activity-id">Inv #: TN-2025-08-9812</div>
+                      <div className="font-bold text-[var(--text-primary)] font-sans">HT BILL CARD</div>
+                      <div className="text-[10px] text-[var(--text-secondary)] activity-id">Inv #: TN-2025-08-9812</div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 p-2.5 bg-[#FAFAFB] rounded-lg border border-[#E5E7EB] text-[11px]">
+                  <div className="grid grid-cols-2 gap-3 p-2.5 bg-[var(--surface-secondary)] rounded-lg border border-[var(--border-default)] text-[11px]">
                     <div>
-                      <div className="text-[#8A8F98] text-[10px] uppercase font-semibold">Consumer Details</div>
-                      <div className="font-semibold text-[#17181A]">Zenith Energy Services Pvt Ltd</div>
-                      <div className="text-[#5F6368]">Plot 14-B, Ambattur Industrial Estate</div>
-                      <div className="text-[#5F6368]">Chennai — 600058</div>
+                      <div className="text-[var(--text-tertiary)] text-[10px] uppercase font-semibold">Consumer Details</div>
+                      <div className="font-semibold text-[var(--text-primary)]">Zenith Energy Services Pvt Ltd</div>
+                      <div className="text-[var(--text-secondary)]">Plot 14-B, Ambattur Industrial Estate</div>
+                      <div className="text-[var(--text-secondary)]">Chennai — 600058</div>
                     </div>
                     <div>
-                      <div className="text-[#8A8F98] text-[10px] uppercase font-semibold">Meter & Connection</div>
+                      <div className="text-[var(--text-tertiary)] text-[10px] uppercase font-semibold">Meter & Connection</div>
                       <div>HT Service No: <span className="activity-id font-medium">09-234-8871-0</span></div>
                       <div>Meter No: <span className="activity-id font-medium">{selectedRecord.meterNumber}</span></div>
                       <div>Tariff: <span className="font-medium">HT-1A Industrial</span></div>
@@ -483,43 +483,43 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
                   </div>
 
                   {/* Highlighted Meter Consumption */}
-                  <div className="border border-[#5141FF]/40 bg-[#5141FF]/5 rounded-lg p-3 text-xs space-y-1">
-                    <div className="flex items-center justify-between font-semibold text-[#181B27]">
+                  <div className="border border-[var(--action-primary)]/40 bg-[var(--action-primary)]/5 rounded-lg p-3 text-xs space-y-1">
+                    <div className="flex items-center justify-between font-semibold text-[var(--text-primary)]">
                       <span>Billed Consumption (Total kWh)</span>
                       <span className="text-base font-semibold underline">
                         {selectedRecord.quantity.toLocaleString()} kWh
                       </span>
                     </div>
-                    <div className="text-[10px] text-[#5F6368] flex justify-between font-data">
+                    <div className="text-[10px] text-[var(--text-secondary)] flex justify-between font-data">
                       <span>Billing Period: {selectedRecord.billingPeriod}</span>
                       <span>Verified OCR Multiplier: 1.00</span>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 text-center text-[10px] border-t border-[#F1F3F5] pt-2">
+                  <div className="grid grid-cols-3 gap-2 text-center text-[10px] border-t border-[var(--border-subtle)] pt-2">
                     <div>
-                      <span className="text-[#8A8F98]">Current Reading:</span>
+                      <span className="text-[var(--text-tertiary)]">Current Reading:</span>
                       <div className="font-semibold font-data">1,482,200</div>
                     </div>
                     <div>
-                      <span className="text-[#8A8F98]">Previous Reading:</span>
+                      <span className="text-[var(--text-tertiary)]">Previous Reading:</span>
                       <div className="font-semibold font-data">1,434,000</div>
                     </div>
                     <div>
-                      <span className="text-[#8A8F98]">Net Difference:</span>
-                      <div className="font-semibold text-[#027A48] font-data">{selectedRecord.quantity.toLocaleString()}</div>
+                      <span className="text-[var(--text-tertiary)]">Net Difference:</span>
+                      <div className="font-semibold text-[var(--status-success)] font-data">{selectedRecord.quantity.toLocaleString()}</div>
                     </div>
                   </div>
                 </div>
               )}
 
               {activeTab === 'ocr' && (
-                <div className="w-full bg-white border border-[#E5E7EB] rounded-xl p-4 text-xs space-y-3">
-                  <div className="text-xs font-semibold text-[#17181A] font-sans flex items-center space-x-1.5">
-                    <FileCheck className="w-4 h-4 text-[#027A48]" />
+                <div className="w-full bg-white border border-[var(--border-default)] rounded-xl p-4 text-xs space-y-3">
+                  <div className="text-xs font-semibold text-[var(--text-primary)] font-sans flex items-center space-x-1.5">
+                    <FileCheck className="w-4 h-4 text-[var(--status-success)]" />
                     <span>OCR Extraction Output (Model Confidence: 98.4%)</span>
                   </div>
-                  <pre className="bg-[#FAFAFB] p-3 rounded-lg text-[11px] text-[#17181A] overflow-x-auto leading-relaxed border border-[#E5E7EB] font-mono">
+                  <pre className="bg-[var(--surface-secondary)] p-3 rounded-lg text-[11px] text-[var(--text-primary)] overflow-x-auto leading-relaxed border border-[var(--border-default)] font-mono">
 {JSON.stringify(
   {
     supplier: 'Tamil Nadu Generation & Distribution Corporation',
@@ -541,26 +541,26 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
               )}
 
               {activeTab === 'metadata' && (
-                <div className="w-full bg-white border border-[#E5E7EB] rounded-xl p-4 text-xs space-y-3">
-                  <div className="text-xs font-semibold text-[#17181A] font-sans flex items-center space-x-1.5">
-                    <Hash className="w-4 h-4 text-[#181B27]" />
+                <div className="w-full bg-white border border-[var(--border-default)] rounded-xl p-4 text-xs space-y-3">
+                  <div className="text-xs font-semibold text-[var(--text-primary)] font-sans flex items-center space-x-1.5">
+                    <Hash className="w-4 h-4 text-[var(--text-primary)]" />
                     <span>Cryptographic Evidence Integrity Audit</span>
                   </div>
                   <div className="space-y-2 text-[11px]">
-                    <div className="p-2.5 bg-[#FAFAFB] rounded-lg border border-[#E5E7EB]">
-                      <div className="text-[#8A8F98] text-[10px] uppercase font-semibold font-sans">SHA-256 Checksum</div>
-                      <div className="hash-display text-[#17181A] break-all font-medium mt-0.5">
+                    <div className="p-2.5 bg-[var(--surface-secondary)] rounded-lg border border-[var(--border-default)]">
+                      <div className="text-[var(--text-tertiary)] text-[10px] uppercase font-semibold font-sans">SHA-256 Checksum</div>
+                      <div className="hash-display text-[var(--text-primary)] break-all font-medium mt-0.5">
                         {selectedRecord.fileSha256}
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="p-2.5 bg-[#FAFAFB] rounded-lg border border-[#E5E7EB]">
-                        <div className="text-[#8A8F98] text-[10px] uppercase font-semibold font-sans">Storage Class</div>
-                        <div className="font-semibold text-[#17181A] font-sans">WORM Immutable Object Store</div>
+                      <div className="p-2.5 bg-[var(--surface-secondary)] rounded-lg border border-[var(--border-default)]">
+                        <div className="text-[var(--text-tertiary)] text-[10px] uppercase font-semibold font-sans">Storage Class</div>
+                        <div className="font-semibold text-[var(--text-primary)] font-sans">WORM Immutable Object Store</div>
                       </div>
-                      <div className="p-2.5 bg-[#FAFAFB] rounded-lg border border-[#E5E7EB]">
-                        <div className="text-[#8A8F98] text-[10px] uppercase font-semibold font-sans">Audit Status</div>
-                        <div className="font-semibold text-[#027A48] font-sans">Unmodified Since Upload</div>
+                      <div className="p-2.5 bg-[var(--surface-secondary)] rounded-lg border border-[var(--border-default)]">
+                        <div className="text-[var(--text-tertiary)] text-[10px] uppercase font-semibold font-sans">Audit Status</div>
+                        <div className="font-semibold text-[var(--status-success)] font-sans">Unmodified Since Upload</div>
                       </div>
                     </div>
                   </div>
@@ -569,13 +569,13 @@ export const Screen32_EvidenceTraceView: React.FC = () => {
             </div>
 
             {/* Evidence Footer */}
-            <div className="p-3 bg-[#FAFAFB] border-t border-[#E5E7EB] flex items-center justify-between text-xs">
-              <span className="text-[11px] font-semibold text-[#027A48]">
-                Resolution 300 DPI · Digitally Certified
+            <div className="p-3 bg-[var(--surface-secondary)] border-t border-[var(--border-default)] flex items-center justify-between text-xs">
+              <span className="text-[11px] font-semibold text-[var(--status-success)]">
+                Resolution 300 DPI · Digital signature recorded
               </span>
               <button
                 onClick={handleRaiseQuery}
-                className="text-xs text-[#5141FF] hover:underline font-semibold flex items-center space-x-1"
+                className="text-xs text-[var(--action-primary)] hover:underline font-semibold flex items-center space-x-1"
               >
                 <span>Raise Query on Evidence</span>
                 <ArrowRight className="w-3.5 h-3.5" />

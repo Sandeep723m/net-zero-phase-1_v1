@@ -96,7 +96,7 @@ export const Screen23_SubmissionQueue: React.FC = () => {
           <StatusBadge status="Pending" customLabel="Four-Eye Workflow" size="sm" />
         }
         contextInfo={
-          <span className="route-path text-xs text-[#8A8F98] font-medium">
+          <span className="route-path text-xs text-[var(--text-tertiary)] font-medium">
             /workflow/queue
           </span>
         }
@@ -114,7 +114,7 @@ export const Screen23_SubmissionQueue: React.FC = () => {
               onClick={() => navigateToScreen('25_approval_history', 'FLOW_B')}
               className="enterprise-btn-secondary h-9 px-3.5 flex items-center space-x-1.5 text-xs"
             >
-              <History className="w-3.5 h-3.5 text-[#5F6368]" />
+              <History className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
               <span>Approval History</span>
             </button>
           </div>
@@ -146,45 +146,45 @@ export const Screen23_SubmissionQueue: React.FC = () => {
       </div>
 
       {/* Submissions Table (FR-23.04 - FR-23.08) */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
-        <div className="p-4 border-b border-[#E5E7EB] flex items-center justify-between">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
+        <div className="p-4 border-b border-[var(--border-default)] flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Inbox className="w-4 h-4 text-[#181B27]" />
-            <h2 className="text-sm font-semibold text-[#17181A] font-sans">Pending Submissions</h2>
+            <Inbox className="w-4 h-4 text-[var(--text-primary)]" />
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] font-sans">Pending Submissions</h2>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <select
               aria-label="Filter submissions by status"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
-              className="h-8 px-2 text-xs border border-[#E5E7EB] rounded-lg bg-white"
+              className="h-8 px-2 text-xs border border-[var(--border-default)] rounded-lg bg-white"
             >
               <option value="all">All statuses</option>
               <option value="Awaiting Review">Awaiting review</option>
               <option value="Returned for Correction">Returned</option>
               <option value="Approved">Approved</option>
             </select>
-            <div className="flex border border-[#E5E7EB] rounded-lg overflow-hidden" aria-label="Submission view">
-              <button type="button" onClick={() => setViewMode('list')} aria-label="List view" className={`p-2 ${viewMode === 'list' ? 'bg-[#F2F0FF] text-[#5141FF]' : 'text-[#5F6368]'}`}><List className="w-4 h-4" /></button>
-              <button type="button" onClick={() => setViewMode('tiles')} aria-label="Tile view" className={`p-2 ${viewMode === 'tiles' ? 'bg-[#F2F0FF] text-[#5141FF]' : 'text-[#5F6368]'}`}><LayoutGrid className="w-4 h-4" /></button>
+            <div className="flex border border-[var(--border-default)] rounded-lg overflow-hidden" aria-label="Submission view">
+              <button type="button" onClick={() => setViewMode('list')} aria-label="List view" className={`p-2 ${viewMode === 'list' ? 'bg-[var(--brand-50)] text-[var(--action-primary)]' : 'text-[var(--text-secondary)]'}`}><List className="w-4 h-4" /></button>
+              <button type="button" onClick={() => setViewMode('tiles')} aria-label="Tile view" className={`p-2 ${viewMode === 'tiles' ? 'bg-[var(--brand-50)] text-[var(--action-primary)]' : 'text-[var(--text-secondary)]'}`}><LayoutGrid className="w-4 h-4" /></button>
             </div>
-            <span className="text-xs text-[#5F6368] font-medium">{visibleSubmissions.length} submissions</span>
+            <span className="text-xs text-[var(--text-secondary)] font-medium">{visibleSubmissions.length} submissions</span>
           </div>
         </div>
 
         {viewMode === 'tiles' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-4">
             {visibleSubmissions.map((item) => (
-              <div key={item.id} className="p-4 border border-[#E5E7EB] rounded-xl space-y-3">
+              <div key={item.id} className="p-4 border border-[var(--border-default)] rounded-xl space-y-3">
                 <div className="flex items-start justify-between gap-3">
-                  <div><div className="text-sm font-semibold text-[#17181A]">{item.siteName}</div><div className="text-xs text-[#5F6368] mt-1">{item.id} · {item.submittedDate}</div></div>
+                  <div><div className="text-sm font-semibold text-[var(--text-primary)]">{item.siteName}</div><div className="text-xs text-[var(--text-secondary)] mt-1">{item.id} · {item.submittedDate}</div></div>
                   <StatusBadge status={item.status === 'Approved' ? 'Approved' : item.status === 'Returned for Correction' ? 'Error' : 'Pending'} customLabel={item.status} size="sm" />
                 </div>
-                <div className="text-xs text-[#5F6368]">{item.rowsCount} records · Submitted by {item.submittedBy}</div>
+                <div className="text-xs text-[var(--text-secondary)]">{item.rowsCount} records · Submitted by {item.submittedBy}</div>
                 <div className="flex flex-wrap gap-2">
                   <button type="button" onClick={() => handleReviewBatch(item.id)} className="enterprise-btn-secondary h-8 px-3 text-xs">Review</button>
-                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Approved')} className="h-8 px-3 text-xs rounded-lg border border-[#027A48]/30 text-[#027A48] disabled:opacity-40 inline-flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5" />Approve</button>
-                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Returned for Correction')} className="h-8 px-3 text-xs rounded-lg border border-[#FB3256]/30 text-[#FB3256] disabled:opacity-40 inline-flex items-center gap-1"><XCircle className="w-3.5 h-3.5" />Reject</button>
+                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Approved')} className="h-8 px-3 text-xs rounded-lg border border-[#147A5A]/30 text-[var(--status-success)] disabled:opacity-40 inline-flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5" />Approve</button>
+                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Returned for Correction')} className="h-8 px-3 text-xs rounded-lg border border-[var(--color-brand-orange-500)]/30 text-[var(--status-warning)] disabled:opacity-40 inline-flex items-center gap-1"><XCircle className="w-3.5 h-3.5" />Reject</button>
                 </div>
               </div>
             ))}
@@ -192,7 +192,7 @@ export const Screen23_SubmissionQueue: React.FC = () => {
         ) : (
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="bg-[#F4F5F6] border-b border-[#E5E7EB] text-[#5F6368]">
+            <tr className="bg-[var(--bg-canvas)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Submitted</th>
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Site</th>
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider text-right">Rows</th>
@@ -200,20 +200,20 @@ export const Screen23_SubmissionQueue: React.FC = () => {
               <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider text-right">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F1F3F5]">
+          <tbody className="divide-y divide-[#EEEAF5]">
             {visibleSubmissions.map((item) => (
-              <tr key={item.id} className="hover:bg-[#FAFAFB] transition-colors">
-                <td className="py-3.5 px-4 period-code text-[#5F6368]">
+              <tr key={item.id} className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="py-3.5 px-4 period-code text-[var(--text-secondary)]">
                   {item.submittedDate}
                 </td>
-                <td className="py-3.5 px-4 font-semibold text-[#17181A] flex items-center space-x-2">
-                  <Building2 className="w-3.5 h-3.5 text-[#181B27]" />
+                <td className="py-3.5 px-4 font-semibold text-[var(--text-primary)] flex items-center space-x-2">
+                  <Building2 className="w-3.5 h-3.5 text-[var(--text-primary)]" />
                   <span>{item.siteName}</span>
                 </td>
-                <td className="py-3.5 px-4 text-right period-code font-medium text-[#17181A]">
+                <td className="py-3.5 px-4 text-right period-code font-medium text-[var(--text-primary)]">
                   {item.rowsCount}
                 </td>
-                <td className="py-3.5 px-4 text-[#5F6368] font-data">
+                <td className="py-3.5 px-4 text-[var(--text-secondary)] font-data">
                   {item.submittedBy}
                 </td>
                 <td className="py-3.5 px-4 text-right">
@@ -224,9 +224,9 @@ export const Screen23_SubmissionQueue: React.FC = () => {
                     onClick={() => handleReviewBatch(item.id)}
                     className={`h-8 px-3 text-xs inline-flex items-center space-x-1 shadow-2xs font-semibold rounded-lg transition-colors ${
                       currentRole === 'DATA_ENTRY'
-                        ? 'bg-[#F4F5F6] text-[#17181A] hover:bg-[#E5E7EB] border border-[#D9DDE3]'
+                        ? 'bg-[var(--bg-canvas)] text-[var(--text-primary)] hover:bg-[var(--border-default)] border border-[var(--border-default)]'
                         : currentRole === 'VERIFIER'
-                        ? 'bg-[#5141FF]/10 text-[#181B27] hover:bg-[#5141FF]/20 border border-[#5141FF]/30'
+                        ? 'bg-[var(--action-primary)]/10 text-[var(--text-primary)] hover:bg-[var(--action-primary)]/20 border border-[var(--action-primary)]/30'
                         : 'enterprise-btn-primary'
                     }`}
                   >
@@ -239,8 +239,8 @@ export const Screen23_SubmissionQueue: React.FC = () => {
                     </span>
                     <ArrowRight className="w-3 h-3" />
                   </button>
-                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Approved')} className="h-8 px-2.5 rounded-lg border border-[#027A48]/30 text-[#027A48] disabled:opacity-40">Approve</button>
-                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Returned for Correction')} className="h-8 px-2.5 rounded-lg border border-[#FB3256]/30 text-[#FB3256] disabled:opacity-40">Reject</button>
+                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Approved')} className="h-8 px-2.5 rounded-lg border border-[#147A5A]/30 text-[var(--status-success)] disabled:opacity-40">Approve</button>
+                  <button type="button" disabled={!canReview || item.status !== 'Awaiting Review'} onClick={() => updateBatchStatus(item, 'Returned for Correction')} className="h-8 px-2.5 rounded-lg border border-[var(--color-brand-orange-500)]/30 text-[var(--status-warning)] disabled:opacity-40">Reject</button>
                   </div>
                 </td>
               </tr>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { UserRole } from '../../types';
-import tulaLogo from '../../assets/Tula Carbon.png';
+import tulaLogo from '../../assets/Tula Carbon Dot Grid Logo.png';
 import {
   Building2,
   ChevronDown,
@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
 
   return (
     <>
-      <header className="sticky top-0 z-30 h-16 glass-shell bg-white/80 backdrop-blur-xl border-b border-[#E2E5EF]/80 px-4 sm:px-6 lg:px-8 flex items-center justify-between shadow-[0_2px_12px_rgba(28,31,58,0.03)]">
+      <header className="sticky top-0 z-30 h-16 glass-shell bg-white/80 backdrop-blur-xl border-b border-[var(--border-default)]/80 px-4 sm:px-6 lg:px-8 flex items-center justify-between shadow-[0_2px_12px_rgba(28,31,58,0.03)]">
         {/* ============================================================ */}
         {/* MOBILE HEADER (md:hidden): Left Menu Bar | Center Logo | Right Side Nav Bar */}
         {/* ============================================================ */}
@@ -122,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
               id="btn-mobile-left-menu"
               type="button"
               onClick={toggleMobileMenu}
-              className="p-2 -ml-1 text-[#17181A] hover:text-[#5141FF] hover:bg-[#F2F0FF] rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#5141FF]/20"
+              className="p-2 -ml-1 text-[var(--text-primary)] hover:text-[var(--action-primary)] hover:bg-[var(--brand-50)] rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--border-focus)]/20"
               aria-label={isMobileMenuOpen ? "Close left navigation menu" : "Open left navigation menu"}
               title="Open navigation menu"
             >
@@ -138,7 +138,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
             <img
               src={tulaLogo}
               alt="Tula Carbon"
-              className="h-14 sm:h-16 w-auto max-w-[260px] object-contain group-hover:opacity-90 transition-opacity"
+              className="h-9 sm:h-10 w-auto max-w-[168px] object-contain group-hover:opacity-90 transition-opacity"
             />
           </div>
 
@@ -148,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
               id="btn-mobile-right-menu"
               type="button"
               onClick={toggleMobileRightNav}
-              className="p-2 -mr-1 text-[#17181A] hover:text-[#5141FF] hover:bg-[#F2F0FF] rounded-lg transition-colors relative focus:outline-none focus:ring-2 focus:ring-[#5141FF]/20"
+              className="p-2 -mr-1 text-[var(--text-primary)] hover:text-[var(--action-primary)] hover:bg-[var(--brand-50)] rounded-lg transition-colors relative focus:outline-none focus:ring-2 focus:ring-[var(--border-focus)]/20"
               aria-label={isMobileRightNavOpen ? "Close side nav menu" : "Open side nav menu"}
               title="Open side nav bar menu"
             >
@@ -158,7 +158,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                 <PanelRight className="w-5 h-5" />
               )}
               {unreadNotificationsCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#FB3256] rounded-full ring-2 ring-white" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[var(--color-brand-orange-500)] rounded-full ring-2 ring-white" />
               )}
             </button>
           </div>
@@ -168,40 +168,25 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
         {/* DESKTOP HEADER (hidden md:flex): Left Controls + Right Controls */}
         {/* ============================================================ */}
         <div className="hidden md:flex items-center justify-between w-full">
-          {/* Left: Brand Logo + Context Hierarchy (Organization & Reporting Period aligned to Inner Content) */}
+          {/* Context Hierarchy: Organization & Reporting Period */}
           <div className="flex items-center min-w-0">
-            {/* Brand Logo - Sized to match sidebar width (w-64) so dropdowns align with Inner Content Title */}
-            <div
-              id="header-brand-logo"
-              onClick={() => navigateToScreen('10_activity_dashboard')}
-              className="w-64 shrink-0 flex items-center cursor-pointer select-none group pr-4"
-              title="Tula Carbon Dashboard"
-            >
-              <img
-                src={tulaLogo}
-                alt="Tula Carbon"
-                className="h-14 sm:h-16 md:h-[64px] w-auto max-w-[260px] object-contain group-hover:opacity-90 transition-opacity"
-              />
-            </div>
-
-            {/* Context Hierarchy: Organization + Reporting Period (Aligned with Inner Content Title) */}
             <div className="flex items-center space-x-2 min-w-0">
               {/* Tenant / Organization Selector */}
               <div className="relative min-w-0">
                 <button
                   onClick={() => setTenantDropdownOpen(!tenantDropdownOpen)}
-                  className="flex items-center space-x-2 px-3 h-9 text-xs text-[#181B27] hover:bg-[#F7F8FC] rounded-xl border border-[#E2E5EF] hover:border-[#CCD1DF] focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none transition-all max-w-[210px] bg-white/80 hover:bg-white shadow-2xs font-sans group"
+                  className="flex items-center space-x-2 px-3 h-9 text-xs text-[var(--text-primary)] hover:bg-[var(--bg-canvas)] rounded-xl border border-[var(--border-default)] hover:border-[var(--border-strong)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none transition-all max-w-[210px] bg-white/80 hover:bg-white shadow-2xs font-sans group"
                   title="Switch Organisation"
                   aria-expanded={tenantDropdownOpen}
                 >
-                  <Building2 className="w-3.5 h-3.5 text-[#5141FF] shrink-0" aria-hidden="true" />
+                  <Building2 className="w-3.5 h-3.5 text-[var(--action-primary)] shrink-0" aria-hidden="true" />
                   <span className="font-semibold truncate">{currentTenant.name}</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-[#858CA0] group-hover:text-[#181B27] transition-colors shrink-0" aria-hidden="true" />
+                  <ChevronDown className="w-3.5 h-3.5 text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)] transition-colors shrink-0" aria-hidden="true" />
                 </button>
 
                 {tenantDropdownOpen && (
-                  <div className="absolute left-0 mt-1.5 w-64 glass-card-strong bg-white/95 rounded-xl shadow-xl border border-[#E2E5EF] py-1.5 z-50">
-                    <div className="px-3 py-1.5 border-b border-[#F0F2F7] text-[11px] font-semibold text-[#858CA0] uppercase tracking-wider">
+                  <div className="absolute left-0 mt-1.5 w-64 glass-card-strong bg-white/95 rounded-xl shadow-xl border border-[var(--border-default)] py-1.5 z-50">
+                    <div className="px-3 py-1.5 border-b border-[var(--border-subtle)] text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
                       Select Organisation Context
                     </div>
                     {tenants.map((t) => (
@@ -211,26 +196,26 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                           setCurrentTenant(t);
                           setTenantDropdownOpen(false);
                         }}
-                        className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-[#F7F8FC] focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none ${
-                          t.id === currentTenant.id ? 'bg-[#F2F0FF] text-[#5141FF] font-semibold' : 'text-[#181B27]'
+                        className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-[var(--bg-canvas)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none ${
+                          t.id === currentTenant.id ? 'bg-[var(--brand-50)] text-[var(--action-primary)] font-semibold' : 'text-[var(--text-primary)]'
                         }`}
                       >
                         <div className="truncate">
                           <div className="font-semibold truncate">{t.name}</div>
-                          <div className="text-[11px] text-[#62697C] font-data">{t.legalEntityName}</div>
+                          <div className="text-[11px] text-[var(--text-secondary)] font-data">{t.legalEntityName}</div>
                         </div>
                         {t.id === currentTenant.id && (
-                          <Check className="w-4 h-4 text-[#5141FF] shrink-0" aria-hidden="true" />
+                          <Check className="w-4 h-4 text-[var(--action-primary)] shrink-0" aria-hidden="true" />
                         )}
                       </button>
                     ))}
-                    <div className="border-t border-[#F0F2F7] p-1.5">
+                    <div className="border-t border-[var(--border-subtle)] p-1.5">
                       <button
                         onClick={() => {
                           setTenantDropdownOpen(false);
                           navigateToScreen('03_tenant_selector');
                         }}
-                        className="w-full text-center py-1 text-xs text-[#5141FF] font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none"
+                        className="w-full text-center py-1 text-xs text-[var(--action-primary)] font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none"
                       >
                         View Tenant Directory →
                       </button>
@@ -243,27 +228,27 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
               <div className="relative shrink-0">
                 <button
                   onClick={() => setPeriodDropdownOpen(!periodDropdownOpen)}
-                  className="flex items-center space-x-2 px-3 h-9 text-xs text-[#181B27] hover:bg-[#F7F8FC] rounded-xl border border-[#E2E5EF] hover:border-[#CCD1DF] focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none transition-all shadow-2xs bg-white/80 hover:bg-white font-sans group"
+                  className="flex items-center space-x-2 px-3 h-9 text-xs text-[var(--text-primary)] hover:bg-[var(--bg-canvas)] rounded-xl border border-[var(--border-default)] hover:border-[var(--border-strong)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none transition-all shadow-2xs bg-white/80 hover:bg-white font-sans group"
                   title="Select Reporting Period"
                   aria-expanded={periodDropdownOpen}
                 >
-                  <Calendar className="w-3.5 h-3.5 text-[#5141FF] shrink-0" aria-hidden="true" />
-                  <span className="font-semibold text-[#181B27] whitespace-nowrap">{activePeriod.name}</span>
+                  <Calendar className="w-3.5 h-3.5 text-[var(--action-primary)] shrink-0" aria-hidden="true" />
+                  <span className="font-semibold text-[var(--text-primary)] whitespace-nowrap">{activePeriod.name}</span>
                   {activePeriod.locked ? (
-                    <span className="text-[10px] px-1.5 py-0.5 bg-[#F0F2F7] text-[#42485A] rounded-full border border-[#E2E5EF] font-bold uppercase tracking-wider">
+                    <span className="text-[10px] px-1.5 py-0.5 bg-[var(--bg-subtle)] text-[var(--text-primary)] rounded-full border border-[var(--border-default)] font-bold uppercase tracking-wider">
                       Locked
                     </span>
                   ) : (
-                    <span className="text-[10px] px-1.5 py-0.5 bg-[#E8F7EF] text-[#16845B] rounded-full border border-[#16845B]/20 font-bold uppercase tracking-wider">
+                    <span className="text-[10px] px-1.5 py-0.5 bg-[var(--status-success-bg)] text-[var(--status-success)] rounded-full border border-[#147A5A]/20 font-bold uppercase tracking-wider">
                       Active
                     </span>
                   )}
-                  <ChevronDown className="w-3.5 h-3.5 text-[#858CA0] group-hover:text-[#181B27] transition-colors shrink-0" aria-hidden="true" />
+                  <ChevronDown className="w-3.5 h-3.5 text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)] transition-colors shrink-0" aria-hidden="true" />
                 </button>
 
               {periodDropdownOpen && (
-                <div className="absolute left-0 mt-1.5 w-60 glass-card-strong bg-white/95 rounded-xl shadow-xl border border-[#E2E5EF] py-1.5 z-50">
-                  <div className="px-3 py-1.5 border-b border-[#F0F2F7] text-[11px] font-semibold text-[#858CA0] uppercase tracking-wider">
+                <div className="absolute left-0 mt-1.5 w-60 glass-card-strong bg-white/95 rounded-xl shadow-xl border border-[var(--border-default)] py-1.5 z-50">
+                  <div className="px-3 py-1.5 border-b border-[var(--border-subtle)] text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
                     Reporting Period
                   </div>
                   {periods.map((p) => (
@@ -273,30 +258,30 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                         setActivePeriodId(p.id);
                         setPeriodDropdownOpen(false);
                       }}
-                      className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-[#F7F8FC] focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none ${
-                        p.id === activePeriod.id ? 'bg-[#F2F0FF] text-[#5141FF] font-semibold' : 'text-[#181B27]'
+                      className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-[var(--bg-canvas)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none ${
+                        p.id === activePeriod.id ? 'bg-[var(--brand-50)] text-[var(--action-primary)] font-semibold' : 'text-[var(--text-primary)]'
                       }`}
                     >
                       <div>
                         <div className="font-semibold">{p.name}</div>
-                        <div className="text-[11px] text-[#62697C] font-mono">
+                        <div className="text-[11px] text-[var(--text-secondary)] font-mono">
                           {p.startDate} to {p.endDate}
                         </div>
                       </div>
                       {p.locked && (
-                        <span className="text-[11px] px-2 py-0.5 bg-[#F0F2F7] text-[#42485A] rounded-full border border-[#E2E5EF]">
+                        <span className="text-[11px] px-2 py-0.5 bg-[var(--bg-subtle)] text-[var(--text-primary)] rounded-full border border-[var(--border-default)]">
                           Locked
                         </span>
                       )}
                     </button>
                   ))}
-                  <div className="border-t border-[#F0F2F7] p-1.5">
+                  <div className="border-t border-[var(--border-subtle)] p-1.5">
                     <button
                       onClick={() => {
                         setPeriodDropdownOpen(false);
                         navigateToScreen('06_periods');
                       }}
-                      className="w-full text-center py-1 text-xs text-[#5141FF] font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none"
+                      className="w-full text-center py-1 text-xs text-[var(--action-primary)] font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none"
                     >
                       Manage Reporting Periods →
                     </button>
@@ -313,13 +298,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
             <button
               id="btn-nav-notifications"
               onClick={() => navigateToScreen('34_reviewer_notification', 'FLOW_F')}
-              className="h-9 w-9 flex items-center justify-center text-[#42485A] hover:text-[#5141FF] hover:bg-[#F2F0FF] rounded-xl border border-[#E2E5EF] hover:border-[#CCD1DF] focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none transition-colors relative shadow-2xs bg-white/70"
+              className="h-9 w-9 flex items-center justify-center text-[var(--text-primary)] hover:text-[var(--action-primary)] hover:bg-[var(--brand-50)] rounded-xl border border-[var(--border-default)] hover:border-[var(--border-strong)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none transition-colors relative shadow-2xs bg-white/70"
               title="Notification Center"
               aria-label="Notification Center"
             >
               <Bell className="w-4 h-4" aria-hidden="true" />
               {unreadNotificationsCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 px-1 min-w-[14px] h-[14px] text-[9px] font-bold bg-[#FB3256] text-white rounded-full flex items-center justify-center leading-none" aria-label={`${unreadNotificationsCount} unread notifications`}>
+                <span className="absolute top-1.5 right-1.5 px-1 min-w-[14px] h-[14px] text-[9px] font-bold bg-[var(--color-brand-orange-500)] text-white rounded-full flex items-center justify-center leading-none" aria-label={`${unreadNotificationsCount} unread notifications`}>
                   {unreadNotificationsCount}
                 </span>
               )}
@@ -328,17 +313,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
             {/* User Component: Avatar + Name */}
             <div
               onClick={() => navigateToScreen('01_login', 'FLOW_A')}
-              className="flex items-center space-x-2 px-2.5 h-9 rounded-xl hover:bg-[#F7F8FC] cursor-pointer transition-colors border border-[#E2E5EF] hover:border-[#CCD1DF] focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none shadow-2xs bg-white/70"
+              className="flex items-center space-x-2 px-2.5 h-9 rounded-xl hover:bg-[var(--bg-canvas)] cursor-pointer transition-colors border border-[var(--border-default)] hover:border-[var(--border-strong)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none shadow-2xs bg-white/70"
               title="Account Settings / Log out"
               tabIndex={0}
               role="button"
             >
-              <div className="w-6 h-6 rounded-lg bg-[#F2F0FF] text-[#5141FF] font-semibold text-[11px] flex items-center justify-center shrink-0 border border-[#E5E0FF]">
+              <div className="w-6 h-6 rounded-lg bg-[var(--brand-50)] text-[var(--action-primary)] font-semibold text-[11px] flex items-center justify-center shrink-0 border border-[var(--brand-100)]">
                 {getUserInitials()}
               </div>
               <div className="hidden lg:flex items-center space-x-1">
-                <span className="text-xs font-semibold text-[#181B27]">{getUserName()}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#858CA0]" aria-hidden="true" />
+                <span className="text-xs font-semibold text-[var(--text-primary)]">{getUserName()}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-[var(--text-tertiary)]" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -359,21 +344,21 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
 
       <aside
         id="mobile-right-nav-drawer"
-        className={`fixed inset-y-0 right-0 z-50 w-80 max-w-[86vw] bg-white border-l border-[#D9DDE3] flex flex-col justify-between shadow-2xl md:hidden transition-transform duration-200 ease-in-out ${
+        className={`fixed inset-y-0 right-0 z-50 w-80 max-w-[86vw] bg-white border-l border-[var(--border-default)] flex flex-col justify-between shadow-2xl md:hidden transition-transform duration-200 ease-in-out ${
           isMobileRightNavOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Drawer Header */}
-        <div className="p-3.5 border-b border-[#D9DDE3] bg-[#F8F9FB] flex items-center justify-between">
+        <div className="p-3.5 border-b border-[var(--border-default)] bg-[var(--bg-canvas)] flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <PanelRight className="w-4 h-4 text-[#174A8B]" />
-            <span className="text-sm font-semibold text-[#171A1F]">Side Nav Menu</span>
+            <PanelRight className="w-4 h-4 text-[#2D63D2]" />
+            <span className="text-sm font-semibold text-[var(--text-primary)]">Side Nav Menu</span>
           </div>
           <button
             id="btn-close-mobile-right-nav"
             type="button"
             onClick={() => setIsMobileRightNavOpen(false)}
-            className="p-1.5 text-[#5E6672] hover:text-[#171A1F] hover:bg-[#E9ECEF] rounded-md transition-colors focus:outline-none"
+            className="p-1.5 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] rounded-lg transition-colors focus:outline-none"
             aria-label="Close side nav menu"
           >
             <X className="w-5 h-5" />
@@ -383,14 +368,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
         {/* Scrollable Drawer Content */}
         <div className="flex-1 overflow-y-auto p-4 space-y-5">
           {/* User Profile Summary */}
-          <div className="p-3 bg-[#F8F9FB] border border-[#D9DDE3] rounded-lg flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-[#174A8B] text-white flex items-center justify-center text-sm font-semibold shadow-xs shrink-0">
+          <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-default)] rounded-lg flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-full bg-[#2D63D2] text-white flex items-center justify-center text-sm font-semibold shadow-xs shrink-0">
               {getUserInitials()}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-semibold text-[#171A1F] truncate">{getUserName()}</div>
-              <div className="text-[11px] text-[#5E6672] truncate">satishbittu67@gmail.com</div>
-              <span className="inline-block mt-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#EAF2FB] text-[#174A8B] border border-[#2166B1]/20">
+              <div className="text-xs font-semibold text-[var(--text-primary)] truncate">{getUserName()}</div>
+              <div className="text-[11px] text-[var(--text-secondary)] truncate">satishbittu67@gmail.com</div>
+              <span className="inline-block mt-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-[var(--status-info-bg)] text-[#2D63D2] border border-[var(--status-info)]/20">
                 {roles.find((r) => r.role === currentRole)?.label || currentRole}
               </span>
             </div>
@@ -399,10 +384,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
           {/* Quick Actions Shortcuts */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-[#858C96] uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
                 Quick Actions
               </span>
-              <span className="text-[10px] text-[#5141FF] font-semibold bg-[#F2F0FF] px-1.5 py-0.5 rounded">
+              <span className="text-[10px] text-[var(--action-primary)] font-semibold bg-[var(--brand-50)] px-1.5 py-0.5 rounded">
                 Direct Jump
               </span>
             </div>
@@ -413,18 +398,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   setIsMobileRightNavOpen(false);
                   navigateToScreen('11_entry_form', 'FLOW_B');
                 }}
-                className="w-full p-2.5 rounded-lg border border-[#E5E7EB] bg-white hover:bg-[#FAFAFB] text-left flex items-center justify-between text-xs transition-colors"
+                className="w-full p-2.5 rounded-lg border border-[var(--border-default)] bg-white hover:bg-[var(--surface-secondary)] text-left flex items-center justify-between text-xs transition-colors"
               >
                 <div className="flex items-center space-x-2.5">
-                  <div className="w-7 h-7 rounded-md bg-[#F2F0FF] text-[#5141FF] flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--brand-50)] text-[var(--action-primary)] flex items-center justify-center shrink-0">
                     <TableProperties className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="font-semibold text-[#17181A]">Activity Ingestion</div>
-                    <div className="text-[10px] text-[#5F6368]">Manual, Bulk & Camera Scan</div>
+                    <div className="font-semibold text-[var(--text-primary)]">Activity Ingestion</div>
+                    <div className="text-[10px] text-[var(--text-secondary)]">Manual, Bulk & Camera Scan</div>
                   </div>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#8A8F98]" />
+                <ArrowRight className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
               </button>
 
               <button
@@ -433,18 +418,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   setIsMobileRightNavOpen(false);
                   navigateToScreen('27_report_builder', 'FLOW_E');
                 }}
-                className="w-full p-2.5 rounded-lg border border-[#E5E7EB] bg-white hover:bg-[#FAFAFB] text-left flex items-center justify-between text-xs transition-colors"
+                className="w-full p-2.5 rounded-lg border border-[var(--border-default)] bg-white hover:bg-[var(--surface-secondary)] text-left flex items-center justify-between text-xs transition-colors"
               >
                 <div className="flex items-center space-x-2.5">
-                  <div className="w-7 h-7 rounded-md bg-[#FFF8E6] text-[#B54708] flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--status-warning-bg)] text-[var(--status-warning)] flex items-center justify-center shrink-0">
                     <FileBarChart className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="font-semibold text-[#17181A]">Start New Report</div>
-                    <div className="text-[10px] text-[#5F6368]">GHG Disclosure Builder</div>
+                    <div className="font-semibold text-[var(--text-primary)]">Start New Report</div>
+                    <div className="text-[10px] text-[var(--text-secondary)]">GHG Disclosure Builder</div>
                   </div>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#8A8F98]" />
+                <ArrowRight className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
               </button>
 
               <button
@@ -453,18 +438,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   setIsMobileRightNavOpen(false);
                   openFactorHelper();
                 }}
-                className="w-full p-2.5 rounded-lg border border-[#E5E0FF] bg-[#F2F0FF]/60 hover:bg-[#F2F0FF] text-left flex items-center justify-between text-xs transition-colors"
+                className="w-full p-2.5 rounded-lg border border-[var(--brand-100)] bg-[var(--brand-50)]/60 hover:bg-[var(--brand-50)] text-left flex items-center justify-between text-xs transition-colors"
               >
                 <div className="flex items-center space-x-2.5">
-                  <div className="w-7 h-7 rounded-md bg-[#5141FF] text-white flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--action-primary)] text-white flex items-center justify-center shrink-0">
                     <BookOpen className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="font-semibold text-[#17181A]">Factor Helper</div>
-                    <div className="text-[10px] text-[#5141FF] font-semibold">IPCC AR6 & IEA 2024 Lookup</div>
+                    <div className="font-semibold text-[var(--text-primary)]">Factor Helper</div>
+                    <div className="text-[10px] text-[var(--action-primary)] font-semibold">IPCC AR6 & IEA 2024 Lookup</div>
                   </div>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#8A8F98]" />
+                <ArrowRight className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
               </button>
             </div>
           </div>
@@ -472,10 +457,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
           {/* Role Switcher Section */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-[#858C96] uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
                 Active Role Perspective
               </span>
-              <span className="text-[10px] text-[#174A8B] font-mono">1-Tap Switch</span>
+              <span className="text-[10px] text-[#2D63D2] font-mono">1-Tap Switch</span>
             </div>
             <div className="space-y-1.5">
               {roles.map((r) => {
@@ -484,18 +469,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   <button
                     key={r.role}
                     onClick={() => handleRoleSelect(r.role)}
-                    className={`w-full p-2.5 rounded-md text-left text-xs transition-all border flex items-center justify-between ${
+                    className={`w-full p-2.5 rounded-lg text-left text-xs transition-all border flex items-center justify-between ${
                       isActive
-                        ? 'bg-[#EAF2FB] border-[#174A8B] text-[#174A8B] font-medium shadow-xs'
-                        : 'bg-white border-[#D9DDE3] text-[#171A1F] hover:bg-[#F8F9FB]'
+                        ? 'bg-[var(--status-info-bg)] border-[var(--status-info)] text-[#2D63D2] font-medium shadow-xs'
+                        : 'bg-white border-[var(--border-default)] text-[var(--text-primary)] hover:bg-[var(--bg-canvas)]'
                     }`}
                   >
                     <div>
                       <div className="font-medium">{r.label}</div>
-                      <div className="text-[10px] text-[#5E6672] line-clamp-1">{r.desc}</div>
+                      <div className="text-[10px] text-[var(--text-secondary)] line-clamp-1">{r.desc}</div>
                     </div>
                     {isActive && (
-                      <Check className="w-4 h-4 text-[#174A8B] shrink-0 ml-2" />
+                      <Check className="w-4 h-4 text-[#2D63D2] shrink-0 ml-2" />
                     )}
                   </button>
                 );
@@ -506,10 +491,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
           {/* Organisation / Tenant Section */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-[#858C96] uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
                 Organisation / Tenant
               </span>
-              <Building2 className="w-3.5 h-3.5 text-[#858C96]" />
+              <Building2 className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
             </div>
             <div className="space-y-1">
               {tenants.map((t) => {
@@ -521,18 +506,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                       setCurrentTenant(t);
                       setIsMobileRightNavOpen(false);
                     }}
-                    className={`w-full px-3 py-2 rounded-md text-left text-xs flex items-center justify-between border transition-colors ${
+                    className={`w-full px-3 py-2 rounded-lg text-left text-xs flex items-center justify-between border transition-colors ${
                       isSelected
-                        ? 'bg-[#F1F3F5] border-[#D9DDE3] text-[#174A8B] font-medium'
-                        : 'bg-white border-transparent hover:bg-[#F8F9FB] text-[#171A1F]'
+                        ? 'bg-[var(--bg-subtle)] border-[var(--border-default)] text-[#2D63D2] font-medium'
+                        : 'bg-white border-transparent hover:bg-[var(--bg-canvas)] text-[var(--text-primary)]'
                     }`}
                   >
                     <div className="truncate">
                       <div className="font-medium truncate">{t.name}</div>
-                      <div className="text-[10px] text-[#858C96]">{t.legalEntityName}</div>
+                      <div className="text-[10px] text-[var(--text-tertiary)]">{t.legalEntityName}</div>
                     </div>
                     {isSelected && (
-                      <span className="w-2 h-2 rounded-full bg-[#174A8B] shrink-0 ml-2" />
+                      <span className="w-2 h-2 rounded-full bg-[#2D63D2] shrink-0 ml-2" />
                     )}
                   </button>
                 );
@@ -542,7 +527,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   setIsMobileRightNavOpen(false);
                   navigateToScreen('03_tenant_selector');
                 }}
-                className="w-full py-1.5 text-center text-xs text-[#174A8B] font-medium hover:underline flex items-center justify-center space-x-1"
+                className="w-full py-1.5 text-center text-xs text-[#2D63D2] font-medium hover:underline flex items-center justify-center space-x-1"
               >
                 <span>View Full Tenant Directory</span>
                 <ArrowRight className="w-3 h-3" />
@@ -553,10 +538,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
           {/* Reporting Period Section */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-[#858C96] uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
                 Reporting Period
               </span>
-              <Calendar className="w-3.5 h-3.5 text-[#858C96]" />
+              <Calendar className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
             </div>
             <div className="space-y-1">
               {periods.map((p) => {
@@ -568,18 +553,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                       setActivePeriodId(p.id);
                       setIsMobileRightNavOpen(false);
                     }}
-                    className={`w-full px-3 py-2 rounded-md text-left text-xs flex items-center justify-between border transition-colors ${
+                    className={`w-full px-3 py-2 rounded-lg text-left text-xs flex items-center justify-between border transition-colors ${
                       isSelected
-                        ? 'bg-[#EAF2FB] border-[#2166B1]/30 text-[#174A8B] font-medium'
-                        : 'bg-white border-[#D9DDE3] hover:bg-[#F8F9FB] text-[#171A1F]'
+                        ? 'bg-[var(--status-info-bg)] border-[var(--status-info)]/30 text-[#2D63D2] font-medium'
+                        : 'bg-white border-[var(--border-default)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)]'
                     }`}
                   >
                     <div>
                       <div className="font-medium">{p.name}</div>
-                      <div className="text-[10px] text-[#5E6672]">{p.startDate} - {p.endDate}</div>
+                      <div className="text-[10px] text-[var(--text-secondary)]">{p.startDate} - {p.endDate}</div>
                     </div>
                     <span className={`text-[10px] px-1.5 py-0.2 rounded font-medium ${
-                      p.locked ? 'bg-[#F1F3F5] text-[#5E6672]' : 'bg-[#EAF2FB] text-[#174A8B]'
+                      p.locked ? 'bg-[var(--bg-subtle)] text-[var(--text-secondary)]' : 'bg-[var(--status-info-bg)] text-[#2D63D2]'
                     }`}>
                       {p.locked ? 'Locked' : 'Active'}
                     </span>
@@ -591,7 +576,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   setIsMobileRightNavOpen(false);
                   navigateToScreen('06_periods');
                 }}
-                className="w-full py-1.5 text-center text-xs text-[#174A8B] font-medium hover:underline flex items-center justify-center space-x-1"
+                className="w-full py-1.5 text-center text-xs text-[#2D63D2] font-medium hover:underline flex items-center justify-center space-x-1"
               >
                 <span>Manage Reporting Periods</span>
                 <ArrowRight className="w-3 h-3" />
@@ -600,8 +585,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
           </div>
 
           {/* Quick Shortcuts */}
-          <div className="space-y-2 pt-2 border-t border-[#F1F3F5]">
-            <span className="text-[11px] font-semibold text-[#858C96] uppercase tracking-wider">
+          <div className="space-y-2 pt-2 border-t border-[var(--border-subtle)]">
+            <span className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-wider">
               Workspace Tools
             </span>
             <div className="space-y-1.5">
@@ -611,18 +596,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   setIsMobileRightNavOpen(false);
                   navigateToScreen('34_reviewer_notification', 'FLOW_F');
                 }}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-md bg-white border border-[#D9DDE3] hover:bg-[#F8F9FB] text-xs transition-colors"
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-full bg-white border border-[var(--border-default)] hover:bg-[var(--bg-canvas)] text-xs transition-colors"
               >
                 <div className="flex items-center space-x-2.5">
-                  <Bell className="w-4 h-4 text-[#174A8B]" />
-                  <span className="font-medium text-[#171A1F]">Notification Center</span>
+                  <Bell className="w-4 h-4 text-[#2D63D2]" />
+                  <span className="font-medium text-[var(--text-primary)]">Notification Center</span>
                 </div>
                 {unreadNotificationsCount > 0 ? (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FB3256] text-white">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[var(--color-brand-orange-500)] text-white">
                     {unreadNotificationsCount} unread
                   </span>
                 ) : (
-                  <span className="text-[10px] text-[#858C96]">Up to date</span>
+                  <span className="text-[10px] text-[var(--text-tertiary)]">Up to date</span>
                 )}
               </button>
 
@@ -632,7 +617,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
                   setIsMobileRightNavOpen(false);
                   navigateToScreen('01_login', 'FLOW_A');
                 }}
-                className="w-full flex items-center space-x-2.5 px-3 py-2.5 rounded-full bg-white border border-[#E5E7EB] hover:bg-[#FFF0F3] hover:border-[#FFDCE4] text-xs text-[#5F6368] hover:text-[#FB3256] transition-colors"
+                className="w-full flex items-center space-x-2.5 px-3 py-2.5 rounded-full bg-white border border-[var(--border-default)] hover:bg-[var(--status-warning-bg)] hover:border-[var(--status-warning)] text-xs text-[var(--text-secondary)] hover:text-[var(--status-warning)] transition-colors"
               >
                 <LogOut className="w-4 h-4" />
                 <span>Switch Account / Sign Out</span>
@@ -642,8 +627,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
         </div>
 
         {/* Drawer Footer */}
-        <div className="p-3 bg-[#F8F9FB] border-t border-[#D9DDE3] text-center text-[10px] text-[#858C96] space-y-0.5">
-          <div className="font-medium text-[#5E6672]">Tula Carbon Accounting & Assurance</div>
+        <div className="p-3 bg-[var(--bg-canvas)] border-t border-[var(--border-default)] text-center text-[10px] text-[var(--text-tertiary)] space-y-0.5">
+          <div className="font-medium text-[var(--text-secondary)]">Tula Carbon Accounting & Assurance</div>
           <div>GHG Protocol Scopes 1, 2 & 3 · Phase 1 Assurance</div>
         </div>
       </aside>

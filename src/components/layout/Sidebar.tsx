@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { ScreenId } from '../../types';
-import tulaLogo from '../../assets/Tula Carbon.png';
+import { ScreenId, UserRole } from '../../types';
+import tulaLogo from '../../assets/Tula Carbon Dot Grid Logo.png';
 import {
   LayoutDashboard,
   TableProperties,
-  FileSpreadsheet,
-  ScanLine,
   Files,
   Calculator,
   FileText,
   CheckCircle2,
   ShieldCheck,
-  Building,
+  Building2,
   MapPin,
   Calendar,
   Zap,
@@ -28,11 +26,22 @@ import {
   SlidersHorizontal,
   Target,
   Play,
-  Search,
-  Sparkles,
-  ArrowRight,
-  ChevronRight,
+  ChevronDown,
+  LogOut,
+  Menu,
 } from 'lucide-react';
+
+interface NavItem {
+  id: ScreenId;
+  label: string;
+  icon: React.ElementType;
+  badge?: number | string;
+}
+
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
 
 export const Sidebar: React.FC = () => {
   const {
@@ -42,476 +51,181 @@ export const Sidebar: React.FC = () => {
     verifierQueries,
     notifications,
     currentRole,
-    isMobileMenuOpen,
+    setCurrentRole,
+    currentUser,
+      isMobileMenuOpen,
     setIsMobileMenuOpen,
   } = useApp();
+  const [roleMenuOpen, setRoleMenuOpen] = useState(false);
 
-  const [navSearch, setNavSearch] = useState('');
-  const [isPromoCardDismissed, setIsPromoCardDismissed] = useState(false);
+  const pendingReviews = records.filter((record) => record.status === 'Submitted').length;
+  const openQueries = verifierQueries.filter((query) => query.status === 'Open').length;
+  const unreadNotifications = notifications.filter((notification) => !notification.isRead).length;
 
-  const pendingReviewCount = records.filter((r) => r.status === 'Submitted').length;
-  const openQueriesCount = verifierQueries.filter((q) => q.status === 'Open').length;
-  const unreadNotificationsCount = notifications.filter((n) => !n.isRead).length;
+  const roles: { role: UserRole; label: string }[] = [
+    { role: 'TENANT_ADMIN', label: 'Tenant admin' },
+    { role: 'DATA_ENTRY', label: 'Data entry' },
+    { role: 'REVIEWER', label: 'Reviewer' },
+    { role: 'VERIFIER', label: 'Verifier' },
+  ];
 
-  interface NavItem {
-    id: ScreenId;
-    label: string;
-    icon: React.ElementType;
-    badge?: number | string;
-    badgeColor?: string;
-    iconTint?: string;
-  }
+  const switchRole = (role: UserRole) => {
+    setCurrentRole(role);
+    setRoleMenuOpen(false);
+    setIsMobileMenuOpen(false);
+    if (role === 'VERIFIER') navigateToScreen('31_verifier_dashboard', 'FLOW_F');
+    else if (role === 'DATA_ENTRY') navigateToScreen('10_activity_dashboard', 'FLOW_B');
+    else if (role === 'REVIEWER') navigateToScreen('24_review_approve', 'FLOW_B');
+    else navigateToScreen('04_org_profile', 'FLOW_A');
+  };
 
-  interface NavSection {
-    title: string;
-    items: NavItem[];
-  }
-
-  let sections: NavSection[] = [];
-
+  let sections: NavSection[];
   if (currentRole === 'VERIFIER') {
     sections = [
-      {
-        title: 'Assurance & Verification',
-        items: [
-          {
-            id: '31_verifier_dashboard',
-            label: 'Verifier Dashboard',
-            icon: ShieldCheck,
-            badge: openQueriesCount > 0 ? `${openQueriesCount} open` : undefined,
-            badgeColor: 'bg-[#FFF0F1] text-[#C52238] border border-[#C52238]/20',
-            iconTint: 'text-[#5141FF]',
-          },
-          { id: '32_evidence_trace', label: 'Evidence Trace', icon: Files, iconTint: 'text-[#168FE5]' },
-          { id: '33_raise_query', label: 'Assurance Queries', icon: HelpCircle, iconTint: 'text-[#FB3256]' },
-          { id: '28_report_preview', label: 'Report Disclosures', icon: FileText, iconTint: 'text-[#16845B]' },
-        ],
-      },
-      {
-        title: 'Governance & Evidence',
-        items: [
-          { id: '22_factors_reference', label: 'Emission Factors Library', icon: BookOpen, iconTint: 'text-[#5141FF]' },
-          { id: '37_benchmarking', label: 'Sector Benchmark Radar', icon: Target, iconTint: 'text-[#168FE5]' },
-          { id: '35_audit_trail', label: 'Immutable Audit Trail', icon: History, iconTint: 'text-[#42485A]' },
-          {
-            id: '34_reviewer_notification',
-            label: 'Notification Center',
-            icon: Bell,
-            badge: unreadNotificationsCount > 0 ? unreadNotificationsCount : undefined,
-            badgeColor: 'bg-[#FFF0F1] text-[#C52238]',
-            iconTint: 'text-[#FB3256]',
-          },
-        ],
-      },
-      {
-        title: 'Boundaries (Read-Only)',
-        items: [
-          { id: '04_org_profile', label: 'Organisation Profile', icon: Building, iconTint: 'text-[#62697C]' },
-          { id: '05_sites', label: 'Assurance Sites', icon: MapPin, iconTint: 'text-[#62697C]' },
-          { id: '06_periods', label: 'Reporting Periods', icon: Calendar, iconTint: 'text-[#62697C]' },
-        ],
-      },
+      { title: 'Main', items: [
+        { id: '31_verifier_dashboard', label: 'Overview', icon: LayoutDashboard, badge: openQueries || undefined },
+        { id: '32_evidence_trace', label: 'Evidence trace', icon: Files },
+        { id: '33_raise_query', label: 'Assurance queries', icon: HelpCircle },
+        { id: '35_audit_trail', label: 'Audit trail', icon: History },
+      ] },
+      { title: 'Workspace', items: [
+        { id: '22_factors_reference', label: 'Emission factors', icon: Zap },
+        { id: '37_benchmarking', label: 'Benchmarks', icon: Target },
+        { id: '28_report_preview', label: 'Report disclosures', icon: FileText },
+      ] },
+      { title: 'Support', items: [
+        { id: '04_org_profile', label: 'Organisation profile', icon: Building2 },
+        { id: '05_sites', label: 'Facilities', icon: MapPin },
+        { id: '06_periods', label: 'Reporting periods', icon: Calendar },
+        { id: '34_reviewer_notification', label: 'Notifications', icon: Bell, badge: unreadNotifications || undefined },
+      ] },
     ];
   } else if (currentRole === 'DATA_ENTRY') {
     sections = [
-      {
-        title: 'Workspace',
-        items: [
-          { id: '10_activity_dashboard', label: 'Activity Dashboard', icon: LayoutDashboard, iconTint: 'text-[#5141FF]' },
-        ],
-      },
-      {
-        title: 'Data Collection',
-        items: [
-          { id: '11_entry_form', label: 'Activity Data Ingestion', icon: TableProperties, iconTint: 'text-[#5141FF]' },
-          { id: '16_attach_evidence', label: 'Evidence & Documents', icon: Files, iconTint: 'text-[#16845B]' },
-        ],
-      },
-      {
-        title: 'Workflow & Tracking',
-        items: [
-          { id: '23_submission_queue', label: 'My Submissions', icon: Inbox, iconTint: 'text-[#5141FF]' },
-          {
-            id: '34_reviewer_notification',
-            label: 'Notification Center',
-            icon: Bell,
-            badge: unreadNotificationsCount > 0 ? unreadNotificationsCount : undefined,
-            badgeColor: 'bg-[#FFF0F1] text-[#C52238]',
-            iconTint: 'text-[#FB3256]',
-          },
-          { id: '22_factors_reference', label: 'Emission Factors', icon: BookOpen, iconTint: 'text-[#168FE5]' },
-        ],
-      },
+      { title: 'Main', items: [
+        { id: '10_activity_dashboard', label: 'Overview', icon: LayoutDashboard },
+        { id: '11_entry_form', label: 'Activity data', icon: TableProperties },
+        { id: '16_attach_evidence', label: 'Evidence & documents', icon: Files },
+      ] },
+      { title: 'Workspace', items: [
+        { id: '23_submission_queue', label: 'My submissions', icon: Inbox },
+        { id: '22_factors_reference', label: 'Emission factors', icon: Zap },
+      ] },
+      { title: 'Support', items: [
+        { id: '34_reviewer_notification', label: 'Notifications', icon: Bell, badge: unreadNotifications || undefined },
+      ] },
     ];
   } else if (currentRole === 'REVIEWER') {
     sections = [
-      {
-        title: 'Workspace',
-        items: [
-          { id: '10_activity_dashboard', label: 'Activity Dashboard', icon: LayoutDashboard, iconTint: 'text-[#5141FF]' },
-        ],
-      },
-      {
-        title: 'Review & Approvals',
-        items: [
-          {
-            id: '24_review_approve',
-            label: 'Review & Approvals',
-            icon: CheckCircle2,
-            badge: pendingReviewCount > 0 ? pendingReviewCount : undefined,
-            badgeColor: 'bg-[#F2F0FF] text-[#5141FF] border border-[#5141FF]/20',
-            iconTint: 'text-[#16845B]',
-          },
-          { id: '23_submission_queue', label: 'Submission Queue', icon: Inbox, iconTint: 'text-[#5141FF]' },
-          { id: '25_approval_history', label: 'Approval History', icon: History, iconTint: 'text-[#42485A]' },
-          {
-            id: '33_raise_query',
-            label: 'Verifier Queries',
-            icon: HelpCircle,
-            badge: openQueriesCount > 0 ? `${openQueriesCount} open` : undefined,
-            badgeColor: 'bg-[#FFF0F1] text-[#C52238] border border-[#C52238]/20',
-            iconTint: 'text-[#FB3256]',
-          },
-        ],
-      },
-      {
-        title: 'Calculations & Reports',
-        items: [
-          { id: '19_run_calculation', label: 'Run Calculation Engine', icon: Play, iconTint: 'text-[#5141FF]' },
-          { id: '20_results_summary', label: 'Calculations Ledger', icon: Calculator, iconTint: 'text-[#168FE5]' },
-          { id: '21_drill_down', label: 'Results Drill-Down', icon: Eye, iconTint: 'text-[#5141FF]' },
-          { id: '36_scenario_builder', label: 'What-If Scenarios', icon: SlidersHorizontal, badge: 'New', iconTint: 'text-[#FB3256]' },
-          { id: '37_benchmarking', label: 'Industry Benchmarking', icon: Target, iconTint: 'text-[#16845B]' },
-          { id: '27_report_builder', label: 'Reports & Export', icon: FileText, iconTint: 'text-[#5141FF]' },
-          { id: '22_factors_reference', label: 'Emission Factors', icon: BookOpen, iconTint: 'text-[#168FE5]' },
-        ],
-      },
-      {
-        title: 'Governance & Assurance',
-        items: [
-          { id: '35_audit_trail', label: 'Audit Trail Viewer', icon: History, iconTint: 'text-[#42485A]' },
-          {
-            id: '34_reviewer_notification',
-            label: 'Notification Center',
-            icon: Bell,
-            badge: unreadNotificationsCount > 0 ? unreadNotificationsCount : undefined,
-            badgeColor: 'bg-[#FFF0F1] text-[#C52238]',
-            iconTint: 'text-[#FB3256]',
-          },
-        ],
-      },
+      { title: 'Main', items: [
+        { id: '10_activity_dashboard', label: 'Overview', icon: LayoutDashboard },
+        { id: '24_review_approve', label: 'Review & approvals', icon: CheckCircle2, badge: pendingReviews || undefined },
+        { id: '23_submission_queue', label: 'Submission queue', icon: Inbox },
+      ] },
+      { title: 'Workspace', items: [
+        { id: '19_run_calculation', label: 'Run calculations', icon: Play },
+        { id: '20_results_summary', label: 'Calculation ledger', icon: Calculator },
+        { id: '21_drill_down', label: 'Results analysis', icon: Eye },
+        { id: '22_factors_reference', label: 'Emission factors', icon: Zap },
+        { id: '25_approval_history', label: 'Approval history', icon: History },
+        { id: '33_raise_query', label: 'Verifier queries', icon: HelpCircle, badge: openQueries || undefined },
+        { id: '35_audit_trail', label: 'Audit trail', icon: History },
+        { id: '36_scenario_builder', label: 'Scenarios', icon: SlidersHorizontal },
+        { id: '37_benchmarking', label: 'Benchmarks', icon: Target },
+        { id: '27_report_builder', label: 'Reports & exports', icon: FileText },
+      ] },
+      { title: 'Support', items: [
+        { id: '34_reviewer_notification', label: 'Notifications', icon: Bell, badge: unreadNotifications || undefined },
+        { id: '09_tenant_settings', label: 'Settings', icon: Settings },
+      ] },
     ];
   } else {
-    // TENANT_ADMIN
     sections = [
-      {
-        title: 'Workspace',
-        items: [
-          { id: '10_activity_dashboard', label: 'Activity Dashboard', icon: LayoutDashboard, iconTint: 'text-[#5141FF]' },
-        ],
-      },
-      {
-        title: 'Data Collection',
-        items: [
-          { id: '11_entry_form', label: 'Activity Data Ingestion', icon: TableProperties, iconTint: 'text-[#5141FF]' },
-          { id: '16_attach_evidence', label: 'Evidence & Documents', icon: Files, iconTint: 'text-[#16845B]' },
-        ],
-      },
-      {
-        title: 'Calculations & Reports',
-        items: [
-          { id: '19_run_calculation', label: 'Run Calculation Engine', icon: Play, iconTint: 'text-[#5141FF]' },
-          { id: '20_results_summary', label: 'Calculations Ledger', icon: Calculator, iconTint: 'text-[#168FE5]' },
-          { id: '21_drill_down', label: 'Results Drill-Down', icon: Eye, iconTint: 'text-[#5141FF]' },
-          { id: '36_scenario_builder', label: 'What-If Scenarios', icon: SlidersHorizontal, badge: 'New', iconTint: 'text-[#FB3256]' },
-          { id: '37_benchmarking', label: 'Industry Benchmarking', icon: Target, iconTint: 'text-[#16845B]' },
-          { id: '22_factors_reference', label: 'Emission Factors', icon: BookOpen, iconTint: 'text-[#168FE5]' },
-          { id: '27_report_builder', label: 'Reports & Export', icon: FileText, iconTint: 'text-[#5141FF]' },
-        ],
-      },
-      {
-        title: 'Workflow & Governance',
-        items: [
-          {
-            id: '24_review_approve',
-            label: 'Review & Approvals',
-            icon: CheckCircle2,
-            badge: pendingReviewCount > 0 ? pendingReviewCount : undefined,
-            badgeColor: 'bg-[#F2F0FF] text-[#5141FF] border border-[#5141FF]/20',
-            iconTint: 'text-[#16845B]',
-          },
-          { id: '23_submission_queue', label: 'Submission Queue', icon: Inbox, iconTint: 'text-[#5141FF]' },
-          { id: '26_period_lock', label: 'Period Governance', icon: Calendar, iconTint: 'text-[#62697C]' },
-          {
-            id: '31_verifier_dashboard',
-            label: 'Verifier Portal',
-            icon: ShieldCheck,
-            badge: openQueriesCount > 0 ? openQueriesCount : undefined,
-            badgeColor: 'bg-[#FFF0F1] text-[#C52238] border border-[#C52238]/20',
-            iconTint: 'text-[#5141FF]',
-          },
-          {
-            id: '34_reviewer_notification',
-            label: 'Notification Center',
-            icon: Bell,
-            badge: unreadNotificationsCount > 0 ? unreadNotificationsCount : undefined,
-            badgeColor: 'bg-[#FFF0F1] text-[#C52238]',
-            iconTint: 'text-[#FB3256]',
-          },
-        ],
-      },
-      {
-        title: 'Administration',
-        items: [
-          { id: '04_org_profile', label: 'Organisation Profile', icon: Building, iconTint: 'text-[#62697C]' },
-          { id: '05_sites', label: 'Sites & Facilities', icon: MapPin, iconTint: 'text-[#62697C]' },
-          { id: '06_periods', label: 'Reporting Periods', icon: Calendar, iconTint: 'text-[#62697C]' },
-          { id: '07_emission_sources', label: 'Emission Sources', icon: Zap, iconTint: 'text-[#5141FF]' },
-          { id: '08_users_roles', label: 'Users & Roles', icon: Users, iconTint: 'text-[#62697C]' },
-          { id: '09_tenant_settings', label: 'Tenant Settings', icon: Settings, iconTint: 'text-[#62697C]' },
-          { id: '35_audit_trail', label: 'Audit Trail Viewer', icon: History, iconTint: 'text-[#42485A]' },
-        ],
-      },
+      { title: 'Main', items: [
+        { id: '10_activity_dashboard', label: 'Overview', icon: LayoutDashboard },
+        { id: '11_entry_form', label: 'Activity data', icon: TableProperties },
+        { id: '16_attach_evidence', label: 'Evidence & documents', icon: Files },
+      ] },
+      { title: 'Workspace', items: [
+        { id: '19_run_calculation', label: 'Run calculations', icon: Play },
+        { id: '20_results_summary', label: 'Calculation ledger', icon: Calculator },
+        { id: '21_drill_down', label: 'Results analysis', icon: Eye },
+        { id: '22_factors_reference', label: 'Emission factors', icon: Zap },
+        { id: '24_review_approve', label: 'Review & approvals', icon: CheckCircle2, badge: pendingReviews || undefined },
+        { id: '23_submission_queue', label: 'Submission queue', icon: Inbox },
+        { id: '26_period_lock', label: 'Period close', icon: Calendar },
+        { id: '31_verifier_dashboard', label: 'Verifier workspace', icon: ShieldCheck, badge: openQueries || undefined },
+        { id: '35_audit_trail', label: 'Audit trail', icon: History },
+        { id: '36_scenario_builder', label: 'Scenarios', icon: SlidersHorizontal },
+        { id: '37_benchmarking', label: 'Benchmarks', icon: Target },
+        { id: '27_report_builder', label: 'Reports & exports', icon: FileText },
+      ] },
+      { title: 'Support', items: [
+        { id: '34_reviewer_notification', label: 'Notifications', icon: Bell, badge: unreadNotifications || undefined },
+        { id: '04_org_profile', label: 'Organisation profile', icon: Building2 },
+        { id: '05_sites', label: 'Facilities', icon: MapPin },
+        { id: '06_periods', label: 'Reporting periods', icon: Calendar },
+        { id: '07_emission_sources', label: 'Emission sources', icon: Zap },
+        { id: '08_users_roles', label: 'Users & roles', icon: Users },
+        { id: '09_tenant_settings', label: 'Settings', icon: Settings },
+      ] },
     ];
   }
 
-  const renderNetZeroCard = () => {
-    if (isPromoCardDismissed) return null;
-
-    return (
-      <div className="p-3 border-t border-[#E2E5EF]/60 bg-white/40 space-y-2">
-        <div className="relative overflow-hidden p-3.5 rounded-2xl bg-gradient-to-b from-white/95 via-white/90 to-[#F7F8FC]/90 backdrop-blur-xl border border-white/90 shadow-[0_8px_24px_rgba(28,31,58,0.06),0_2px_6px_rgba(28,31,58,0.03)] space-y-3">
-          {/* Decorative Subtle Dot Matrix Grid in Background */}
-          <svg
-            className="absolute top-2 right-8 w-20 h-14 pointer-events-none opacity-45"
-            viewBox="0 0 80 50"
-            fill="none"
-            aria-hidden="true"
-          >
-            <circle cx="10" cy="10" r="1.5" fill="#5141FF" fillOpacity="0.4" />
-            <circle cx="22" cy="10" r="1.5" fill="#5141FF" fillOpacity="0.7" />
-            <circle cx="34" cy="10" r="1.5" fill="#FB3256" fillOpacity="0.5" />
-            <circle cx="46" cy="10" r="1.5" fill="#FB3256" fillOpacity="0.8" />
-            <circle cx="58" cy="10" r="1.5" fill="#FB3256" fillOpacity="0.3" />
-            <circle cx="70" cy="10" r="1.5" fill="#FB3256" fillOpacity="0.2" />
-
-            <circle cx="16" cy="20" r="1.5" fill="#5141FF" fillOpacity="0.6" />
-            <circle cx="28" cy="20" r="1.5" fill="#5141FF" fillOpacity="0.9" />
-            <circle cx="40" cy="20" r="1.5" fill="#5141FF" fillOpacity="0.6" />
-            <circle cx="52" cy="20" r="1.5" fill="#FB3256" fillOpacity="0.7" />
-            <circle cx="64" cy="20" r="1.5" fill="#FB3256" fillOpacity="0.4" />
-
-            <circle cx="10" cy="30" r="1.5" fill="#5141FF" fillOpacity="0.3" />
-            <circle cx="22" cy="30" r="1.5" fill="#5141FF" fillOpacity="0.7" />
-            <circle cx="34" cy="30" r="1.5" fill="#5141FF" fillOpacity="0.5" />
-            <circle cx="46" cy="30" r="1.5" fill="#FB3256" fillOpacity="0.6" />
-            <circle cx="58" cy="30" r="1.5" fill="#FB3256" fillOpacity="0.3" />
-
-            <circle cx="16" cy="40" r="1.5" fill="#5141FF" fillOpacity="0.4" />
-            <circle cx="28" cy="40" r="1.5" fill="#5141FF" fillOpacity="0.5" />
-            <circle cx="40" cy="40" r="1.5" fill="#5141FF" fillOpacity="0.3" />
-            <circle cx="52" cy="40" r="1.5" fill="#FB3256" fillOpacity="0.4" />
-          </svg>
-
-          {/* Dismiss Button */}
-          <button
-            type="button"
-            onClick={() => setIsPromoCardDismissed(true)}
-            className="absolute top-2.5 right-2.5 p-1 text-[#858CA0] hover:text-[#181B27] hover:bg-black/5 rounded-lg transition-colors cursor-pointer"
-            aria-label="Dismiss Net-Zero card"
-            title="Dismiss"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
-
-          {/* Icon with Purple and White Glass Fill */}
-          <div className="flex items-start justify-between">
-            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#7B61FF] via-[#5141FF] to-[#3623D3] flex items-center justify-center shadow-[0_6px_18px_rgba(81,65,255,0.38),inset_0_1.5px_2px_rgba(255,255,255,0.55),inset_0_-1.5px_2px_rgba(0,0,0,0.2)] border border-white/35 shrink-0 overflow-hidden group">
-              {/* Glass reflection overlay on top half */}
-              <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/45 via-white/15 to-transparent pointer-events-none rounded-t-2xl" />
-              <Sparkles className="w-5 h-5 text-white relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]" />
-            </div>
-          </div>
-
-          {/* Text content */}
-          <div className="space-y-1">
-            <div className="flex items-center justify-between">
-              <h4 className="text-xs font-bold text-[#181B27] tracking-tight leading-snug">
-                Net-Zero 2030 Pathway
-              </h4>
-              <span className="text-[10px] font-bold text-[#16845B] bg-[#E8F7EF] px-1.5 py-0.5 rounded-full font-mono">
-                68.4%
-              </span>
-            </div>
-            <p className="text-[11px] text-[#62697C] leading-snug">
-              SBTi 1.5°C pathway target: -42% reduction on track
-            </p>
-          </div>
-
-          {/* Dark Gradient Pill Button matching reference design ("Upgrade plan" button style) */}
-          <button
-            type="button"
-            onClick={() => {
-              navigateToScreen('36_scenario_builder', 'FLOW_E');
-              setIsMobileMenuOpen(false);
-            }}
-            className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-b from-[#2B3045] via-[#212537] to-[#141724] hover:from-[#373E5B] hover:to-[#1A1E2E] text-white text-xs font-semibold shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_4px_12px_rgba(20,24,42,0.25)] hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.35),0_6px_16px_rgba(20,24,42,0.35)] active:scale-[0.99] border border-[#3D4460]/40 transition-all duration-150 flex items-center justify-center gap-1.5 cursor-pointer group"
-          >
-            <span>Explore Simulator</span>
-            <ArrowRight className="w-3.5 h-3.5 text-white/80 group-hover:translate-x-0.5 transition-transform" />
-          </button>
-        </div>
-
-        {/* Footer Compliance Badge */}
-        <div className="flex items-center justify-between text-[11px] font-semibold text-[#181B27] px-1 pt-0.5">
-          <span className="flex items-center space-x-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#16845B]" />
-            <span className="text-[10px] text-[#62697C]">ISO 14064-1 & 3 Assurance</span>
-          </span>
-          <span className="text-[10px] text-[#858CA0] font-mono">v2.0</span>
-        </div>
-      </div>
-    );
+  const goTo = (screen: ScreenId) => {
+    navigateToScreen(screen);
+    setIsMobileMenuOpen(false);
   };
 
-  const renderNavList = () => (
-    <div className="flex-1 overflow-y-auto py-2.5 px-3 space-y-4 overscroll-contain">
-      {/* Quick Search Input with ⌘ K shortcut badge */}
-      <div className="relative mb-2.5">
-        <Search className="w-3.5 h-3.5 text-[#858CA0] absolute left-3 top-2.5" />
-        <input
-          type="text"
-          value={navSearch}
-          onChange={(e) => setNavSearch(e.target.value)}
-          placeholder="Ask or search…"
-          className="w-full h-8 pl-8 pr-11 text-xs bg-white/70 hover:bg-white focus:bg-white border border-[#E2E5EF] focus:border-[#5141FF] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5141FF]/20 text-[#181B27] placeholder-[#858CA0] transition-colors shadow-2xs"
-        />
-        <span className="absolute right-2 top-1.5 px-1.5 py-0.5 text-[10px] font-mono font-medium text-[#858CA0] bg-[#F0F2F7] rounded border border-[#E2E5EF]">
-          ⌘K
-        </span>
+  const sidebarContent = (
+    <>
+      <div className="px-3.5 pt-3.5 pb-3 bg-transparent">
+        <div className="flex items-center justify-between gap-2">
+          <img src={tulaLogo} alt="Tula Carbon" className="h-8 w-auto max-w-[168px] object-contain object-left" />
+          <button type="button" onClick={() => setIsMobileMenuOpen(false)} className="md:hidden p-1.5 text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)] rounded-md" aria-label="Close navigation"><X className="w-4 h-4" /></button>
+        </div>
       </div>
 
-      {sections.map((section) => {
-        const matchingItems = section.items.filter((item) =>
-          !navSearch.trim() || item.label.toLowerCase().includes(navSearch.toLowerCase())
-        );
-
-        if (matchingItems.length === 0) return null;
-
-        return (
-          <div key={section.title} className="space-y-1">
-            <div className="px-2 pt-1 pb-1 text-[10px] font-bold text-[#858CA0] uppercase tracking-wider font-sans">
-              {section.title}
-            </div>
-            <div className="space-y-1">
-              {matchingItems.map((item) => {
-                const isActive = currentScreen === item.id;
-                const Icon = item.icon;
-
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      navigateToScreen(item.id);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className={`w-full flex items-center justify-between px-3 py-2 text-xs rounded-xl transition-all text-left relative group font-sans focus-visible:ring-2 focus-visible:ring-[#5141FF] focus-visible:outline-none ${
-                      isActive
-                        ? 'bg-white text-[#181B27] font-semibold shadow-[0_2px_10px_rgba(28,31,58,0.06),0_1px_3px_rgba(28,31,58,0.04)] border border-[#E2E5EF]/80'
-                        : 'text-[#62697C] border border-transparent hover:bg-white/80 hover:text-[#181B27] hover:shadow-[0_2px_8px_rgba(28,31,58,0.04)] hover:border-white/80 font-medium'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-2.5 truncate">
-                      <div
-                        className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-colors ${
-                          isActive
-                            ? 'text-[#5141FF]'
-                            : 'text-[#858CA0] group-hover:text-[#5141FF]'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <span className="truncate">{item.label}</span>
-                    </div>
-
-                    {item.badge !== undefined && (
-                      <span
-                        className={`text-[10px] px-2 py-0.5 rounded-md font-bold shrink-0 ml-1.5 transition-all ${
-                          item.badge === 'New'
-                            ? 'bg-[#5141FF] text-white shadow-xs shadow-[#5141FF]/25'
-                            : item.badgeColor || 'bg-[#5141FF] text-white shadow-xs shadow-[#5141FF]/20'
-                        }`}
-                      >
-                        {item.badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+      <nav aria-label="Main navigation" className="flex-1 overflow-y-auto px-3 py-3 space-y-5 overscroll-contain">
+        {sections.map((section, sectionIndex) => <section key={`${section.title}-${sectionIndex}`} className={sectionIndex ? 'pt-1' : ''}>
+          <h2 className="px-2 mb-1.5 text-xs font-semibold text-[#393939]">{section.title}</h2>
+          <div className="space-y-0.5">
+            {section.items.map((item) => {
+              const Icon = item.icon;
+              const active = currentScreen === item.id;
+              return <button key={item.id} type="button" onClick={() => goTo(item.id)} aria-current={active ? 'page' : undefined} className={`w-full min-h-9 flex items-center gap-2.5 px-2.5 py-1.5 text-left rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] ${active ? 'bg-white text-[#252525] font-medium shadow-[0_1px_3px_rgba(0,0,0,0.08)]' : 'text-[#4e4e4e] hover:text-[#222] hover:bg-white/70'}`}>
+                <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-[#333]' : 'text-[#555]'}`} aria-hidden="true" />
+                <span className="flex-1 min-w-0 text-sm truncate">{item.label}</span>
+                {item.badge !== undefined && <span className={`min-w-5 px-1.5 py-0.5 rounded-full text-[10px] text-center font-semibold ${active ? 'bg-white/20 text-white' : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)]'}`}>{item.badge}</span>}
+              </button>;
+            })}
           </div>
-        );
-      })}
-    </div>
-  );
+        </section>)}
+      </nav>
 
-  return (
-    <>
-      {/* Mobile Drawer Backdrop */}
-      {isMobileMenuOpen && (
-        <div
-          id="mobile-drawer-backdrop"
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="fixed inset-0 bg-black/45 z-40 md:hidden backdrop-blur-xs transition-opacity duration-200"
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Mobile Drawer */}
-      <aside
-        id="mobile-app-sidebar"
-        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] glass-shell bg-white/95 border-r border-[#E2E5EF] flex flex-col justify-between shadow-2xl md:hidden transition-transform duration-200 ease-in-out ${
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        {/* Mobile Drawer Header */}
-        <div className="p-3.5 border-b border-[#E2E5EF] bg-white/60 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <img
-              src={tulaLogo}
-              alt="Tula Carbon"
-              className="h-12 sm:h-14 w-auto max-w-[220px] object-contain"
-            />
-          </div>
-          <button
-            id="btn-close-mobile-menu"
-            type="button"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="p-1.5 text-[#858CA0] hover:text-[#181B27] hover:bg-[#F0F2F7] rounded-lg transition-colors focus:outline-none"
-            aria-label="Close navigation menu"
-          >
-            <X className="w-5 h-5" />
-          </button>
+      <div className="relative p-4 border-t border-[#e5e5e5] bg-transparent">
+        {roleMenuOpen && <div className="absolute bottom-full left-3 right-3 mb-2 bg-white border border-[var(--border-default)] rounded-lg shadow-lg p-1.5">
+          {roles.map((role) => <button key={role.role} type="button" onClick={() => switchRole(role.role)} className={`w-full text-left px-2.5 py-2 rounded-md text-xs ${role.role === currentRole ? 'bg-[var(--brand-50)] text-[var(--action-primary)] font-semibold' : 'text-[var(--text-primary)] hover:bg-[var(--bg-canvas)]'}`}>{role.label}</button>)}
+        </div>}
+        <button type="button" onClick={() => setRoleMenuOpen((open) => !open)} aria-expanded={roleMenuOpen} className="w-full flex items-center gap-2.5 px-1 py-2 mb-2 text-left">
+          <span className="w-9 h-9 rounded-full bg-[var(--brand-50)] text-[var(--action-primary)] flex items-center justify-center text-xs font-semibold shrink-0">{currentUser.avatarInitials}</span>
+          <span className="min-w-0 flex-1"><span className="block text-xs font-semibold text-[var(--text-primary)] truncate">{currentUser.name}</span><span className="block mt-0.5 text-[10px] text-[var(--text-secondary)] truncate">{roles.find((role) => role.role === currentRole)?.label}</span></span>
+          <ChevronDown className={`w-4 h-4 text-[var(--text-secondary)] transition-transform ${roleMenuOpen ? 'rotate-180' : ''}`} />
+        </button>
+        <div className="grid grid-cols-2 gap-2">
+          <button type="button" onClick={() => goTo('09_tenant_settings')} className="flex items-center justify-center gap-2 px-2 py-2 text-xs text-[var(--text-secondary)] border border-[var(--border-default)] rounded-md hover:bg-[var(--bg-canvas)] hover:text-[var(--text-primary)]"><Settings className="w-3.5 h-3.5" />Settings</button>
+          <button type="button" onClick={() => goTo('01_login')} className="flex items-center justify-center gap-2 px-2 py-2 text-xs text-[var(--text-secondary)] border border-[var(--border-default)] rounded-md hover:bg-[var(--bg-canvas)] hover:text-[var(--text-primary)]"><LogOut className="w-3.5 h-3.5" />Sign out</button>
         </div>
-
-        {/* Navigation List */}
-        {renderNavList()}
-
-        {/* Mobile Drawer Decarbonization Promo / Target Card */}
-        {renderNetZeroCard()}
-      </aside>
-
-      {/* Desktop Persistent Sidebar */}
-      <aside
-        id="app-sidebar"
-        className="hidden md:flex md:w-64 lg:w-64 shrink-0 glass-shell bg-white/75 backdrop-blur-xl border-r border-[#E2E5EF]/70 flex-col justify-between select-none sticky top-16 h-[calc(100vh-4rem)] z-20 shadow-[1px_0_4px_rgba(28,31,58,0.03)] pt-2"
-      >
-        {/* Inner scrolling navigation list */}
-        {renderNavList()}
-
-        {/* Bottom Decarbonization Promo / Target Card */}
-        {renderNetZeroCard()}
-      </aside>
+      </div>
     </>
   );
+
+  return <>
+    <button type="button" onClick={() => setIsMobileMenuOpen(true)} className="md:hidden fixed top-3 left-3 z-30 w-10 h-10 flex items-center justify-center bg-white border border-[var(--border-default)] rounded-md shadow-sm text-[var(--text-primary)]" aria-label="Open navigation">
+      <Menu className="w-5 h-5" />
+    </button>
+    {isMobileMenuOpen && <button type="button" aria-label="Close navigation backdrop" onClick={() => setIsMobileMenuOpen(false)} className="fixed inset-0 bg-black/40 z-40 md:hidden" />}
+    <aside id="mobile-app-sidebar" className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[86vw] flex-col border-r border-[#e2e2e2] bg-[#f3f3f3] shadow-xl transition-transform duration-200 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>{sidebarContent}</aside>
+    <aside id="app-sidebar" className="hidden md:flex md:w-60 lg:w-64 shrink-0 sticky top-0 h-full min-h-0 z-20 flex-col border-r border-[#e2e2e2] bg-[#f3f3f3]">{sidebarContent}</aside>
+  </>;
 };

@@ -178,36 +178,36 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[1px] flex justify-end">
-      <div className="w-full max-w-2xl bg-white h-full shadow-2xl flex flex-col border-l border-[#D9DDE3] animate-in slide-in-from-right duration-200">
+      <div className="w-full max-w-2xl bg-white h-full shadow-2xl flex flex-col border-l border-[var(--border-default)] animate-in slide-in-from-right duration-200">
         {/* Header */}
-        <div className="p-4 border-b border-[#D9DDE3] flex items-center justify-between bg-[#F8F9FB]">
+        <div className="p-4 border-b border-[var(--border-default)] flex items-center justify-between bg-[var(--bg-canvas)]">
           <div className="flex items-center space-x-2.5">
-            <div className="p-2 rounded bg-[#EAF2FB] text-[#174A8B]">
+            <div className="p-2 rounded bg-[var(--status-info-bg)] text-[#2D63D2]">
               <Compass className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-semibold text-[#171A1F]">Workflow Directory & Navigation</h2>
-              <p className="text-[11px] text-[#5E6672]">
+              <h2 className="text-sm font-semibold text-[var(--text-primary)]">Workflow Directory & Navigation</h2>
+              <p className="text-[11px] text-[var(--text-secondary)]">
                 Explore end-to-end carbon accounting workflows and enterprise workspaces
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-[#858C96] hover:text-[#171A1F] hover:bg-[#E9ECEF] rounded-md transition-colors"
+            className="p-1.5 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] rounded-md transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tab switch */}
-        <div className="px-4 pt-3 border-b border-[#D9DDE3] flex space-x-4 bg-white">
+        <div className="px-4 pt-3 border-b border-[var(--border-default)] flex space-x-4 bg-white">
           <button
             onClick={() => setActiveTab('flows')}
             className={`pb-2 text-xs font-medium border-b-2 transition-colors ${
               activeTab === 'flows'
-                ? 'border-[#174A8B] text-[#174A8B]'
-                : 'border-transparent text-[#5E6672] hover:text-[#171A1F]'
+                ? 'border-[var(--status-info)] text-[#2D63D2]'
+                : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
             Core Workflows
@@ -216,8 +216,8 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
             onClick={() => setActiveTab('workspaces')}
             className={`pb-2 text-xs font-medium border-b-2 transition-colors ${
               activeTab === 'workspaces'
-                ? 'border-[#174A8B] text-[#174A8B]'
-                : 'border-transparent text-[#5E6672] hover:text-[#171A1F]'
+                ? 'border-[var(--status-info)] text-[#2D63D2]'
+                : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
             All Workspaces & Modules
@@ -233,16 +233,16 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
                 return (
                   <div
                     key={flow.id}
-                    className="p-3.5 rounded-lg border border-[#D9DDE3] bg-white hover:border-[#B8BEC7] transition-all shadow-sm"
+                    className="p-3.5 rounded-lg border border-[var(--border-default)] bg-white hover:border-[var(--border-strong)] transition-all shadow-sm"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-2.5">
-                        <div className="p-2 rounded bg-[#EAF2FB] text-[#174A8B]">
+                        <div className="p-2 rounded bg-[var(--status-info-bg)] text-[#2D63D2]">
                           <Icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <h3 className="text-xs font-semibold text-[#171A1F]">{flow.name}</h3>
-                          <div className="text-[11px] text-[#5E6672]">Default Persona: {flow.role}</div>
+                          <h3 className="text-xs font-semibold text-[var(--text-primary)]">{flow.name}</h3>
+                          <div className="text-[11px] text-[var(--text-secondary)]">Default Persona: {flow.role}</div>
                         </div>
                       </div>
                       <button
@@ -251,16 +251,16 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
                           navigateToScreen(flow.steps[0].screen, flow.id);
                           onClose();
                         }}
-                        className="px-2.5 py-1 text-[11px] font-medium bg-[#174A8B] text-white hover:bg-[#2166B1] rounded transition-colors"
+                        className="px-2.5 py-1 text-[11px] font-medium bg-[#2D63D2] text-white hover:bg-[#2D63D2] rounded transition-colors"
                       >
                         Start Workflow →
                       </button>
                     </div>
 
-                    <p className="text-[11px] text-[#5E6672] mt-2">{flow.description}</p>
+                    <p className="text-[11px] text-[var(--text-secondary)] mt-2">{flow.description}</p>
 
                     {/* Stepper links */}
-                    <div className="mt-3 pt-2.5 border-t border-[#F1F3F5] flex flex-wrap gap-1.5 items-center">
+                    <div className="mt-3 pt-2.5 border-t border-[var(--border-subtle)] flex flex-wrap gap-1.5 items-center">
                       {flow.steps.map((step, idx) => {
                         const isCurrent = currentScreen === step.screen;
                         return (
@@ -273,15 +273,15 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
                               }}
                               className={`px-2 py-1 rounded text-[11px] border transition-colors flex items-center space-x-1.5 ${
                                 isCurrent
-                                  ? 'bg-[#174A8B] text-white border-[#174A8B]'
-                                  : 'bg-[#F8F9FB] text-[#171A1F] border-[#D9DDE3] hover:border-[#2166B1]'
+                                  ? 'bg-[#2D63D2] text-white border-[var(--status-info)]'
+                                  : 'bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-default)] hover:border-[var(--status-info)]'
                               }`}
                             >
                               <span className="text-[10px] font-medium opacity-75">{idx + 1}.</span>
                               <span>{step.label}</span>
                             </button>
                             {idx < flow.steps.length - 1 && (
-                              <ArrowRight className="w-3 h-3 text-[#858C96] shrink-0" />
+                              <ArrowRight className="w-3 h-3 text-[var(--text-tertiary)] shrink-0" />
                             )}
                           </React.Fragment>
                         );
@@ -304,17 +304,17 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
                     }}
                     className={`p-2.5 rounded-md border text-left transition-colors flex items-center justify-between ${
                       isCurrent
-                        ? 'bg-[#EAF2FB] border-[#2166B1] text-[#174A8B]'
-                        : 'bg-white border-[#D9DDE3] hover:border-[#B8BEC7] text-[#171A1F]'
+                        ? 'bg-[var(--status-info-bg)] border-[var(--status-info)] text-[#2D63D2]'
+                        : 'bg-white border-[var(--border-default)] hover:border-[var(--border-strong)] text-[var(--text-primary)]'
                     }`}
                   >
                     <div>
                       <div className="flex items-center space-x-2">
                         <span className="text-xs font-medium">{item.name}</span>
                       </div>
-                      <span className="text-[10px] text-[#5E6672] mt-0.5 block">{item.category}</span>
+                      <span className="text-[10px] text-[var(--text-secondary)] mt-0.5 block">{item.category}</span>
                     </div>
-                    {isCurrent && <CheckCircle className="w-4 h-4 text-[#174A8B] shrink-0" />}
+                    {isCurrent && <CheckCircle className="w-4 h-4 text-[#2D63D2] shrink-0" />}
                   </button>
                 );
               })}
@@ -323,11 +323,11 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
         </div>
 
         {/* Footer info note */}
-        <div className="p-3 bg-[#F8F9FB] border-t border-[#D9DDE3] text-[11px] text-[#5E6672] flex items-center justify-between">
+        <div className="p-3 bg-[var(--bg-canvas)] border-t border-[var(--border-default)] text-[11px] text-[var(--text-secondary)] flex items-center justify-between">
           <span>ISO 14064-1:2018 & GHG Protocol Corporate Standard</span>
           <button
             onClick={onClose}
-            className="px-3 py-1 text-xs text-[#5E6672] hover:text-[#171A1F]"
+            className="px-3 py-1 text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
           >
             Close
           </button>

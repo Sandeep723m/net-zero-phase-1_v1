@@ -93,7 +93,7 @@ export const Screen25_ApprovalHistory: React.FC = () => {
           <StatusBadge status="Locked" customLabel="Read-only historical ledger" size="sm" />
         }
         contextInfo={
-          <span className="route-path text-xs text-[#8A8F98] font-medium">
+          <span className="route-path text-xs text-[var(--text-tertiary)] font-medium">
             /workflow/history
           </span>
         }
@@ -130,7 +130,7 @@ export const Screen25_ApprovalHistory: React.FC = () => {
                 onClick={() => navigateToScreen('10_activity_dashboard', 'FLOW_B')}
                 className="enterprise-btn-secondary h-9 px-3.5 flex items-center space-x-1.5 text-xs"
               >
-                <Activity className="w-3.5 h-3.5 text-[#181B27]" />
+                <Activity className="w-3.5 h-3.5 text-[var(--text-primary)]" />
                 <span>Activity Dashboard</span>
               </button>
             )}
@@ -139,15 +139,15 @@ export const Screen25_ApprovalHistory: React.FC = () => {
       />
 
       {/* Filter Toolbar (FR-25.07, FR-25.08) */}
-      <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs">
+      <div className="p-4 bg-white border border-[var(--border-default)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center space-x-2">
-            <Building2 className="w-3.5 h-3.5 text-[#5F6368]" />
-            <label className="text-xs font-semibold text-[#5F6368] font-sans">Site:</label>
+            <Building2 className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
+            <label className="text-xs font-semibold text-[var(--text-secondary)] font-sans">Site:</label>
             <select
               value={siteFilter}
               onChange={(e) => setSiteFilter(e.target.value)}
-              className="px-3 py-1.5 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] focus:outline-none focus:border-[#5141FF] font-sans"
+              className="px-3 py-1.5 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--action-primary)] font-sans"
             >
               <option value="All Sites">All Sites</option>
               <option value="Chennai Plant 1">Chennai Plant 1</option>
@@ -156,12 +156,12 @@ export const Screen25_ApprovalHistory: React.FC = () => {
           </div>
 
           <div className="flex items-center space-x-2">
-            <Calendar className="w-3.5 h-3.5 text-[#5F6368]" />
-            <label className="text-xs font-semibold text-[#5F6368] font-sans">Period:</label>
+            <Calendar className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
+            <label className="text-xs font-semibold text-[var(--text-secondary)] font-sans">Period:</label>
             <select
               value={periodFilter}
               onChange={(e) => setPeriodFilter(e.target.value)}
-              className="px-3 py-1.5 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] focus:outline-none focus:border-[#5141FF] font-sans"
+              className="px-3 py-1.5 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--action-primary)] font-sans"
             >
               <option value="FY 2025–26">FY 2025–26</option>
               <option value="FY 2024–25">FY 2024–25</option>
@@ -171,7 +171,7 @@ export const Screen25_ApprovalHistory: React.FC = () => {
 
         <button
           onClick={() => navigateToScreen('35_audit_trail', 'FLOW_F')}
-          className="text-xs text-[#5141FF] hover:underline flex items-center space-x-1 font-semibold"
+          className="text-xs text-[var(--action-primary)] hover:underline flex items-center space-x-1 font-semibold"
         >
           <span>View Comprehensive Audit Trail</span>
           <ExternalLink className="w-3 h-3" />
@@ -179,10 +179,10 @@ export const Screen25_ApprovalHistory: React.FC = () => {
       </div>
 
       {/* History Table (FR-25.01 - FR-25.06) */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="bg-[#F4F5F6] border-b border-[#E5E7EB] text-[#5F6368]">
+            <tr className="bg-[var(--bg-canvas)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
               <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider">Batch</th>
               <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider">Site</th>
               <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider">Reviewed By</th>
@@ -191,19 +191,19 @@ export const Screen25_ApprovalHistory: React.FC = () => {
               <th className="py-3 px-4 font-semibold text-[11px] uppercase tracking-wider">Comment</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F1F3F5]">
+          <tbody className="divide-y divide-[#EEEAF5]">
             {filteredHistory.map((item, idx) => (
-              <tr key={idx} className="hover:bg-[#FAFAFB] transition-colors">
-                <td className="py-3.5 px-4 activity-id font-medium text-[#181B27]">
+              <tr key={idx} className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="py-3.5 px-4 activity-id font-medium text-[var(--text-primary)]">
                   {item.batchId}
                 </td>
-                <td className="py-3.5 px-4 text-[#17181A] font-semibold">
+                <td className="py-3.5 px-4 text-[var(--text-primary)] font-semibold">
                   {item.siteName}
                 </td>
-                <td className="py-3.5 px-4 text-[#5F6368] font-data">
+                <td className="py-3.5 px-4 text-[var(--text-secondary)] font-data">
                   {item.reviewedBy}
                 </td>
-                <td className="py-3.5 px-4 period-code text-[#5F6368]">
+                <td className="py-3.5 px-4 period-code text-[var(--text-secondary)]">
                   {item.date}
                 </td>
                 <td className="py-3.5 px-4">
@@ -213,7 +213,7 @@ export const Screen25_ApprovalHistory: React.FC = () => {
                     <StatusBadge status="Returned" size="sm" />
                   )}
                 </td>
-                <td className="py-3.5 px-4 text-[#5F6368] max-w-xs truncate font-data">
+                <td className="py-3.5 px-4 text-[var(--text-secondary)] max-w-xs truncate font-data">
                   {item.comment}
                 </td>
               </tr>
@@ -222,7 +222,7 @@ export const Screen25_ApprovalHistory: React.FC = () => {
         </table>
       </div>
 
-      <div className="text-xs text-[#8A8F98] text-center pt-2 font-data">
+      <div className="text-xs text-[var(--text-tertiary)] text-center pt-2 font-data">
         Approval history records are immutable and permanently available to verification auditors.
       </div>
     </div>

@@ -88,7 +88,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '11_entry_form',
       flowId: 'FLOW_B',
       badge: 'Unified Ingestion',
-      badgeColor: 'bg-[#F2F0FF] text-[#5141FF] border-[#E5E0FF]',
+      badgeColor: 'bg-[var(--brand-50)] text-[var(--action-primary)] border-[var(--brand-100)]',
       priority: true,
     },
     {
@@ -99,7 +99,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '27_report_builder',
       flowId: 'FLOW_E',
       badge: 'Reporting',
-      badgeColor: 'bg-[#FFF8E6] text-[#B54708] border-[#FEDF89]',
+      badgeColor: 'bg-[var(--status-warning-bg)] text-[var(--status-warning)] border-[var(--status-warning)]',
       priority: true,
     },
     {
@@ -110,7 +110,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '19_run_calc',
       flowId: 'FLOW_E',
       badge: 'Engine',
-      badgeColor: 'bg-[#F4EBFF] text-[#6927DA] border-[#D8B4FE]',
+      badgeColor: 'bg-[var(--brand-50)] text-[var(--action-primary)] border-[var(--brand-100)]',
     },
     {
       id: 'review-queue',
@@ -120,7 +120,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '24_review_approve',
       flowId: 'FLOW_B',
       badge: 'Approvals',
-      badgeColor: 'bg-[#F2F0FF] text-[#5141FF] border-[#E5E0FF]',
+      badgeColor: 'bg-[var(--brand-50)] text-[var(--action-primary)] border-[var(--brand-100)]',
       roles: ['REVIEWER', 'TENANT_ADMIN'],
     },
     {
@@ -131,7 +131,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '32_evidence_trace',
       flowId: 'FLOW_F',
       badge: 'Assurance',
-      badgeColor: 'bg-[#EEF9F1] text-[#26783B] border-[#DDF3E3]',
+      badgeColor: 'bg-[var(--status-success-bg)] text-[var(--status-success)] border-[var(--status-success-bg)]',
       roles: ['VERIFIER', 'REVIEWER', 'TENANT_ADMIN'],
     },
     {
@@ -142,7 +142,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '22_factors_library',
       flowId: 'FLOW_E',
       badge: 'IPCC · IEA',
-      badgeColor: 'bg-[#F2F0FF] text-[#5141FF] border-[#E5E0FF]',
+      badgeColor: 'bg-[var(--brand-50)] text-[var(--action-primary)] border-[var(--brand-100)]',
       priority: true,
       onExecute: () => openFactorHelper(),
     },
@@ -154,7 +154,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '20_results_summary',
       flowId: 'FLOW_E',
       badge: 'C-01 to C-12',
-      badgeColor: 'bg-[#F2F0FF] text-[#5141FF] border-[#E5E0FF]',
+      badgeColor: 'bg-[var(--brand-50)] text-[var(--action-primary)] border-[var(--brand-100)]',
       roles: ['TENANT_ADMIN', 'REVIEWER', 'VERIFIER', 'DATA_ENTRY'],
     },
     {
@@ -165,7 +165,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '36_scenario_builder',
       flowId: 'FLOW_E',
       badge: 'What-If',
-      badgeColor: 'bg-[#E8F8EE] text-[#0F6B48] border-[#B8E7C8]',
+      badgeColor: 'bg-[var(--status-success-bg)] text-[var(--status-success)] border-[#B8E7C8]',
       roles: ['TENANT_ADMIN', 'REVIEWER'],
     },
     {
@@ -176,7 +176,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '37_benchmarking',
       flowId: 'FLOW_E',
       badge: 'Radar',
-      badgeColor: 'bg-[#F2F0FF] text-[#5141FF] border-[#E5E0FF]',
+      badgeColor: 'bg-[var(--brand-50)] text-[var(--action-primary)] border-[var(--brand-100)]',
       roles: ['TENANT_ADMIN', 'REVIEWER', 'VERIFIER'],
     },
     {
@@ -187,7 +187,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
       screenId: '22_factors_reference',
       flowId: 'FLOW_E',
       badge: 'Reference',
-      badgeColor: 'bg-[#F1F3F5] text-[#5F6368] border-[#E5E7EB]',
+      badgeColor: 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] border-[var(--border-default)]',
     },
   ];
 
@@ -215,10 +215,10 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
   // Button styles depending on variant (standardized rounded-xl 38px CTA)
   const buttonClasses =
     variant === 'header'
-      ? 'enterprise-btn-primary h-9 px-3.5 text-xs font-semibold rounded-xl shadow-xs flex items-center space-x-1.5 focus-visible:ring-2 focus-visible:ring-[#5141FF]'
+      ? 'enterprise-btn-primary h-9 px-3.5 text-xs font-semibold rounded-xl shadow-xs flex items-center space-x-1.5 focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]'
       : variant === 'page'
-      ? 'enterprise-btn-secondary h-9 px-3.5 text-xs font-semibold rounded-xl shadow-2xs flex items-center space-x-1.5 focus-visible:ring-2 focus-visible:ring-[#5141FF]'
-      : 'w-full h-9 flex items-center justify-between px-3 rounded-xl bg-[#5141FF] text-white text-xs font-semibold';
+      ? 'enterprise-btn-secondary h-9 px-3.5 text-xs font-semibold rounded-xl shadow-2xs flex items-center space-x-1.5 focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]'
+      : 'w-full h-9 flex items-center justify-between px-3 rounded-xl bg-[var(--action-primary)] text-white text-xs font-semibold';
 
   return (
     <div className={`relative ${className}`} ref={menuRef}>
@@ -232,54 +232,54 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
         title="Jump directly to common tasks"
       >
         <div className="flex items-center space-x-1.5">
-          <Zap className={`w-3.5 h-3.5 ${variant === 'header' ? 'text-[#FFD166]' : 'text-[#5141FF]'}`} />
+          <Zap className={`w-3.5 h-3.5 ${variant === 'header' ? 'text-[var(--status-warning)]' : 'text-[var(--action-primary)]'}`} />
           <span>{buttonLabel}</span>
         </div>
         <ChevronDown
           className={`w-3 h-3 transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
-          } ${variant === 'header' ? 'text-white/80' : 'text-[#62697C]'}`}
+          } ${variant === 'header' ? 'text-white/80' : 'text-[var(--text-secondary)]'}`}
         />
       </button>
 
       {isOpen && (
         <div
           id="quick-actions-dropdown"
-          className="absolute right-0 mt-2 w-80 sm:w-96 glass-card-strong bg-white/95 rounded-2xl shadow-2xl border border-[#E2E5EF] py-2 z-50 animate-in fade-in zoom-in-95 duration-100"
+          className="absolute right-0 mt-2 w-80 sm:w-96 glass-card-strong bg-white/95 rounded-2xl shadow-2xl border border-[var(--border-default)] py-2 z-50 animate-in fade-in zoom-in-95 duration-100"
           role="menu"
         >
           {/* Header & Quick Search */}
-          <div className="px-3.5 pt-2 pb-2.5 border-b border-[#F0F2F7]">
+          <div className="px-3.5 pt-2 pb-2.5 border-b border-[var(--border-subtle)]">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#5141FF]" />
-                <span className="text-[11px] font-bold text-[#181B27] uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-[var(--action-primary)]" />
+                <span className="text-[11px] font-bold text-[var(--text-primary)] uppercase tracking-wider">
                   Quick Actions
                 </span>
               </div>
-              <span className="text-[10px] text-[#62697C] font-data bg-[#F0F2F7] px-2 py-0.5 rounded-full">
+              <span className="text-[10px] text-[var(--text-secondary)] font-data bg-[var(--bg-subtle)] px-2 py-0.5 rounded-full">
                 Period: {activePeriod?.name || 'Active'}
               </span>
             </div>
 
             {/* Quick Search Filter */}
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-[#858CA0] absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-[var(--text-tertiary)] absolute left-2.5 top-1/2 -translate-y-1/2" />
               <input
                 ref={searchInputRef}
                 type="text"
                 placeholder="Search action (e.g. Bill, Emission, Report)..."
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F7F8FC] border border-[#E2E5EF] rounded-xl focus:outline-none focus:border-[#5141FF] focus:bg-white text-[#181B27] placeholder-[#858CA0]"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-[var(--bg-canvas)] border border-[var(--border-default)] rounded-xl focus:outline-none focus:border-[var(--action-primary)] focus:bg-white text-[var(--text-primary)] placeholder-[#85808D]"
               />
             </div>
           </div>
 
           {/* Action Items List */}
-          <div className="max-h-80 overflow-y-auto p-1.5 space-y-1 divide-y divide-[#F0F2F7]">
+          <div className="max-h-80 overflow-y-auto p-1.5 space-y-1 divide-y divide-[#EEEAF5]">
             {filteredActions.length === 0 ? (
-              <div className="py-6 text-center text-xs text-[#858CA0]">
+              <div className="py-6 text-center text-xs text-[var(--text-tertiary)]">
                 No quick actions found matching "{searchFilter}"
               </div>
             ) : (
@@ -292,39 +292,39 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
                     key={action.id}
                     type="button"
                     onClick={() => handleActionClick(action)}
-                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F2F0FF]/50 transition-all group flex items-start space-x-3 border border-transparent hover:border-[#E5E0FF]"
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[var(--brand-50)]/50 transition-all group flex items-start space-x-3 border border-transparent hover:border-[var(--brand-100)]"
                     role="menuitem"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-[#F2F0FF] group-hover:bg-[#5141FF] text-[#5141FF] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
+                    <div className="w-8 h-8 rounded-lg bg-[var(--brand-50)] group-hover:bg-[var(--action-primary)] text-[var(--action-primary)] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
                       <IconComponent className="w-4 h-4" />
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-[#181B27] group-hover:text-[#5141FF]">
+                        <span className="text-xs font-semibold text-[var(--text-primary)] group-hover:text-[var(--action-primary)]">
                           {action.title}
                         </span>
                         <div className="flex items-center space-x-1 shrink-0 ml-2">
                           {isRoleRecommended && (
-                            <span className="text-[9px] px-1.5 py-0.2 bg-[#E8F7EF] text-[#16845B] rounded-full border border-[#16845B]/20 font-semibold">
+                            <span className="text-[9px] px-1.5 py-0.2 bg-[var(--status-success-bg)] text-[var(--status-success)] rounded-full border border-[#147A5A]/20 font-semibold">
                               For You
                             </span>
                           )}
                           <span
                             className={`text-[9px] px-1.5 py-0.2 rounded-full border font-medium ${
-                              action.badgeColor || 'bg-[#F0F2F7] text-[#62697C] border-[#E2E5EF]'
+                              action.badgeColor || 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] border-[var(--border-default)]'
                             }`}
                           >
                             {action.badge}
                           </span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#62697C] line-clamp-1 mt-0.5 font-data">
+                      <p className="text-[11px] text-[var(--text-secondary)] line-clamp-1 mt-0.5 font-data">
                         {action.description}
                       </p>
                     </div>
 
-                    <ArrowRight className="w-3.5 h-3.5 text-[#858CA0] group-hover:text-[#5141FF] group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[var(--text-tertiary)] group-hover:text-[var(--action-primary)] group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
                   </button>
                 );
               })
@@ -332,9 +332,9 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
           </div>
 
           {/* Footer Tip */}
-          <div className="px-3.5 py-2 bg-[#FAFAFB] border-t border-[#F1F3F5] rounded-b-xl flex items-center justify-between text-[10px] text-[#5F6368]">
+          <div className="px-3.5 py-2 bg-[var(--surface-secondary)] border-t border-[var(--border-subtle)] rounded-b-xl flex items-center justify-between text-[10px] text-[var(--text-secondary)]">
             <span>Fast navigation across Tula Carbon modules</span>
-            <span className="font-mono text-[#8A8F98]">Esc to close</span>
+            <span className="font-mono text-[var(--text-tertiary)]">Esc to close</span>
           </div>
         </div>
       )}

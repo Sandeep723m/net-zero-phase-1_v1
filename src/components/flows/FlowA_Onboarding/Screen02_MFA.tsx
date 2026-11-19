@@ -74,23 +74,23 @@ export const Screen02_MFA: React.FC = () => {
   const isComplete = digits.every((d) => d.length === 1);
 
   return (
-    <div id="screen-02-mfa" className="w-full max-w-md mx-auto p-6 sm:p-8 bg-white border border-[#E5E7EB] rounded-2xl shadow-sm font-sans">
-      <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#F1F3F5]">
+    <div id="screen-02-mfa" className="w-full max-w-md mx-auto p-6 sm:p-8 bg-white border border-[var(--border-default)] rounded-2xl shadow-sm font-sans">
+      <div className="flex items-center justify-between pb-4 mb-6 border-b border-[var(--border-subtle)]">
         <button
           onClick={() => navigateToScreen('01_login', 'FLOW_A')}
-          className="flex items-center space-x-1.5 text-xs text-[#5F6368] hover:text-[#17181A] font-semibold"
+          className="flex items-center space-x-1.5 text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-semibold"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back</span>
         </button>
-        <span className="text-[11px] font-semibold text-[#5F6368]">Step 2 of 2</span>
+        <span className="text-[11px] font-semibold text-[var(--text-secondary)]">Step 2 of 2</span>
       </div>
 
       <div className="text-center mb-6">
-        <div className="w-12 h-12 bg-[#5141FF]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 text-[#181B27]">
+        <div className="w-12 h-12 bg-[var(--action-primary)]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 text-[var(--text-primary)]">
           <KeyRound className="w-6 h-6" />
         </div>
-        <h1 className="text-xl font-bold text-[#181B27]">Two-Factor Verification</h1>
+        <h1 className="text-xl font-bold text-[var(--text-primary)]">Two-Factor Verification</h1>
       </div>
 
       <form onSubmit={handleVerify} className="space-y-6">
@@ -107,7 +107,7 @@ export const Screen02_MFA: React.FC = () => {
               aria-label={`Digit ${idx + 1}`}
               onChange={(e) => handleChange(idx, e.target.value)}
               onKeyDown={(e) => handleKeyDown(idx, e)}
-              className="w-11 h-12 text-center text-lg font-bold font-mono border border-[#E5E7EB] rounded-xl focus:outline-none focus:border-[#5141FF] focus:ring-1 focus:ring-[#5141FF] bg-[#FAFAFB] text-[#17181A]"
+              className="w-11 h-12 text-center text-lg font-bold font-mono border border-[var(--border-default)] rounded-xl focus:outline-none focus:border-[var(--action-primary)] focus:ring-1 focus:ring-[var(--border-focus)] bg-[var(--surface-secondary)] text-[var(--text-primary)]"
             />
           ))}
         </div>
@@ -125,13 +125,13 @@ export const Screen02_MFA: React.FC = () => {
       </form>
 
       {/* Resend and DX Quick Fill Controls */}
-      <div className="mt-6 pt-5 border-t border-[#F1F3F5] flex items-center justify-between text-xs">
+      <div className="mt-6 pt-5 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs">
         <button
           type="button"
           onClick={handleQuickFill}
-          className="text-[#181B27] hover:text-[#02215c] font-semibold flex items-center space-x-1"
+          className="text-[var(--text-primary)] hover:text-[#02215c] font-semibold flex items-center space-x-1"
         >
-          <Zap className="w-3.5 h-3.5 text-[#181B27]" />
+          <Zap className="w-3.5 h-3.5 text-[var(--text-primary)]" />
           <span>Autofill Demo Code</span>
         </button>
 
@@ -140,7 +140,7 @@ export const Screen02_MFA: React.FC = () => {
           onClick={handleResend}
           disabled={countdown > 0}
           className={`flex items-center space-x-1 font-semibold ${
-            countdown > 0 ? 'text-[#8A8F98] cursor-not-allowed' : 'text-[#5141FF] hover:underline'
+            countdown > 0 ? 'text-[var(--text-tertiary)] cursor-not-allowed' : 'text-[var(--action-primary)] hover:underline'
           }`}
         >
           <RefreshCw className="w-3 h-3" />

@@ -109,7 +109,7 @@ export const Screen18_OCRReview: React.FC = () => {
       />
 
       {/* Critical Policy Banner */}
-      <div className="p-3 bg-[#5141FF]/5 border border-[#5141FF]/20 rounded-xl text-xs text-[#5141FF] flex items-center justify-between shadow-2xs">
+      <div className="p-3 bg-[var(--action-primary)]/5 border border-[var(--action-primary)]/20 rounded-xl text-xs text-[var(--action-primary)] flex items-center justify-between shadow-2xs">
         <div className="flex items-center space-x-2 font-data">
           <Info className="w-4 h-4 shrink-0" />
           <span>
@@ -119,7 +119,7 @@ export const Screen18_OCRReview: React.FC = () => {
         <button
           type="button"
           onClick={() => navigateToScreen('35_audit_trail', 'FLOW_F')}
-          className="text-xs text-[#5141FF] hover:underline flex items-center space-x-1 shrink-0 font-semibold"
+          className="text-xs text-[var(--action-primary)] hover:underline flex items-center space-x-1 shrink-0 font-semibold"
         >
           <span>Immutable Audit Trail</span>
           <ExternalLink className="w-3 h-3" />
@@ -129,73 +129,73 @@ export const Screen18_OCRReview: React.FC = () => {
       {/* 2-Column Split: Left Bill Preview | Right Extracted Fields */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left: Uploaded Bill Preview (6 Cols) */}
-        <div className="lg:col-span-6 bg-white border border-[#E5E7EB] rounded-xl p-5 space-y-3 shadow-2xs">
-          <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F5]">
+        <div className="lg:col-span-6 bg-white border border-[var(--border-default)] rounded-xl p-5 space-y-3 shadow-2xs">
+          <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
             <div className="flex items-center space-x-2">
-              <FileText className="w-4 h-4 text-[#181B27]" />
-              <h2 className="text-sm font-semibold text-[#17181A]">Uploaded bill preview</h2>
+              <FileText className="w-4 h-4 text-[var(--text-primary)]" />
+              <h2 className="text-sm font-semibold text-[var(--text-primary)]">Uploaded bill preview</h2>
             </div>
-            <span className="text-[11px] font-data font-medium text-[#5F6368]">
+            <span className="text-[11px] font-data font-medium text-[var(--text-secondary)]">
               TANGEDCO_HT_Bill_Jul_2025.pdf
             </span>
           </div>
 
           {/* Document Display Simulation */}
-          <div className="border border-[#E5E7EB] bg-[#FAFAFB] rounded-xl p-4 font-data text-xs space-y-3 relative overflow-hidden">
+          <div className="border border-[var(--border-default)] bg-[var(--surface-secondary)] rounded-xl p-4 font-data text-xs space-y-3 relative overflow-hidden">
             {/* Header */}
-            <div className="flex justify-between items-start border-b border-[#E5E7EB] pb-2">
+            <div className="flex justify-between items-start border-b border-[var(--border-default)] pb-2">
               <div>
-                <div className="font-bold text-[#17181A]">TAMIL NADU GENERATION AND DISTRIBUTION CORP (TANGEDCO)</div>
-                <div className="text-[10px] text-[#5F6368]">High Tension (HT) Electricity Bill & Receipt</div>
+                <div className="font-bold text-[var(--text-primary)]">TAMIL NADU GENERATION AND DISTRIBUTION CORP (TANGEDCO)</div>
+                <div className="text-[10px] text-[var(--text-secondary)]">High Tension (HT) Electricity Bill & Receipt</div>
               </div>
-              <span className="text-[10px] bg-[#0F9D58]/10 text-[#0F9D58] border border-[#0F9D58]/20 px-1.5 py-0.5 rounded font-bold">PAID</span>
+              <span className="text-[10px] bg-[var(--status-success)]/10 text-[var(--status-success)] border border-[#147A5A]/20 px-1.5 py-0.5 rounded font-bold">PAID</span>
             </div>
 
             {/* Consumer & Meter Box with Highlight */}
-            <div className="p-2.5 rounded-lg bg-white border border-[#F59E0B] ring-2 ring-[#F59E0B]/20 relative">
-              <span className="absolute top-1 right-2 text-[9px] font-sans font-semibold text-[#B45309] bg-[#FEF3C7] px-1.5 py-0.5 rounded">
+            <div className="p-2.5 rounded-lg bg-white border border-[#9A4F00] ring-2 ring-[#9A4F00]/20 relative">
+              <span className="absolute top-1 right-2 text-[9px] font-sans font-semibold text-[var(--status-warning)] bg-[var(--status-warning-bg)] px-1.5 py-0.5 rounded">
                 78% Conf
               </span>
-              <div className="text-[10px] text-[#5F6368]">Consumer No: <span className="font-bold text-[#17181A]">04-921-084-220</span></div>
-              <div className="text-[10px] text-[#5F6368]">Meter / Account No: <span className="font-bold text-[#17181A]">{meterNumber}</span></div>
-              <div className="text-[10px] text-[#5F6368]">Site: Chennai Plant 1 (Substation A)</div>
+              <div className="text-[10px] text-[var(--text-secondary)]">Consumer No: <span className="font-bold text-[var(--text-primary)]">04-921-084-220</span></div>
+              <div className="text-[10px] text-[var(--text-secondary)]">Meter / Account No: <span className="font-bold text-[var(--text-primary)]">{meterNumber}</span></div>
+              <div className="text-[10px] text-[var(--text-secondary)]">Site: Chennai Plant 1 (Substation A)</div>
             </div>
 
             {/* Billing Period Box */}
-            <div className="p-2.5 rounded-lg bg-white border border-[#5141FF] ring-2 ring-[#01153C]/20 relative">
-              <span className="absolute top-1 right-2 text-[9px] font-sans font-semibold text-[#181B27] bg-[#5141FF]/10 px-1.5 py-0.5 rounded">
+            <div className="p-2.5 rounded-lg bg-white border border-[var(--action-primary)] ring-2 ring-[#5625B8]/20 relative">
+              <span className="absolute top-1 right-2 text-[9px] font-sans font-semibold text-[var(--text-primary)] bg-[var(--action-primary)]/10 px-1.5 py-0.5 rounded">
                 95% Conf
               </span>
-              <div className="text-[10px] text-[#5F6368]">Billing Cycle: <span className="font-bold text-[#17181A]">{billingPeriod}</span></div>
-              <div className="text-[10px] text-[#5F6368]">Bill Date: 02-Aug-2025</div>
+              <div className="text-[10px] text-[var(--text-secondary)]">Billing Cycle: <span className="font-bold text-[var(--text-primary)]">{billingPeriod}</span></div>
+              <div className="text-[10px] text-[var(--text-secondary)]">Bill Date: 02-Aug-2025</div>
             </div>
 
             {/* Units Consumed Box with High Visibility Highlight */}
-            <div className="p-3 rounded-lg bg-[#5141FF]/5 border-2 border-[#5141FF] relative">
-              <span className="absolute top-1.5 right-2 text-[9px] font-sans font-semibold text-[#181B27] bg-white px-1.5 py-0.5 rounded border border-[#5141FF]/20">
+            <div className="p-3 rounded-lg bg-[var(--action-primary)]/5 border-2 border-[var(--action-primary)] relative">
+              <span className="absolute top-1.5 right-2 text-[9px] font-sans font-semibold text-[var(--text-primary)] bg-white px-1.5 py-0.5 rounded border border-[var(--action-primary)]/20">
                 92% Conf
               </span>
-              <div className="text-[10px] uppercase font-bold text-[#181B27]">Active Energy Consumed (Units)</div>
-              <div className="text-xl font-bold text-[#17181A] mt-1 font-data">
+              <div className="text-[10px] uppercase font-bold text-[var(--text-primary)]">Active Energy Consumed (Units)</div>
+              <div className="text-xl font-bold text-[var(--text-primary)] mt-1 font-data">
                 {parseFloat(unitsConsumed).toLocaleString()} <span className="text-xs font-normal">kWh</span>
               </div>
-              <div className="text-[10px] text-[#5F6368] mt-1">Previous: 412,800 | Current: 461,000 | Net: 48,200 kWh</div>
+              <div className="text-[10px] text-[var(--text-secondary)] mt-1">Previous: 412,800 | Current: 461,000 | Net: 48,200 kWh</div>
             </div>
 
-            <div className="text-[10px] text-[#8A8F98] text-center pt-2 font-sans">
+            <div className="text-[10px] text-[var(--text-tertiary)] text-center pt-2 font-sans">
               Azure AI Document Intelligence bounding box overlay active
             </div>
           </div>
         </div>
 
         {/* Right: Extracted Values Table & Review Form (6 Cols) */}
-        <div className="lg:col-span-6 bg-white border border-[#E5E7EB] rounded-xl p-5 space-y-4 shadow-2xs">
-          <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F5]">
-            <h2 className="text-sm font-semibold text-[#17181A]">Extracted Values</h2>
+        <div className="lg:col-span-6 bg-white border border-[var(--border-default)] rounded-xl p-5 space-y-4 shadow-2xs">
+          <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">Extracted Values</h2>
             <button
               type="button"
               onClick={() => setIsEditing(!isEditing)}
-              className="text-xs text-[#5141FF] hover:underline flex items-center space-x-1 font-semibold"
+              className="text-xs text-[var(--action-primary)] hover:underline flex items-center space-x-1 font-semibold"
             >
               <Edit3 className="w-3.5 h-3.5" />
               <span>{isEditing ? 'Done Editing' : 'Edit Manually'}</span>
@@ -203,29 +203,29 @@ export const Screen18_OCRReview: React.FC = () => {
           </div>
 
           {/* Extracted Values Table */}
-          <div className="border border-[#E5E7EB] rounded-xl overflow-hidden shadow-2xs">
+          <div className="border border-[var(--border-default)] rounded-xl overflow-hidden shadow-2xs">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368]">
-                  <th scope="col" className="py-2.5 px-3 font-semibold text-[#17181A]">Field</th>
-                  <th scope="col" className="py-2.5 px-3 font-semibold text-[#17181A]">Extracted value</th>
-                  <th scope="col" className="py-2.5 px-3 font-semibold text-[#17181A]">Confidence</th>
+                <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
+                  <th scope="col" className="py-2.5 px-3 font-semibold text-[var(--text-primary)]">Field</th>
+                  <th scope="col" className="py-2.5 px-3 font-semibold text-[var(--text-primary)]">Extracted value</th>
+                  <th scope="col" className="py-2.5 px-3 font-semibold text-[var(--text-primary)]">Confidence</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F1F3F5]">
+              <tbody className="divide-y divide-[#EEEAF5]">
                 {/* Row 1: Billing Period */}
-                <tr className="hover:bg-[#FAFAFB]">
-                  <td className="py-3 px-3 font-semibold text-[#17181A]">Billing period</td>
+                <tr className="hover:bg-[var(--surface-secondary)]">
+                  <td className="py-3 px-3 font-semibold text-[var(--text-primary)]">Billing period</td>
                   <td className="py-3 px-3 font-data">
                     {isEditing ? (
                       <input
                         type="text"
                         value={billingPeriod}
                         onChange={(e) => setBillingPeriod(e.target.value)}
-                        className="px-2 py-1 text-xs border border-[#E5E7EB] rounded-md w-full font-data focus:border-[#5141FF]"
+                        className="px-2 py-1 text-xs border border-[var(--border-default)] rounded-md w-full font-data focus:border-[var(--action-primary)]"
                       />
                     ) : (
-                      <span className="text-[#17181A] font-semibold">{billingPeriod}</span>
+                      <span className="text-[var(--text-primary)] font-semibold">{billingPeriod}</span>
                     )}
                   </td>
                   <td className="py-3 px-3">
@@ -234,18 +234,18 @@ export const Screen18_OCRReview: React.FC = () => {
                 </tr>
 
                 {/* Row 2: Units consumed (kWh) */}
-                <tr className="bg-[#5141FF]/5 hover:bg-[#5141FF]/10">
-                  <td className="py-3 px-3 font-semibold text-[#181B27]">Units consumed (kWh)</td>
+                <tr className="bg-[var(--action-primary)]/5 hover:bg-[var(--action-primary)]/10">
+                  <td className="py-3 px-3 font-semibold text-[var(--text-primary)]">Units consumed (kWh)</td>
                   <td className="py-3 px-3 font-data">
                     {isEditing ? (
                       <input
                         type="number"
                         value={unitsConsumed}
                         onChange={(e) => setUnitsConsumed(e.target.value)}
-                        className="px-2 py-1 text-xs border border-[#5141FF] rounded-md w-full font-data font-bold focus:outline-none"
+                        className="px-2 py-1 text-xs border border-[var(--action-primary)] rounded-md w-full font-data font-bold focus:outline-none"
                       />
                     ) : (
-                      <span className="text-base font-bold text-[#17181A]">
+                      <span className="text-base font-bold text-[var(--text-primary)]">
                         {parseFloat(unitsConsumed).toLocaleString()}
                       </span>
                     )}
@@ -256,22 +256,22 @@ export const Screen18_OCRReview: React.FC = () => {
                 </tr>
 
                 {/* Row 3: Account / meter number (Low confidence - highlighted) */}
-                <tr className="bg-[#F59E0B]/5 hover:bg-[#F59E0B]/10">
-                  <td className="py-3 px-3 font-semibold text-[#B45309]">Account / meter number</td>
+                <tr className="bg-[var(--status-warning)]/5 hover:bg-[var(--status-warning)]/10">
+                  <td className="py-3 px-3 font-semibold text-[var(--status-warning)]">Account / meter number</td>
                   <td className="py-3 px-3 font-data">
                     {isEditing ? (
                       <input
                         type="text"
                         value={meterNumber}
                         onChange={(e) => setMeterNumber(e.target.value)}
-                        className="px-2 py-1 text-xs border border-[#F59E0B] rounded-md w-full font-data font-bold focus:outline-none"
+                        className="px-2 py-1 text-xs border border-[#9A4F00] rounded-md w-full font-data font-bold focus:outline-none"
                       />
                     ) : (
-                      <span className="text-[#17181A] font-bold">{meterNumber}</span>
+                      <span className="text-[var(--text-primary)] font-bold">{meterNumber}</span>
                     )}
                   </td>
                   <td className="py-3 px-3">
-                    <span className="bg-[#FEF3C7] text-[#B45309] border border-[#F59E0B]/30 px-2 py-0.5 rounded text-[11px] font-semibold flex items-center space-x-1 w-max">
+                    <span className="bg-[var(--status-warning-bg)] text-[var(--status-warning)] border border-[#9A4F00]/30 px-2 py-0.5 rounded text-[11px] font-semibold flex items-center space-x-1 w-max">
                       <AlertTriangle className="w-3 h-3" />
                       <span>{meterConfidence}% Moderate</span>
                     </span>
@@ -282,20 +282,20 @@ export const Screen18_OCRReview: React.FC = () => {
           </div>
 
           {/* Explicit Confidence Explanation Notice */}
-          <div className="p-3 bg-[#FEF3C7]/40 border border-[#F59E0B]/30 rounded-xl text-xs text-[#B45309] flex items-start space-x-2">
-            <AlertTriangle className="w-4 h-4 text-[#B45309] shrink-0 mt-0.5" />
+          <div className="p-3 bg-[var(--status-warning-bg)]/40 border border-[#9A4F00]/30 rounded-xl text-xs text-[var(--status-warning)] flex items-start space-x-2">
+            <AlertTriangle className="w-4 h-4 text-[var(--status-warning)] shrink-0 mt-0.5" />
             <div className="font-data">
               <strong>Confidence: 92% on units consumed, 78% on meter number</strong> — low-confidence fields are highlighted for extra attention.
             </div>
           </div>
 
           {/* Actions */}
-          <div className="pt-3 border-t border-[#F1F3F5] flex flex-wrap items-center justify-between gap-3">
+          <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3">
             <button
               id="btn-reject-discard-ocr"
               type="button"
               onClick={handleRejectAndDiscard}
-              className="h-9 px-3.5 bg-white border border-[#B42318]/30 text-[#B42318] hover:bg-[#B42318]/5 text-xs font-semibold rounded-lg transition-colors flex items-center space-x-1.5 shadow-2xs"
+              className="h-9 px-3.5 bg-white border border-[#C63C46]/30 text-[var(--status-error)] hover:bg-[var(--status-error)]/5 text-xs font-semibold rounded-lg transition-colors flex items-center space-x-1.5 shadow-2xs"
             >
               <XCircle className="w-3.5 h-3.5" />
               <span>Reject & Discard</span>

@@ -127,20 +127,20 @@ export const Screen35_AuditTrail: React.FC = () => {
   return (
     <div id="screen-35-audit-trail-viewer" className="w-full space-y-6">
       {/* Immutability Assurance Bar */}
-      <div className="bg-white text-[#17181A] px-4 py-3 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2 border border-[#E5E7EB] shadow-xs">
+      <div className="bg-white text-[var(--text-primary)] px-4 py-3 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2 border border-[var(--border-default)] shadow-xs">
         <div className="flex items-center space-x-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#5141FF]/10 text-[#5141FF] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-[var(--action-primary)]/10 text-[var(--action-primary)] flex items-center justify-center shrink-0">
             <Lock className="w-4 h-4" />
           </div>
           <div>
-            <span className="font-bold text-[#17181A]">Immutable Audit Ledger</span>
-            <span className="text-[#8A8F98] mx-2">·</span>
-            <span className="text-[#5F6368]">Append-Only Chain</span>
+            <span className="font-bold text-[var(--text-primary)]">Immutable Audit Ledger</span>
+            <span className="text-[var(--text-tertiary)] mx-2">·</span>
+            <span className="text-[var(--text-secondary)]">Append-Only Chain</span>
           </div>
         </div>
         <div className="flex items-center space-x-2 text-xs">
-          <span className="font-semibold text-[#181B27]">
-            ISO 14064-3 · SOC-2 Type II Certified
+          <span className="font-semibold text-[var(--text-primary)]">
+            Methodology and control references are versioned
           </span>
         </div>
       </div>
@@ -158,7 +158,7 @@ export const Screen35_AuditTrail: React.FC = () => {
               onClick={handleExportCSV}
               className="enterprise-btn-secondary h-9 px-4 text-xs inline-flex items-center space-x-1.5 font-semibold rounded-xl"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-[#5F6368]" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
               <span>Export CSV</span>
             </button>
             <button
@@ -173,35 +173,35 @@ export const Screen35_AuditTrail: React.FC = () => {
       />
 
       {/* Filter Bar */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-4 shadow-xs space-y-3 font-sans">
+      <div className="bg-white border border-[var(--border-default)] rounded-2xl p-4 shadow-xs space-y-3 font-sans">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
           {/* Date Range Start / End */}
           <div>
-            <label className="block text-xs font-semibold text-[#5F6368] mb-1.5">Date Range</label>
+            <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">Date Range</label>
             <div className="flex items-center space-x-1.5">
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-2 py-1.5 border border-[#E5E7EB] rounded-xl text-xs bg-white text-[#17181A]"
+                className="w-full px-2 py-1.5 border border-[var(--border-default)] rounded-xl text-xs bg-white text-[var(--text-primary)]"
               />
-              <span className="text-[#8A8F98] text-xs">–</span>
+              <span className="text-[var(--text-tertiary)] text-xs">–</span>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-2 py-1.5 border border-[#E5E7EB] rounded-xl text-xs bg-white text-[#17181A]"
+                className="w-full px-2 py-1.5 border border-[var(--border-default)] rounded-xl text-xs bg-white text-[var(--text-primary)]"
               />
             </div>
           </div>
 
           {/* Actor Filter */}
           <div>
-            <label className="block text-xs font-semibold text-[#5F6368] mb-1.5">Actor</label>
+            <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">Actor</label>
             <select
               value={actorFilter}
               onChange={(e) => setActorFilter(e.target.value)}
-              className="w-full px-3 py-1.5 border border-[#E5E7EB] rounded-xl text-xs bg-white text-[#17181A]"
+              className="w-full px-3 py-1.5 border border-[var(--border-default)] rounded-xl text-xs bg-white text-[var(--text-primary)]"
             >
               <option value="ALL">All Actors</option>
               {actorsList.map((actor) => (
@@ -214,11 +214,11 @@ export const Screen35_AuditTrail: React.FC = () => {
 
           {/* Action Type Filter */}
           <div>
-            <label className="block text-xs font-semibold text-[#5F6368] mb-1.5">Action Type</label>
+            <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">Action Type</label>
             <select
               value={actionFilter}
               onChange={(e) => setActionFilter(e.target.value)}
-              className="w-full px-3 py-1.5 border border-[#E5E7EB] rounded-xl text-xs bg-white text-[#17181A]"
+              className="w-full px-3 py-1.5 border border-[var(--border-default)] rounded-xl text-xs bg-white text-[var(--text-primary)]"
             >
               <option value="ALL">All Actions</option>
               {actionsList.map((action) => (
@@ -231,11 +231,11 @@ export const Screen35_AuditTrail: React.FC = () => {
 
           {/* Entity Filter */}
           <div>
-            <label className="block text-xs font-semibold text-[#5F6368] mb-1.5">Target Entity</label>
+            <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">Target Entity</label>
             <select
               value={entityFilter}
               onChange={(e) => setEntityFilter(e.target.value)}
-              className="w-full px-3 py-1.5 border border-[#E5E7EB] rounded-xl text-xs bg-white text-[#17181A]"
+              className="w-full px-3 py-1.5 border border-[var(--border-default)] rounded-xl text-xs bg-white text-[var(--text-primary)]"
             >
               <option value="ALL">All Entities</option>
               <option value="Activity Data Row #1042">Activity Data Row #1042</option>
@@ -246,15 +246,15 @@ export const Screen35_AuditTrail: React.FC = () => {
 
           {/* Search Input */}
           <div>
-            <label className="block text-xs font-semibold text-[#5F6368] mb-1.5">Search Reason / Value</label>
+            <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">Search Reason / Value</label>
             <div className="relative">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#8A8F98]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[var(--text-tertiary)]" />
               <input
                 type="text"
                 placeholder="Filter reason..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 border border-[#E5E7EB] rounded-xl text-xs bg-white text-[#17181A]"
+                className="w-full pl-8 pr-3 py-1.5 border border-[var(--border-default)] rounded-xl text-xs bg-white text-[var(--text-primary)]"
               />
             </div>
           </div>
@@ -262,15 +262,15 @@ export const Screen35_AuditTrail: React.FC = () => {
       </div>
 
       {/* Audit Log Table */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden shadow-xs">
-        <div className="px-4 py-3.5 border-b border-[#E5E7EB] bg-[#FAFAFB] flex items-center justify-between">
+      <div className="bg-white border border-[var(--border-default)] rounded-2xl overflow-hidden shadow-xs">
+        <div className="px-4 py-3.5 border-b border-[var(--border-default)] bg-[var(--surface-secondary)] flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Activity className="w-4 h-4 text-[#181B27]" />
-            <h2 className="text-xs font-bold text-[#181B27] uppercase tracking-wider">
+            <Activity className="w-4 h-4 text-[var(--text-primary)]" />
+            <h2 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
               Chronological Audit Trail
             </h2>
           </div>
-          <span className="text-[11px] font-semibold text-[#5F6368]">
+          <span className="text-[11px] font-semibold text-[var(--text-secondary)]">
             {filteredEntries.length} events recorded
           </span>
         </div>
@@ -278,16 +278,16 @@ export const Screen35_AuditTrail: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368] font-sans">
-                <th scope="col" className="py-3 px-4 font-semibold text-[#17181A] whitespace-nowrap">Timestamp</th>
-                <th scope="col" className="py-3 px-4 font-semibold text-[#17181A]">Actor</th>
-                <th scope="col" className="py-3 px-4 font-semibold text-[#17181A]">Action</th>
-                <th scope="col" className="py-3 px-4 font-semibold text-[#17181A]">Previous</th>
-                <th scope="col" className="py-3 px-4 font-semibold text-[#17181A]">New</th>
-                <th scope="col" className="py-3 px-4 font-semibold text-[#17181A]">Reason</th>
+              <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)] font-sans">
+                <th scope="col" className="py-3 px-4 font-semibold text-[var(--text-primary)] whitespace-nowrap">Timestamp</th>
+                <th scope="col" className="py-3 px-4 font-semibold text-[var(--text-primary)]">Actor</th>
+                <th scope="col" className="py-3 px-4 font-semibold text-[var(--text-primary)]">Action</th>
+                <th scope="col" className="py-3 px-4 font-semibold text-[var(--text-primary)]">Previous</th>
+                <th scope="col" className="py-3 px-4 font-semibold text-[var(--text-primary)]">New</th>
+                <th scope="col" className="py-3 px-4 font-semibold text-[var(--text-primary)]">Reason</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F1F3F5]">
+            <tbody className="divide-y divide-[#EEEAF5]">
               {filteredEntries.map((item) => {
                 const isCorrection = item.action.toLowerCase().includes('correct');
                 const isSystem = item.userName.toLowerCase().includes('system') || item.userName.toLowerCase().includes('import job');
@@ -299,14 +299,14 @@ export const Screen35_AuditTrail: React.FC = () => {
                     key={item.id}
                     className={`transition-colors ${
                       isCorrection
-                        ? 'bg-[#FEF7EC]/40 hover:bg-[#FEF7EC]/70'
+                        ? 'bg-[var(--status-warning-bg)]/40 hover:bg-[var(--status-warning-bg)]/70'
                         : isFlagged
-                        ? 'bg-[#FFF0F3]/30 hover:bg-[#FFF0F3]/50'
-                        : 'hover:bg-[#FAFAFB]'
+                        ? 'bg-[var(--status-warning-bg)]/30 hover:bg-[var(--status-warning-bg)]/50'
+                        : 'hover:bg-[var(--surface-secondary)]'
                     }`}
                   >
                     {/* Timestamp */}
-                    <td className="py-3 px-4 font-data text-[11px] text-[#5F6368] whitespace-nowrap">
+                    <td className="py-3 px-4 font-data text-[11px] text-[var(--text-secondary)] whitespace-nowrap">
                       {item.timestamp}
                     </td>
 
@@ -314,18 +314,18 @@ export const Screen35_AuditTrail: React.FC = () => {
                     <td className="py-3 px-4 font-sans">
                       <div className="flex items-center space-x-1.5">
                         {isSystem ? (
-                          <span className="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#F4F5F6] text-[#5F6368] border border-[#E5E7EB]">
-                            <Bot className="w-3 h-3 text-[#5F6368]" />
+                          <span className="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[var(--bg-canvas)] text-[var(--text-secondary)] border border-[var(--border-default)]">
+                            <Bot className="w-3 h-3 text-[var(--text-secondary)]" />
                             <span>System</span>
                           </span>
                         ) : (
-                          <div className="w-5 h-5 rounded-full bg-[#5141FF] text-white flex items-center justify-center text-[10px] font-semibold shrink-0">
+                          <div className="w-5 h-5 rounded-full bg-[var(--action-primary)] text-white flex items-center justify-center text-[10px] font-semibold shrink-0">
                             {item.userName.slice(0, 2).toUpperCase()}
                           </div>
                         )}
                         <div>
-                          <div className="font-semibold text-[#17181A]">{item.userName}</div>
-                          {item.role && <div className="text-[10px] text-[#8A8F98]">{item.role}</div>}
+                          <div className="font-semibold text-[var(--text-primary)]">{item.userName}</div>
+                          {item.role && <div className="text-[10px] text-[var(--text-tertiary)]">{item.role}</div>}
                         </div>
                       </div>
                     </td>
@@ -339,24 +339,24 @@ export const Screen35_AuditTrail: React.FC = () => {
                       ) : isFlagged ? (
                         <StatusBadge status="Rejected" customLabel={item.action} size="sm" />
                       ) : (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[#FAFAFB] text-[#17181A] border border-[#E5E7EB]">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[var(--surface-secondary)] text-[var(--text-primary)] border border-[var(--border-default)]">
                           {item.action}
                         </span>
                       )}
                     </td>
 
                     {/* Previous */}
-                    <td className="py-3 px-4 font-data text-[11px] text-[#8A8F98] max-w-[140px] truncate">
+                    <td className="py-3 px-4 font-data text-[11px] text-[var(--text-tertiary)] max-w-[140px] truncate">
                       {item.previousValue || '—'}
                     </td>
 
                     {/* New */}
-                    <td className="py-3 px-4 font-data text-[11px] font-medium text-[#17181A] max-w-[180px]">
+                    <td className="py-3 px-4 font-data text-[11px] font-medium text-[var(--text-primary)] max-w-[180px]">
                       {item.newValue}
                     </td>
 
                     {/* Reason */}
-                    <td className="py-3 px-4 text-[#5F6368] max-w-xs text-[11px] leading-relaxed font-sans">
+                    <td className="py-3 px-4 text-[var(--text-secondary)] max-w-xs text-[11px] leading-relaxed font-sans">
                       {item.reason || '—'}
                     </td>
                   </tr>
@@ -367,12 +367,12 @@ export const Screen35_AuditTrail: React.FC = () => {
         </div>
 
         {/* Footer Guarantee */}
-        <div className="p-3.5 bg-[#FAFAFB] border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between text-xs text-[#5F6368] gap-2 font-data">
+        <div className="p-3.5 bg-[var(--surface-secondary)] border-t border-[var(--border-default)] flex flex-col sm:flex-row items-center justify-between text-xs text-[var(--text-secondary)] gap-2 font-data">
           <div className="flex items-center space-x-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#027A48]" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-[var(--status-success)]" />
             <span className="font-sans">This audit trail is append-only and cannot be altered.</span>
           </div>
-          <div className="hash-display text-[11px] text-[#8A8F98] font-medium">
+          <div className="hash-display text-[11px] text-[var(--text-tertiary)] font-medium">
             Digest: sha256:9f83c605...e15b18b4
           </div>
         </div>

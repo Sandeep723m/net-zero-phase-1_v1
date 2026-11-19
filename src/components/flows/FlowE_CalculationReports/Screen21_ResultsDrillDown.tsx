@@ -96,7 +96,7 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
         ]}
         title="Drill-Down — Grid Electricity, Scope 2"
         contextInfo={
-          <span className="route-path text-xs text-[#8A8F98] font-medium">
+          <span className="route-path text-xs text-[var(--text-tertiary)] font-medium">
             /calculations/results/scope2/grid-electricity
           </span>
         }
@@ -123,15 +123,15 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
       />
 
       {/* Core Product Principle Banner */}
-      <div className="p-3.5 bg-[#F0EEFF] border border-[#D8D3FF] rounded-xl text-xs text-[#5144C9] flex items-center justify-between">
+      <div className="p-3.5 bg-[var(--brand-50)] border border-[#D8D3FF] rounded-xl text-xs text-[var(--action-primary)] flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <ShieldCheck className="w-4 h-4 shrink-0 text-[#181B27]" />
+          <ShieldCheck className="w-4 h-4 shrink-0 text-[var(--text-primary)]" />
           <span>
-            <strong className="font-semibold text-[#17181A]">Primary Product Principle:</strong> Every number should have a path.
+            <strong className="font-semibold text-[var(--text-primary)]">Primary Product Principle:</strong> Every number should have a path.
             Trace from result → site → activity rows → individual record → source evidence.
           </span>
         </div>
-        <span className="period-code text-[11px] text-[#5F6368] font-medium hidden sm:inline-block">
+        <span className="period-code text-[11px] text-[var(--text-secondary)] font-medium hidden sm:inline-block">
           FY 2025–26 · Location-based
         </span>
       </div>
@@ -158,24 +158,24 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
       </div>
 
       {/* Site Breakdown Table */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
-        <div className="p-4 border-b border-[#E5E7EB] flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-[#17181A] font-sans">Contributing Sites Breakdown</h2>
-          <span className="text-xs font-medium text-[#5F6368]">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(20,20,20,0.04)]">
+        <div className="p-4 border-b border-[var(--border-default)] flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-[var(--text-primary)] font-sans">Contributing Sites Breakdown</h2>
+          <span className="text-xs font-medium text-[var(--text-secondary)]">
             {drillDownData.length} sites contributing
           </span>
         </div>
 
         {drillDownData.length === 0 ? (
           <div className="p-8 text-center space-y-1">
-            <div className="text-sm font-semibold text-[#17181A]">No activity data found</div>
-            <div className="text-xs text-[#5F6368] font-data">There are no activity entries contributing to this result.</div>
+            <div className="text-sm font-semibold text-[var(--text-primary)]">No activity data found</div>
+            <div className="text-xs text-[var(--text-secondary)] font-data">There are no activity entries contributing to this result.</div>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#F4F5F6] border-b border-[#E5E7EB] text-[#5F6368]">
+                <tr className="bg-[var(--bg-canvas)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
                   <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Site</th>
                   <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider text-right">Activity Rows</th>
                   <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider text-right">Total kWh</th>
@@ -184,7 +184,7 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
                   <th className="py-2.5 px-4 font-semibold text-[11px] uppercase tracking-wider text-center">Trace Path</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F1F3F5]">
+              <tbody className="divide-y divide-[#EEEAF5]">
                 {drillDownData.map((row) => {
                   const isExpanded = expandedSite === row.siteName;
                   return (
@@ -192,27 +192,27 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
                       <tr
                         onClick={() => handleRowClick(row.siteName)}
                         className={`cursor-pointer transition-colors ${
-                          isExpanded ? 'bg-[#F0EEFF]/40' : 'hover:bg-[#FAFAFB]'
+                          isExpanded ? 'bg-[var(--brand-50)]/40' : 'hover:bg-[var(--surface-secondary)]'
                         }`}
                       >
-                        <td className="py-3.5 px-4 font-medium text-[#17181A] flex items-center space-x-2">
-                          <Building2 className="w-4 h-4 text-[#181B27] shrink-0" />
+                        <td className="py-3.5 px-4 font-medium text-[var(--text-primary)] flex items-center space-x-2">
+                          <Building2 className="w-4 h-4 text-[var(--text-primary)] shrink-0" />
                           <span>{row.siteName}</span>
                         </td>
-                        <td className="py-3.5 px-4 text-right period-code text-[#5F6368]">
+                        <td className="py-3.5 px-4 text-right period-code text-[var(--text-secondary)]">
                           {row.activityRows}
                         </td>
-                        <td className="py-3.5 px-4 text-right period-code font-medium text-[#17181A]">
+                        <td className="py-3.5 px-4 text-right period-code font-medium text-[var(--text-primary)]">
                           {row.totalKwh.toLocaleString()}
                         </td>
-                        <td className="py-3.5 px-4 emission-factor text-xs text-[#5F6368]">
+                        <td className="py-3.5 px-4 emission-factor text-xs text-[var(--text-secondary)]">
                           {row.emissionFactor}
                         </td>
-                        <td className="py-3.5 px-4 text-right emission-factor font-medium text-[#181B27]">
+                        <td className="py-3.5 px-4 text-right emission-factor font-medium text-[var(--text-primary)]">
                           {row.tCO2e.toFixed(1)}
                         </td>
                         <td className="py-3.5 px-4 text-center">
-                          <span className="text-xs text-[#5141FF] hover:underline font-semibold inline-flex items-center space-x-1">
+                          <span className="text-xs text-[var(--action-primary)] hover:underline font-semibold inline-flex items-center space-x-1">
                             <span>{isExpanded ? 'Hide trail' : 'Trace lineage'}</span>
                             <ArrowRight className="w-3 h-3" />
                           </span>
@@ -221,21 +221,21 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
 
                       {/* Expanded Activity Data Lineage Trail */}
                       {isExpanded && (
-                        <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB]">
+                        <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)]">
                           <td colSpan={6} className="p-4 space-y-3">
                             <div className="flex items-center justify-between text-xs">
-                              <span className="font-semibold text-[#17181A]">
+                              <span className="font-semibold text-[var(--text-primary)]">
                                 Line-Item Sample Trail for {row.siteName} (Showing latest activity records)
                               </span>
-                              <span className="text-[11px] text-[#5F6368] period-code">
+                              <span className="text-[11px] text-[var(--text-secondary)] period-code">
                                 Total entries: {row.activityRows}
                               </span>
                             </div>
 
-                            <div className="border border-[#E5E7EB] rounded-lg bg-white overflow-hidden shadow-2xs">
+                            <div className="border border-[var(--border-default)] rounded-lg bg-white overflow-hidden shadow-2xs">
                               <table className="w-full text-left text-xs border-collapse">
                                 <thead>
-                                  <tr className="bg-[#F4F5F6] text-[#5F6368] border-b border-[#E5E7EB]">
+                                  <tr className="bg-[var(--bg-canvas)] text-[var(--text-secondary)] border-b border-[var(--border-default)]">
                                     <th className="py-2 px-3 font-semibold text-[11px] uppercase tracking-wider">Record ID</th>
                                     <th className="py-2 px-3 font-semibold text-[11px] uppercase tracking-wider">Activity Date</th>
                                     <th className="py-2 px-3 font-semibold text-[11px] uppercase tracking-wider text-left">Quantity (kWh)</th>
@@ -244,20 +244,20 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
                                     <th className="py-2 px-3 font-semibold text-[11px] uppercase tracking-wider text-left">Action</th>
                                   </tr>
                                 </thead>
-                                <tbody className="divide-y divide-[#F1F3F5]">
+                                <tbody className="divide-y divide-[#EEEAF5]">
                                   {row.contributingRecords.map((rec) => (
-                                    <tr key={rec.id} className="hover:bg-[#FAFAFB]">
-                                      <td className="py-2 px-3 activity-id font-medium text-[#181B27]">
+                                    <tr key={rec.id} className="hover:bg-[var(--surface-secondary)]">
+                                      <td className="py-2 px-3 activity-id font-medium text-[var(--text-primary)]">
                                         {rec.id}
                                       </td>
-                                      <td className="py-2 px-3 period-code text-[#5F6368]">
+                                      <td className="py-2 px-3 period-code text-[var(--text-secondary)]">
                                         {rec.date}
                                       </td>
                                       <td className="py-2 px-3 text-left period-code">
                                         {rec.quantity.toLocaleString()}
                                       </td>
-                                      <td className="py-2 px-3 file-hash text-xs text-[#5144C9] flex items-center space-x-1">
-                                        <FileText className="w-3.5 h-3.5 shrink-0 text-[#8A8F98]" />
+                                      <td className="py-2 px-3 file-hash text-xs text-[var(--action-primary)] flex items-center space-x-1">
+                                        <FileText className="w-3.5 h-3.5 shrink-0 text-[var(--text-tertiary)]" />
                                         <button
                                           type="button"
                                           onClick={() => handleInspectEvidence(rec.evidence)}
@@ -266,14 +266,14 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
                                           {rec.evidence}
                                         </button>
                                       </td>
-                                      <td className="py-2 px-3 text-left emission-factor font-medium text-[#17181A]">
+                                      <td className="py-2 px-3 text-left emission-factor font-medium text-[var(--text-primary)]">
                                         {rec.tCO2e.toFixed(2)}
                                       </td>
                                       <td className="py-2 px-3 text-left">
                                         <button
                                           type="button"
                                           onClick={() => handleInspectRecord(rec.id)}
-                                          className="text-xs text-[#5141FF] hover:underline inline-flex items-center space-x-0.5 font-semibold"
+                                          className="text-xs text-[var(--action-primary)] hover:underline inline-flex items-center space-x-0.5 font-semibold"
                                         >
                                           <span>Inspect Row</span>
                                           <ExternalLink className="w-3 h-3" />
@@ -297,10 +297,10 @@ export const Screen21_ResultsDrillDown: React.FC = () => {
       </div>
 
       {/* Traceability Guarantee Footnote */}
-      <div className="p-3.5 bg-white border border-[#E5E7EB] rounded-xl text-xs text-[#5F6368] flex items-start space-x-2.5 shadow-2xs font-data">
-        <Info className="w-4 h-4 text-[#181B27] shrink-0 mt-0.5" />
+      <div className="p-3.5 bg-white border border-[var(--border-default)] rounded-xl text-xs text-[var(--text-secondary)] flex items-start space-x-2.5 shadow-2xs font-data">
+        <Info className="w-4 h-4 text-[var(--text-primary)] shrink-0 mt-0.5" />
         <div>
-          <strong className="text-[#17181A] font-semibold">Functional Traceability:</strong> Results drill-down is read-only. Clicking any site row reveals the contributing activity data rows with direct links to primary PDF utility invoices stored in TC-ARC-002, allowing third-party verifiers to validate data lineage without interruption.
+          <strong className="text-[var(--text-primary)] font-semibold">Functional Traceability:</strong> Results drill-down is read-only. Clicking any site row reveals the contributing activity data rows with direct links to primary PDF utility invoices stored in TC-ARC-002, allowing third-party verifiers to validate data lineage without interruption.
         </div>
       </div>
     </div>

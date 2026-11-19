@@ -106,54 +106,54 @@ export const Screen13_ColumnMapping: React.FC = () => {
       />
 
       {/* 4-Step Progress */}
-      <div className="flex items-center space-x-2 text-xs font-data bg-white p-3 rounded-xl border border-[#E5E7EB] shadow-2xs">
-        <span className="px-2.5 py-1 rounded-lg bg-[#FAFAFB] text-[#5F6368] border border-[#E5E7EB]">
+      <div className="flex items-center space-x-2 text-xs font-data bg-white p-3 rounded-xl border border-[var(--border-default)] shadow-2xs">
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
           1. Upload File
         </span>
-        <span className="text-[#8A8F98]">→</span>
-        <span className="px-2.5 py-1 rounded-lg bg-[#5141FF]/10 text-[#181B27] font-bold border border-[#5141FF]/20">
+        <span className="text-[var(--text-tertiary)]">→</span>
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--action-primary)]/10 text-[var(--text-primary)] font-bold border border-[var(--action-primary)]/20">
           2. Map Columns
         </span>
-        <span className="text-[#8A8F98]">→</span>
-        <span className="px-2.5 py-1 rounded-lg bg-[#FAFAFB] text-[#5F6368] border border-[#E5E7EB]">
+        <span className="text-[var(--text-tertiary)]">→</span>
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
           3. Validate
         </span>
-        <span className="text-[#8A8F98]">→</span>
-        <span className="px-2.5 py-1 rounded-lg bg-[#FAFAFB] text-[#5F6368] border border-[#E5E7EB]">
+        <span className="text-[var(--text-tertiary)]">→</span>
+        <span className="px-2.5 py-1 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
           4. Confirm
         </span>
       </div>
 
       {/* Auto-suggest badge & tenant persistence note */}
-      <div className="p-3.5 bg-[#5141FF]/5 border border-[#5141FF]/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-        <div className="flex items-center space-x-2 text-[#181B27]">
+      <div className="p-3.5 bg-[var(--action-primary)]/5 border border-[var(--action-primary)]/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+        <div className="flex items-center space-x-2 text-[var(--text-primary)]">
           <Sparkles className="w-4 h-4 shrink-0" />
           <span className="font-semibold">
             Auto-suggested 5 of 6 column mappings. One column needs your attention.
           </span>
         </div>
-        <div className="flex items-center space-x-1.5 text-[#5F6368] text-[11px] font-data">
-          <BookmarkCheck className="w-3.5 h-3.5 text-[#181B27]" />
+        <div className="flex items-center space-x-1.5 text-[var(--text-secondary)] text-[11px] font-data">
+          <BookmarkCheck className="w-3.5 h-3.5 text-[var(--text-primary)]" />
           <span>Remembered for {currentTenant.name}</span>
         </div>
       </div>
 
       {/* Mapping Table */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-2xs">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-2xs">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368]">
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Column in your file</th>
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Maps to</th>
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Sample value</th>
-              <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Status</th>
+            <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Column in your file</th>
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Maps to</th>
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Sample value</th>
+              <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F1F3F5]">
+          <tbody className="divide-y divide-[#EEEAF5]">
             {mappings.map((row, idx) => (
-              <tr key={idx} className="hover:bg-[#FAFAFB]">
-                <td className="py-3 px-4 font-semibold text-[#17181A]">
-                  <span className="font-data bg-[#FAFAFB] px-2.5 py-1 rounded-md text-[11px] border border-[#E5E7EB]">
+              <tr key={idx} className="hover:bg-[var(--surface-secondary)]">
+                <td className="py-3 px-4 font-semibold text-[var(--text-primary)]">
+                  <span className="font-data bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md text-[11px] border border-[var(--border-default)]">
                     {row.fileColumn}
                   </span>
                 </td>
@@ -161,7 +161,7 @@ export const Screen13_ColumnMapping: React.FC = () => {
                   <select
                     value={row.mapsTo}
                     onChange={(e) => handleFieldMapChange(idx, e.target.value)}
-                    className="w-full max-w-xs px-2.5 py-1.5 text-xs border border-[#E5E7EB] rounded-lg bg-white text-[#17181A] focus:outline-none focus:border-[#5141FF]"
+                    className="w-full max-w-xs px-2.5 py-1.5 text-xs border border-[var(--border-default)] rounded-lg bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--action-primary)]"
                   >
                     {targetSystemFields.map((field) => (
                       <option key={field} value={field}>
@@ -170,7 +170,7 @@ export const Screen13_ColumnMapping: React.FC = () => {
                     ))}
                   </select>
                 </td>
-                <td className="py-3 px-4 font-data text-[#5F6368] text-[11px]">
+                <td className="py-3 px-4 font-data text-[var(--text-secondary)] text-[11px]">
                   {row.sampleValue}
                 </td>
                 <td className="py-3 px-4">
@@ -187,8 +187,8 @@ export const Screen13_ColumnMapping: React.FC = () => {
       </div>
 
       {/* Mapping Configuration Tip */}
-      <div className="p-3 bg-white border border-[#E5E7EB] rounded-xl text-xs text-[#5F6368] flex items-start space-x-2 shadow-2xs">
-        <Info className="w-4 h-4 text-[#8A8F98] shrink-0 mt-0.5" />
+      <div className="p-3 bg-white border border-[var(--border-default)] rounded-xl text-xs text-[var(--text-secondary)] flex items-start space-x-2 shadow-2xs">
+        <Info className="w-4 h-4 text-[var(--text-tertiary)] shrink-0 mt-0.5" />
         <span className="font-data">
           <strong>What to do:</strong> Choose the matching field for each column. If a column is not needed, select “Do not map” to confirm you have reviewed it.
         </span>

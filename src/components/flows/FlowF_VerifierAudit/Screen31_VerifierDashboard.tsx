@@ -56,39 +56,39 @@ export const Screen31_VerifierDashboard: React.FC = () => {
   return (
     <div id="screen-31-verifier-dashboard" className="w-full space-y-6">
       {/* Verifier Surface Banner / Top Header */}
-      <div className="bg-[#FAFAFB] text-[#17181A] rounded-2xl p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border border-[#E5E7EB]">
+      <div className="bg-[var(--surface-secondary)] text-[var(--text-primary)] rounded-2xl p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border border-[var(--border-default)]">
         <div className="flex items-center space-x-4 min-w-0">
-          <div className="w-12 h-12 rounded-2xl bg-white border border-[#E5E7EB] flex items-center justify-center text-[#181B27] shrink-0 shadow-xs">
-            <ShieldCheck className="w-6 h-6 text-[#181B27]" />
+          <div className="w-12 h-12 rounded-2xl bg-white border border-[var(--border-default)] flex items-center justify-center text-[var(--text-primary)] shrink-0 shadow-xs">
+            <ShieldCheck className="w-6 h-6 text-[var(--text-primary)]" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center space-x-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#181B27]">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--text-primary)]">
                 Verifier Portal
               </span>
-              <span className="text-[#8A8F98]">·</span>
-              <span className="text-xs text-[#027A48] font-semibold">
+              <span className="text-[var(--text-tertiary)]">·</span>
+              <span className="text-xs text-[var(--status-success)] font-semibold">
                 Read-Only Session
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-[#17181A] mt-1 font-sans tracking-tight truncate">
+            <h1 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mt-1 font-sans tracking-tight truncate">
               Assurance & Verification Docket
             </h1>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 text-xs pt-4 lg:pt-0 border-t lg:border-t-0 border-[#E5E7EB] shrink-0">
-          <div className="bg-white h-9 px-3.5 rounded-lg border border-[#E5E7EB] flex items-center space-x-2 shadow-2xs">
-            <span className="text-[#8A8F98]">Client:</span>
-            <span className="font-semibold text-[#17181A] flex items-center space-x-1.5">
-              <Building2 className="w-3.5 h-3.5 text-[#181B27]" />
+        <div className="flex flex-wrap items-center gap-2.5 text-xs pt-4 lg:pt-0 border-t lg:border-t-0 border-[var(--border-default)] shrink-0">
+          <div className="bg-white h-9 px-3.5 rounded-lg border border-[var(--border-default)] flex items-center space-x-2 shadow-2xs">
+            <span className="text-[var(--text-tertiary)]">Client:</span>
+            <span className="font-semibold text-[var(--text-primary)] flex items-center space-x-1.5">
+              <Building2 className="w-3.5 h-3.5 text-[var(--text-primary)]" />
               <span>Zenith Energy</span>
             </span>
           </div>
 
-          <div className="bg-white h-9 px-3.5 rounded-lg border border-[#E5E7EB] flex items-center space-x-2 shadow-2xs">
-            <span className="text-[#8A8F98]">Verifier:</span>
-            <span className="font-semibold text-[#17181A] flex items-center space-x-1.5">
+          <div className="bg-white h-9 px-3.5 rounded-lg border border-[var(--border-default)] flex items-center space-x-2 shadow-2xs">
+            <span className="text-[var(--text-tertiary)]">Verifier:</span>
+            <span className="font-semibold text-[var(--text-primary)] flex items-center space-x-1.5">
               <span>{currentRole === 'VERIFIER' ? currentUser.name : 'Dr. V. Raman (SGS)'}</span>
             </span>
           </div>
@@ -96,39 +96,39 @@ export const Screen31_VerifierDashboard: React.FC = () => {
       </div>
 
       {/* Internal Verifier Subnav */}
-      <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2 text-xs overflow-x-auto whitespace-nowrap scrollbar-none font-sans">
+      <div className="flex items-center justify-between border-b border-[var(--border-default)] pb-2 text-xs overflow-x-auto whitespace-nowrap scrollbar-none font-sans">
         <div className="flex items-center space-x-6">
           <button
-            className="font-bold text-[#181B27] border-b-2 border-[#5141FF] pb-2 flex items-center space-x-1.5 -mb-[9px]"
+            className="font-bold text-[var(--text-primary)] border-b-2 border-[var(--action-primary)] pb-2 flex items-center space-x-1.5 -mb-[9px]"
           >
             <span>Assigned Reviews</span>
           </button>
           <button
             onClick={() => navigateToScreen('32_evidence_trace', 'FLOW_F')}
-            className="text-[#5F6368] hover:text-[#5141FF] pb-2 transition-colors flex items-center space-x-1.5 font-medium"
+            className="text-[var(--text-secondary)] hover:text-[var(--action-primary)] pb-2 transition-colors flex items-center space-x-1.5 font-medium"
           >
             <span>Evidence Trace</span>
           </button>
           <button
             onClick={() => navigateToScreen('33_raise_query', 'FLOW_F')}
-            className="text-[#5F6368] hover:text-[#5141FF] pb-2 transition-colors flex items-center space-x-1.5 font-medium"
+            className="text-[var(--text-secondary)] hover:text-[var(--action-primary)] pb-2 transition-colors flex items-center space-x-1.5 font-medium"
           >
             <span>Queries</span>
             {openQueriesCount > 0 && (
-              <span className="px-1.5 py-0.2 bg-[#FFF0F3] text-[#FB3256] text-[10px] font-bold rounded-md border border-[#FFDCE4]">
+              <span className="px-1.5 py-0.2 bg-[var(--status-warning-bg)] text-[var(--status-warning)] text-[10px] font-bold rounded-md border border-[var(--status-warning)]">
                 {openQueriesCount}
               </span>
             )}
           </button>
           <button
             onClick={() => navigateToScreen('35_audit_trail', 'FLOW_F')}
-            className="text-[#5F6368] hover:text-[#5141FF] pb-2 transition-colors font-medium"
+            className="text-[var(--text-secondary)] hover:text-[var(--action-primary)] pb-2 transition-colors font-medium"
           >
             <span>Audit Trail</span>
           </button>
         </div>
 
-        <div className="text-[11px] text-[#8A8F98] hidden sm:block font-medium">
+        <div className="text-[11px] text-[var(--text-tertiary)] hidden sm:block font-medium">
           ISO 14064-3 Docket
         </div>
       </div>
@@ -144,17 +144,17 @@ export const Screen31_VerifierDashboard: React.FC = () => {
 
       {/* Main Review Section */}
       {assignedReviews.length === 0 ? (
-        <div id="verifier-empty-state" className="bg-white border border-[#E5E7EB] rounded-2xl p-12 text-center space-y-3">
-          <div className="w-12 h-12 rounded-xl bg-[#F4F5F6] text-[#8A8F98] flex items-center justify-center mx-auto">
+        <div id="verifier-empty-state" className="bg-white border border-[var(--border-default)] rounded-2xl p-12 text-center space-y-3">
+          <div className="w-12 h-12 rounded-xl bg-[var(--bg-canvas)] text-[var(--text-tertiary)] flex items-center justify-center mx-auto">
             <Inbox className="w-6 h-6" />
           </div>
           <div className="space-y-1">
-            <h3 className="text-sm font-semibold text-[#17181A]">No reviews assigned</h3>
+            <h3 className="text-sm font-semibold text-[var(--text-primary)]">No reviews assigned</h3>
           </div>
           <div className="pt-2">
             <button
               onClick={() => showToast('Scopes Synchronized', 'Assigned review scopes refreshed.')}
-              className="text-xs text-[#5141FF] hover:underline font-semibold"
+              className="text-xs text-[var(--action-primary)] hover:underline font-semibold"
             >
               Reload assigned scopes
             </button>
@@ -163,10 +163,10 @@ export const Screen31_VerifierDashboard: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {/* Desktop & Tablet Table */}
-          <div className="hidden sm:block bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden shadow-xs">
+          <div className="hidden sm:block bg-white border border-[var(--border-default)] rounded-2xl overflow-hidden shadow-xs">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368]">
+                <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
                   <th scope="col" className="py-3.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Client</th>
                   <th scope="col" className="py-3.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Report</th>
                   <th scope="col" className="py-3.5 px-4 font-semibold text-[11px] uppercase tracking-wider">Period</th>
@@ -174,36 +174,36 @@ export const Screen31_VerifierDashboard: React.FC = () => {
                   <th scope="col" className="py-3.5 px-4 text-right font-semibold text-[11px] uppercase tracking-wider">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F1F3F5]">
+              <tbody className="divide-y divide-[#EEEAF5]">
                 {assignedReviews.map((rev) => (
                   <tr
                     key={rev.id}
                     onClick={() => handleOpenTrace(rev)}
-                    className="hover:bg-[#FAFAFB] transition-colors cursor-pointer group"
+                    className="hover:bg-[var(--surface-secondary)] transition-colors cursor-pointer group"
                   >
                     <td className="py-4 px-4">
-                      <div className="font-bold text-[#17181A] group-hover:text-[#5141FF] transition-colors">
+                      <div className="font-bold text-[var(--text-primary)] group-hover:text-[var(--action-primary)] transition-colors">
                         {rev.client}
                       </div>
-                      <div className="text-[11px] text-[#8A8F98] mt-0.5">
+                      <div className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
                         {rev.sitesScoped.join(', ')}
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      <div className="font-semibold text-[#17181A] flex items-center space-x-1.5">
-                        <FileText className="w-3.5 h-3.5 text-[#5F6368]" />
+                      <div className="font-semibold text-[var(--text-primary)] flex items-center space-x-1.5">
+                        <FileText className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
                         <span>{rev.report}</span>
                       </div>
-                      <div className="text-[11px] text-[#8A8F98] mt-0.5">
+                      <div className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
                         {rev.standard}
                       </div>
                     </td>
-                    <td className="py-4 px-4 text-[#17181A]">
+                    <td className="py-4 px-4 text-[var(--text-primary)]">
                       <div className="font-semibold">{rev.period}</div>
-                      <div className="text-[11px] text-[#8A8F98]">{rev.periodDates}</div>
+                      <div className="text-[11px] text-[var(--text-tertiary)]">{rev.periodDates}</div>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="text-[11px] font-semibold text-[#181B27] bg-[#5141FF]/10 px-2.5 py-1 rounded-md">
+                      <span className="text-[11px] font-semibold text-[var(--text-primary)] bg-[var(--action-primary)]/10 px-2.5 py-1 rounded-md">
                         {rev.status}
                       </span>
                     </td>
@@ -213,7 +213,7 @@ export const Screen31_VerifierDashboard: React.FC = () => {
                           e.stopPropagation();
                           handleOpenTrace(rev);
                         }}
-                        className="h-9 px-4 text-xs font-semibold text-white bg-[#5141FF] rounded-lg hover:bg-[#4232E8] shadow-2xs inline-flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5141FF]"
+                        className="h-9 px-4 text-xs font-semibold text-white bg-[var(--action-primary)] rounded-lg hover:bg-[var(--action-primary-hover)] shadow-2xs inline-flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]"
                       >
                         <span>Open Evidence Trace</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -230,24 +230,24 @@ export const Screen31_VerifierDashboard: React.FC = () => {
             {assignedReviews.map((rev) => (
               <div
                 key={rev.id}
-                className="bg-white border border-[#E5E7EB] rounded-2xl p-4 space-y-3 shadow-xs"
+                className="bg-white border border-[var(--border-default)] rounded-2xl p-4 space-y-3 shadow-xs"
               >
                 <div>
-                  <div className="text-sm font-bold text-[#17181A]">{rev.client}</div>
-                  <div className="text-xs text-[#5F6368] mt-0.5">{rev.report}</div>
-                  <div className="text-xs text-[#8A8F98] mt-0.5">{rev.period}</div>
+                  <div className="text-sm font-bold text-[var(--text-primary)]">{rev.client}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-0.5">{rev.report}</div>
+                  <div className="text-xs text-[var(--text-tertiary)] mt-0.5">{rev.period}</div>
                 </div>
 
                 <div>
-                  <span className="text-[11px] font-semibold text-[#181B27] bg-[#5141FF]/10 px-2.5 py-1 rounded-md">
+                  <span className="text-[11px] font-semibold text-[var(--text-primary)] bg-[var(--action-primary)]/10 px-2.5 py-1 rounded-md">
                     {rev.status}
                   </span>
                 </div>
 
-                <div className="pt-2 border-t border-[#F1F3F5]">
+                <div className="pt-2 border-t border-[var(--border-subtle)]">
                   <button
                     onClick={() => handleOpenTrace(rev)}
-                    className="w-full h-9 px-4 text-xs font-semibold text-white bg-[#5141FF] rounded-lg hover:bg-[#4232E8] shadow-2xs flex items-center justify-between transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5141FF]"
+                    className="w-full h-9 px-4 text-xs font-semibold text-white bg-[var(--action-primary)] rounded-lg hover:bg-[var(--action-primary-hover)] shadow-2xs flex items-center justify-between transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]"
                   >
                     <span>View Evidence Trace</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -260,35 +260,35 @@ export const Screen31_VerifierDashboard: React.FC = () => {
       )}
 
       {/* Assurance Scope & Protocol Summary */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-xs">
-        <div className="flex items-center justify-between pb-3 border-b border-[#F1F3F5] mb-4">
+      <div className="bg-white border border-[var(--border-default)] rounded-2xl p-5 shadow-xs">
+        <div className="flex items-center justify-between pb-3 border-b border-[var(--border-subtle)] mb-4">
           <div className="flex items-center space-x-2">
-            <Lock className="w-4 h-4 text-[#181B27]" />
-            <h3 className="text-xs font-bold text-[#181B27] uppercase tracking-wider">
+            <Lock className="w-4 h-4 text-[var(--text-primary)]" />
+            <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
               Assurance Protocol & Boundary
             </h3>
           </div>
-          <span className="text-xs text-[#5F6368] font-medium">ISO 14064-3 Certified</span>
+          <span className="text-xs text-[var(--text-secondary)] font-medium">Applied assurance profile</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <div className="p-3.5 bg-[#FAFAFB] border border-[#E5E7EB] rounded-xl space-y-1.5">
-            <div className="font-semibold text-[#17181A]">Assigned Boundary</div>
-            <div className="text-[#5F6368]">
+          <div className="p-3.5 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl space-y-1.5">
+            <div className="font-semibold text-[var(--text-primary)]">Assigned Boundary</div>
+            <div className="text-[var(--text-secondary)]">
               Scope 1 & 2 emissions for Chennai Plant 1 and Pune Warehouse (FY 2025–26).
             </div>
           </div>
 
-          <div className="p-3.5 bg-[#FAFAFB] border border-[#E5E7EB] rounded-xl space-y-1.5">
-            <div className="font-semibold text-[#17181A]">Inspection Actions</div>
-            <div className="text-[#5F6368]">
+          <div className="p-3.5 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl space-y-1.5">
+            <div className="font-semibold text-[var(--text-primary)]">Inspection Actions</div>
+            <div className="text-[var(--text-secondary)]">
               Audit calculation formula lineage, inspect utility bills, and raise line-item clarification queries.
             </div>
           </div>
 
-          <div className="p-3.5 bg-[#FAFAFB] border border-[#E5E7EB] rounded-xl space-y-1.5">
-            <div className="font-semibold text-[#17181A]">Immutability Protection</div>
-            <div className="text-[#5F6368]">
+          <div className="p-3.5 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl space-y-1.5">
+            <div className="font-semibold text-[var(--text-primary)]">Immutability Protection</div>
+            <div className="text-[var(--text-secondary)]">
               Read-only role enforcement. Data cannot be edited, deleted, or re-aggregated by external verifiers.
             </div>
           </div>

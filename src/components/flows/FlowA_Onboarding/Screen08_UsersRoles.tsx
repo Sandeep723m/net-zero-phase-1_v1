@@ -128,8 +128,8 @@ export const Screen08_UsersRoles: React.FC = () => {
               <span>Invite User</span>
             </button>
           ) : (
-            <div className="flex items-center space-x-2 text-xs text-[#5F6368] font-data bg-[#FAFAFB] px-3 py-1.5 rounded-lg border border-[#E5E7EB]">
-              <Lock className="w-3.5 h-3.5 text-[#8A8F98]" />
+            <div className="flex items-center space-x-2 text-xs text-[var(--text-secondary)] font-data bg-[var(--surface-secondary)] px-3 py-1.5 rounded-lg border border-[var(--border-default)]">
+              <Lock className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
               <span>User directory managed by Tenant Admin</span>
             </div>
           )
@@ -137,44 +137,44 @@ export const Screen08_UsersRoles: React.FC = () => {
       />
 
       {/* Users Table */}
-      <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-2xs font-sans">
+      <div className="bg-white border border-[var(--border-default)] rounded-xl overflow-hidden shadow-2xs font-sans">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368]">
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Name</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Email Address</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Platform Role</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Site Scope</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Account Status</th>
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A] text-right">Access</th>
+              <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Name</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Email Address</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Platform Role</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Site Scope</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Account Status</th>
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)] text-right">Access</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F1F3F5]">
+            <tbody className="divide-y divide-[#EEEAF5]">
               {users.map((user) => {
                 const siteScopeLabel = user.siteScope.includes('all')
                   ? 'All Sites (Organisation-wide)'
                   : sites.find((s) => s.id === user.siteScope[0])?.name || user.siteScope[0];
 
                 return (
-                  <tr key={user.id} className="hover:bg-[#FAFAFB] transition-colors">
+                  <tr key={user.id} className="hover:bg-[var(--surface-secondary)] transition-colors">
                     <td className="py-3 px-4">
                       <div className="flex items-center space-x-2.5">
-                        <div className="w-7 h-7 rounded-full bg-[#5141FF]/10 border border-[#5141FF]/20 flex items-center justify-center font-bold text-xs text-[#181B27]">
+                        <div className="w-7 h-7 rounded-full bg-[var(--action-primary)]/10 border border-[var(--action-primary)]/20 flex items-center justify-center font-bold text-xs text-[var(--text-primary)]">
                           {user.avatarInitials}
                         </div>
-                        <span className="font-semibold text-[#17181A]">{user.name}</span>
+                        <span className="font-semibold text-[var(--text-primary)]">{user.name}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 font-data text-[#5F6368]">{user.email}</td>
+                    <td className="py-3 px-4 font-data text-[var(--text-secondary)]">{user.email}</td>
                     <td className="py-3 px-4">
-                      <span className="px-2 py-0.5 rounded-md bg-[#FAFAFB] text-[#17181A] text-[11px] font-semibold border border-[#E5E7EB]">
+                      <span className="px-2 py-0.5 rounded-md bg-[var(--surface-secondary)] text-[var(--text-primary)] text-[11px] font-semibold border border-[var(--border-default)]">
                         {user.role.replace('_', ' ')}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-[#5F6368]">
+                    <td className="py-3 px-4 text-[var(--text-secondary)]">
                       <div className="flex items-center space-x-1 font-data">
-                        <MapPin className="w-3.5 h-3.5 text-[#8A8F98]" />
+                        <MapPin className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
                         <span>{siteScopeLabel}</span>
                       </div>
                     </td>
@@ -186,7 +186,7 @@ export const Screen08_UsersRoles: React.FC = () => {
                       />
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <button className="text-[11px] text-[#5141FF] hover:underline font-semibold">
+                      <button className="text-[11px] text-[var(--action-primary)] hover:underline font-semibold">
                         Edit Access
                       </button>
                     </td>
@@ -199,55 +199,55 @@ export const Screen08_UsersRoles: React.FC = () => {
       </div>
 
       {/* Role Permission Matrix */}
-      <div className="p-5 bg-white border border-[#E5E7EB] rounded-xl shadow-2xs font-sans">
+      <div className="p-5 bg-white border border-[var(--border-default)] rounded-xl shadow-2xs font-sans">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-[#17181A]">Role Permission Matrix</h2>
-          <span className="text-[11px] px-2.5 py-1 bg-[#FAFAFB] rounded-lg border border-[#E5E7EB] text-[#5F6368] font-data">
+          <h2 className="text-sm font-semibold text-[var(--text-primary)]">Role Permission Matrix</h2>
+          <span className="text-[11px] px-2.5 py-1 bg-[var(--surface-secondary)] rounded-lg border border-[var(--border-default)] text-[var(--text-secondary)] font-data">
             Four-Eye Principle Enforced
           </span>
         </div>
 
-        <div className="overflow-x-auto border border-[#E5E7EB] rounded-xl">
+        <div className="overflow-x-auto border border-[var(--border-default)] rounded-xl">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-[#FAFAFB] border-b border-[#E5E7EB] text-[#5F6368]">
-                <th scope="col" className="py-2.5 px-4 font-semibold text-[#17181A]">Capability / Function</th>
-                <th scope="col" className="py-2.5 px-3 font-semibold text-[#17181A] text-center">Tenant Admin</th>
-                <th scope="col" className="py-2.5 px-3 font-semibold text-[#17181A] text-center">Data Entry</th>
-                <th scope="col" className="py-2.5 px-3 font-semibold text-[#17181A] text-center">Reviewer / Approver</th>
-                <th scope="col" className="py-2.5 px-3 font-semibold text-[#17181A] text-center">Verifier / VVB</th>
+              <tr className="bg-[var(--surface-secondary)] border-b border-[var(--border-default)] text-[var(--text-secondary)]">
+                <th scope="col" className="py-2.5 px-4 font-semibold text-[var(--text-primary)]">Capability / Function</th>
+                <th scope="col" className="py-2.5 px-3 font-semibold text-[var(--text-primary)] text-center">Tenant Admin</th>
+                <th scope="col" className="py-2.5 px-3 font-semibold text-[var(--text-primary)] text-center">Data Entry</th>
+                <th scope="col" className="py-2.5 px-3 font-semibold text-[var(--text-primary)] text-center">Reviewer / Approver</th>
+                <th scope="col" className="py-2.5 px-3 font-semibold text-[var(--text-primary)] text-center">Verifier / VVB</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F1F3F5]">
+            <tbody className="divide-y divide-[#EEEAF5]">
               {permissionsMatrix.map((row, idx) => (
-                <tr key={idx} className="hover:bg-[#FAFAFB]">
-                  <td className="py-2.5 px-4 text-[#17181A]">{row.action}</td>
+                <tr key={idx} className="hover:bg-[var(--surface-secondary)]">
+                  <td className="py-2.5 px-4 text-[var(--text-primary)]">{row.action}</td>
                   <td className="py-2.5 px-3 text-center">
                     {row.admin ? (
-                      <Check className="w-4 h-4 text-[#181B27] mx-auto" />
+                      <Check className="w-4 h-4 text-[var(--text-primary)] mx-auto" />
                     ) : (
-                      <span className="text-[#8A8F98]">—</span>
+                      <span className="text-[var(--text-tertiary)]">—</span>
                     )}
                   </td>
                   <td className="py-2.5 px-3 text-center">
                     {row.dataEntry ? (
-                      <Check className="w-4 h-4 text-[#181B27] mx-auto" />
+                      <Check className="w-4 h-4 text-[var(--text-primary)] mx-auto" />
                     ) : (
-                      <span className="text-[#8A8F98]">—</span>
+                      <span className="text-[var(--text-tertiary)]">—</span>
                     )}
                   </td>
                   <td className="py-2.5 px-3 text-center">
                     {row.reviewer ? (
-                      <Check className="w-4 h-4 text-[#181B27] mx-auto" />
+                      <Check className="w-4 h-4 text-[var(--text-primary)] mx-auto" />
                     ) : (
-                      <span className="text-[#8A8F98]">—</span>
+                      <span className="text-[var(--text-tertiary)]">—</span>
                     )}
                   </td>
                   <td className="py-2.5 px-3 text-center">
                     {row.verifier ? (
-                      <Check className="w-4 h-4 text-[#181B27] mx-auto" />
+                      <Check className="w-4 h-4 text-[var(--text-primary)] mx-auto" />
                     ) : (
-                      <span className="text-[#8A8F98]">—</span>
+                      <span className="text-[var(--text-tertiary)]">—</span>
                     )}
                   </td>
                 </tr>
@@ -258,10 +258,10 @@ export const Screen08_UsersRoles: React.FC = () => {
       </div>
 
       {/* Completion of Flow A Onboarding */}
-      <div className="p-4 bg-[#5141FF]/5 border border-[#5141FF]/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans">
+      <div className="p-4 bg-[var(--action-primary)]/5 border border-[var(--action-primary)]/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans">
         <div>
-          <span className="font-bold text-[#181B27]">Onboarding Complete</span>
-          <p className="text-[#5F6368] mt-0.5 text-[11px] font-data">
+          <span className="font-bold text-[var(--text-primary)]">Onboarding Complete</span>
+          <p className="text-[var(--text-secondary)] mt-0.5 text-[11px] font-data">
             The organisation boundary, sites, reporting periods, emission factors, and user roles are configured. You are now ready to begin Activity Data Ingestion.
           </p>
         </div>
@@ -277,15 +277,15 @@ export const Screen08_UsersRoles: React.FC = () => {
       {/* Invite User Drawer */}
       {isDrawerOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex justify-end">
-          <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col border-l border-[#E5E7EB] font-sans animate-in slide-in-from-right duration-200">
-            <div className="p-4 border-b border-[#E5E7EB] flex items-center justify-between bg-[#F4F5F6]">
+          <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col border-l border-[var(--border-default)] font-sans animate-in slide-in-from-right duration-200">
+            <div className="p-4 border-b border-[var(--border-default)] flex items-center justify-between bg-[var(--bg-canvas)]">
               <div className="flex items-center space-x-2">
-                <UserPlus className="w-4 h-4 text-[#181B27]" />
-                <h3 className="text-sm font-semibold text-[#17181A]">Invite Team Member</h3>
+                <UserPlus className="w-4 h-4 text-[var(--text-primary)]" />
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">Invite Team Member</h3>
               </div>
               <button
                 onClick={() => setIsDrawerOpen(false)}
-                className="p-1 text-[#8A8F98] hover:text-[#17181A] rounded"
+                className="p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] rounded"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -293,8 +293,8 @@ export const Screen08_UsersRoles: React.FC = () => {
 
             <form onSubmit={handleInvite} className="p-4 flex-1 overflow-y-auto space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">
-                  Full Name <span className="text-[#FB3256]">*</span>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">
+                  Full Name <span className="text-[var(--status-warning)]">*</span>
                 </label>
                 <input
                   type="text"
@@ -302,13 +302,13 @@ export const Screen08_UsersRoles: React.FC = () => {
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                   placeholder="e.g. Priya Sharma"
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">
-                  Work Email <span className="text-[#FB3256]">*</span>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">
+                  Work Email <span className="text-[var(--status-warning)]">*</span>
                 </label>
                 <input
                   type="email"
@@ -316,16 +316,16 @@ export const Screen08_UsersRoles: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">Assigned Role</label>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">Assigned Role</label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value as any)}
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 >
                   <option value="DATA_ENTRY">Data Entry (Enters/imports activity data)</option>
                   <option value="REVIEWER">Reviewer / Approver (Verifies & approves)</option>
@@ -335,11 +335,11 @@ export const Screen08_UsersRoles: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#17181A] mb-1">Facility Scope</label>
+                <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">Facility Scope</label>
                 <select
                   value={siteScope}
                   onChange={(e) => setSiteScope(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#5141FF] bg-white text-[#17181A]"
+                  className="w-full px-3 py-2 text-xs border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--action-primary)] bg-white text-[var(--text-primary)]"
                 >
                   <option value="all">All Sites (Organisation-wide)</option>
                   {sites.map((site) => (
@@ -350,7 +350,7 @@ export const Screen08_UsersRoles: React.FC = () => {
                 </select>
               </div>
 
-              <div className="pt-4 border-t border-[#F1F3F5] flex items-center justify-end space-x-2">
+              <div className="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-end space-x-2">
                 <button
                   type="button"
                   onClick={() => setIsDrawerOpen(false)}

@@ -51,37 +51,37 @@ export const Screen34_NotificationCenter: React.FC = () => {
     switch (type) {
       case 'verifier_query':
         return (
-          <div className="w-8 h-8 rounded-lg bg-[#5141FF]/10 text-[#5141FF] flex items-center justify-center shrink-0 border border-[#5141FF]/20">
+          <div className="w-8 h-8 rounded-lg bg-[var(--action-primary)]/10 text-[var(--action-primary)] flex items-center justify-center shrink-0 border border-[var(--action-primary)]/20">
             <HelpCircle className="w-4 h-4" />
           </div>
         );
       case 'approval':
         return (
-          <div className="w-8 h-8 rounded-lg bg-[#ECFDF3] text-[#027A48] flex items-center justify-center shrink-0 border border-[#027A48]/30">
+          <div className="w-8 h-8 rounded-lg bg-[var(--status-success-bg)] text-[var(--status-success)] flex items-center justify-center shrink-0 border border-[#147A5A]/30">
             <CheckCircle2 className="w-4 h-4" />
           </div>
         );
       case 'import_failure':
         return (
-          <div className="w-8 h-8 rounded-lg bg-[#FFF0F3] text-[#FB3256] flex items-center justify-center shrink-0 border border-[#FFDCE4]/40">
+          <div className="w-8 h-8 rounded-lg bg-[var(--status-warning-bg)] text-[var(--status-warning)] flex items-center justify-center shrink-0 border border-[var(--status-warning)]/40">
             <AlertOctagon className="w-4 h-4" />
           </div>
         );
       case 'import_success':
         return (
-          <div className="w-8 h-8 rounded-lg bg-[#FAFAFB] text-[#17181A] flex items-center justify-center shrink-0 border border-[#E5E7EB]">
+          <div className="w-8 h-8 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-primary)] flex items-center justify-center shrink-0 border border-[var(--border-default)]">
             <FileSpreadsheet className="w-4 h-4" />
           </div>
         );
       case 'period_lock':
         return (
-          <div className="w-8 h-8 rounded-lg bg-[#FAFAFB] text-[#5F6368] flex items-center justify-center shrink-0 border border-[#E5E7EB]">
+          <div className="w-8 h-8 rounded-lg bg-[var(--surface-secondary)] text-[var(--text-secondary)] flex items-center justify-center shrink-0 border border-[var(--border-default)]">
             <Lock className="w-4 h-4" />
           </div>
         );
       default:
         return (
-          <div className="w-8 h-8 rounded-lg bg-[#F4F5F6] text-[#5F6368] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-[var(--bg-canvas)] text-[var(--text-secondary)] flex items-center justify-center shrink-0">
             <Bell className="w-4 h-4" />
           </div>
         );
@@ -108,14 +108,14 @@ export const Screen34_NotificationCenter: React.FC = () => {
             disabled={unreadCount === 0}
             className="enterprise-btn-secondary h-9 px-3 text-xs inline-flex items-center space-x-1.5 font-semibold disabled:opacity-50"
           >
-            <CheckCheck className="w-3.5 h-3.5 text-[#5F6368]" />
+            <CheckCheck className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
             <span>Mark all as read</span>
           </button>
         }
       />
 
       {/* Filter Tabs */}
-      <div className="flex items-center space-x-2 border-b border-[#E5E7EB] pb-3 text-xs overflow-x-auto">
+      <div className="flex items-center space-x-2 border-b border-[var(--border-default)] pb-3 text-xs overflow-x-auto">
         {[
           { key: 'all', label: `All (${notifications.length})` },
           { key: 'unread', label: `Unread (${unreadCount})` },
@@ -128,8 +128,8 @@ export const Screen34_NotificationCenter: React.FC = () => {
             onClick={() => setActiveFilter(tab.key as any)}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors whitespace-nowrap ${
               activeFilter === tab.key
-                ? 'bg-[#5141FF] text-white shadow-xs'
-                : 'bg-white border border-[#E5E7EB] text-[#5F6368] hover:text-[#17181A] hover:bg-[#FAFAFB]'
+                ? 'bg-[var(--action-primary)] text-white shadow-xs'
+                : 'bg-white border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-secondary)]'
             }`}
           >
             {tab.label}
@@ -139,20 +139,20 @@ export const Screen34_NotificationCenter: React.FC = () => {
 
       {/* Notification List */}
       {filteredNotifications.length === 0 ? (
-        <div id="notifications-empty-state" className="bg-white border border-[#E5E7EB] rounded-2xl p-12 text-center space-y-2">
-          <div className="w-12 h-12 rounded-xl bg-[#F4F5F6] text-[#8A8F98] flex items-center justify-center mx-auto">
+        <div id="notifications-empty-state" className="bg-white border border-[var(--border-default)] rounded-2xl p-12 text-center space-y-2">
+          <div className="w-12 h-12 rounded-xl bg-[var(--bg-canvas)] text-[var(--text-tertiary)] flex items-center justify-center mx-auto">
             <Inbox className="w-6 h-6" />
           </div>
-          <h3 className="text-sm font-semibold text-[#17181A]">No notifications</h3>
+          <h3 className="text-sm font-semibold text-[var(--text-primary)]">No notifications</h3>
         </div>
       ) : (
-        <div className="bg-white border border-[#E5E7EB] rounded-2xl divide-y divide-[#F1F3F5] shadow-xs overflow-hidden">
+        <div className="bg-white border border-[var(--border-default)] rounded-2xl divide-y divide-[#EEEAF5] shadow-xs overflow-hidden">
           {filteredNotifications.map((item) => (
             <div
               key={item.id}
               onClick={() => handleNotificationClick(item)}
               className={`p-4 flex items-start justify-between gap-3 text-xs transition-colors cursor-pointer group ${
-                !item.isRead ? 'bg-[#5141FF]/5 hover:bg-[#5141FF]/10' : 'bg-white hover:bg-[#FAFAFB]'
+                !item.isRead ? 'bg-[var(--action-primary)]/5 hover:bg-[var(--action-primary)]/10' : 'bg-white hover:bg-[var(--surface-secondary)]'
               }`}
             >
               <div className="flex items-start space-x-3.5">
@@ -162,27 +162,27 @@ export const Screen34_NotificationCenter: React.FC = () => {
                   <div className="flex items-center space-x-2">
                     <span
                       className={`text-xs ${
-                        !item.isRead ? 'font-bold text-[#17181A]' : 'font-medium text-[#5F6368]'
-                      } group-hover:text-[#5141FF] transition-colors`}
+                        !item.isRead ? 'font-bold text-[var(--text-primary)]' : 'font-medium text-[var(--text-secondary)]'
+                      } group-hover:text-[var(--action-primary)] transition-colors`}
                     >
                       {item.title}
                     </span>
                     {!item.isRead && (
                       <span
-                        className="w-2 h-2 rounded-full bg-[#5141FF] shrink-0"
+                        className="w-2 h-2 rounded-full bg-[var(--action-primary)] shrink-0"
                         title="Unread notification"
                       />
                     )}
                   </div>
 
                   {item.description && (
-                    <p className="text-[11px] text-[#5F6368] line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
                   )}
 
                   {item.entityRef && (
-                    <div className="text-[11px] font-mono text-[#8A8F98] pt-0.5">
+                    <div className="text-[11px] font-mono text-[var(--text-tertiary)] pt-0.5">
                       {item.entityRef}
                     </div>
                   )}
@@ -190,11 +190,11 @@ export const Screen34_NotificationCenter: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-3 shrink-0 text-right">
-                <span className="text-[11px] text-[#8A8F98] whitespace-nowrap flex items-center space-x-1">
+                <span className="text-[11px] text-[var(--text-tertiary)] whitespace-nowrap flex items-center space-x-1">
                   <Clock className="w-3 h-3" />
                   <span>{item.relativeTime || item.timestamp}</span>
                 </span>
-                <span className="text-[#8A8F98] group-hover:text-[#17181A] transition-transform group-hover:translate-x-0.5">
+                <span className="text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)] transition-transform group-hover:translate-x-0.5">
                   <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
@@ -204,11 +204,11 @@ export const Screen34_NotificationCenter: React.FC = () => {
       )}
 
       {/* Footer Navigation */}
-      <div className="p-3 bg-[#FAFAFB] border border-[#E5E7EB] rounded-2xl text-xs text-[#5F6368] flex items-center justify-between">
+      <div className="p-3 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl text-xs text-[var(--text-secondary)] flex items-center justify-between">
         <span>Retention: 90 Days</span>
         <button
           onClick={() => navigateToScreen('35_audit_trail', 'FLOW_F')}
-          className="text-[#5141FF] hover:underline font-semibold flex items-center space-x-1"
+          className="text-[var(--action-primary)] hover:underline font-semibold flex items-center space-x-1"
         >
           <span>View Complete Audit Trail</span>
           <ArrowRight className="w-3.5 h-3.5" />

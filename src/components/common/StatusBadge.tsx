@@ -50,7 +50,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 }) => {
   const normStatus = (status || '').toLowerCase().trim();
 
-  let colorClasses = 'bg-[#F0F2F7] text-[#42485A] border-[#E2E5EF]';
+  let colorClasses = 'bg-[var(--status-neutral-bg)] text-[var(--status-neutral)] border-[var(--border-default)]';
   let IconComponent: React.ElementType = FileCheck;
 
   if (
@@ -63,7 +63,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     normStatus === 'resolved' ||
     normStatus === 'closed'
   ) {
-    colorClasses = 'bg-[#E8F7EF] text-[#16845B] border-[#16845B]/25';
+    colorClasses = 'bg-[var(--status-success-bg)] text-[var(--status-success)] border-[var(--status-success)]/25';
     IconComponent = CheckCircle2;
   } else if (
     normStatus === 'pending' ||
@@ -73,7 +73,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     normStatus === 'in progress' ||
     normStatus === 'initiated'
   ) {
-    colorClasses = 'bg-[#F2F0FF] text-[#5141FF] border-[#5141FF]/25';
+    colorClasses = 'bg-[var(--status-info-bg)] text-[var(--status-info)] border-[var(--status-info)]/25';
     IconComponent = Clock;
   } else if (
     normStatus === 'returned' ||
@@ -83,7 +83,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     normStatus === 'needs review' ||
     normStatus === 'correction'
   ) {
-    colorClasses = 'bg-[#FFF5D9] text-[#946200] border-[#946200]/25';
+    colorClasses = 'bg-[var(--status-warning-bg)] text-[var(--status-warning)] border-[var(--status-warning)]/25';
     IconComponent = RotateCcw;
   } else if (
     normStatus === 'flagged' ||
@@ -93,13 +93,13 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     normStatus === 'urgent' ||
     normStatus === 'action required'
   ) {
-    colorClasses = 'bg-[#FFF0F1] text-[#C52238] border-[#C52238]/25';
+    colorClasses = 'bg-[var(--status-error-bg)] text-[var(--status-error)] border-[var(--status-error)]/25';
     IconComponent = AlertCircle;
   } else if (normStatus === 'locked') {
-    colorClasses = 'bg-[#F0F2F7] text-[#42485A] border-[#E2E5EF]';
+    colorClasses = 'bg-[var(--status-neutral-bg)] text-[var(--status-neutral)] border-[var(--border-default)]';
     IconComponent = Lock;
   } else if (normStatus === 'default' || normStatus === 'info') {
-    colorClasses = 'bg-[#EBF2FF] text-[#2859C5] border-[#2859C5]/25';
+    colorClasses = 'bg-[var(--status-info-bg)] text-[var(--status-info)] border-[var(--status-info)]/25';
     IconComponent = HelpCircle;
   }
 
