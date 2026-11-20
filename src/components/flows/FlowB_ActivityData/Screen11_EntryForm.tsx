@@ -139,6 +139,7 @@ export const Screen11_EntryForm: React.FC<Screen11Props> = ({ initialTab = 'manu
     sites,
     emissionSources,
     activePeriod,
+    activeFilterSite,
     addActivityRecord,
     navigateToScreen,
     setSelectedRecordId,
@@ -158,17 +159,10 @@ export const Screen11_EntryForm: React.FC<Screen11Props> = ({ initialTab = 'manu
   const isPeriodLocked = Boolean(activePeriod?.locked);
   const isVerifierReadOnly = currentRole === 'VERIFIER';
 
-  // Allowed sites based on user siteScope
-  const allowedSites = useMemo(() => {
-    if (currentUser?.siteScope && currentUser.siteScope.length > 0 && currentRole === 'DATA_ENTRY') {
-      const filtered = sites.filter((s) => currentUser.siteScope?.includes(s.id));
-      return filtered.length > 0 ? filtered : sites;
-    }
-    return sites;
-  }, [sites, currentUser, currentRole]);
-
-  const defaultSite = allowedSites.find((s) => s.name.includes('Chennai')) || allowedSites[0] || sites[0];
-  const [siteId, setSiteId] = useState(ocrPrefillData?.siteId || defaultSite?.id || 'site-chennai-1');
+  const allowedSites = sites.filter((site) => currentUser.siteScope.includes('all') || currentUser.siteScope.includes(site.id));
+  const defaultSite = allowedSites.find((site) => site.id === activeFilterSite) ||
+    allowedSites.find((site) => site.name.includes('Chennai')) || allowedSites[0];
+  const [siteId, setSiteId] = useState(ocrPrefillData?.siteId || defaultSite?.id || '');
 
   const availableSources = emissionSources.filter((s) => s.siteId === siteId);
   const defaultSource =
@@ -176,7 +170,11 @@ export const Screen11_EntryForm: React.FC<Screen11Props> = ({ initialTab = 'manu
     availableSources[0];
 
   const [sourceId, setSourceId] = useState(ocrPrefillData?.sourceId || defaultSource?.id || '');
-  const [date, setDate] = useState(ocrPrefillData?.date || '2025-08-12');
+  const sampleDate = '2025-08-12';
+  const defaultDate = activePeriod && (sampleDate < activePeriod.startDate || sampleDate > activePeriod.endDate)
+    ? activePeriod.startDate
+    : sampleDate;
+  const [date, setDate] = useState(ocrPrefillData?.date || defaultDate);
   const [quantity, setQuantity] = useState<string>(ocrPrefillData?.quantity ? String(ocrPrefillData.quantity) : '48200');
   const [unit, setUnit] = useState<string>(ocrPrefillData?.unit || 'kWh');
   const [entryMethod, setEntryMethod] = useState<string>(ocrPrefillData?.entryMethod || 'Manual');
@@ -208,7 +206,8 @@ export const Screen11_EntryForm: React.FC<Screen11Props> = ({ initialTab = 'manu
 
   // Selected source object
   const currentSource = availableSources.find((s) => s.id === sourceId) || availableSources[0] || defaultSource;
-  const selectedSite = sites.find((s) => s.id === siteId) || defaultSite;
+  const selectedSite = allowedSites.find((site) => site.id === siteId);
+  const dateOutsidePeriod = !activePeriod || !date || date < activePeriod.startDate || date > activePeriod.endDate;
 
   const isLiquidFuel = useMemo(() => {
     const srcName = (currentSource?.name || '').toLowerCase();
@@ -279,8 +278,13 @@ export const Screen11_EntryForm: React.FC<Screen11Props> = ({ initialTab = 'manu
       showToast('Auditor Read-Only', 'Independent verifiers cannot submit activity records.', 'error');
       return;
     }
-    if (!currentSource || numQuantity <= 0) {
-      showToast('Validation Error', 'Please enter a valid positive quantity.', 'error');
+    if (!selectedSite || !currentSource || !Number.isFinite(numQuantity) || numQuantity <= 0) {
+      showToast('Validation Error', 'Select an available facility and activity source, and enter a valid positive quantity.', 'error');
+      return;
+    }
+
+    if (dateOutsidePeriod) {
+      showToast('Activity date outside the reporting period', 'Choose a date within the selected reporting period.', 'error');
       return;
     }
 
@@ -752,10 +756,15 @@ export const Screen11_EntryForm: React.FC<Screen11Props> = ({ initialTab = 'manu
                     </label>
                     <input
                       type="date"
+                      min={activePeriod?.startDate}
+                      max={activePeriod?.endDate}
+                      aria-invalid={dateOutsidePeriod}
+                      aria-describedby={dateOutsidePeriod ? 'activity-date-error' : undefined}
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       className="w-full h-9 px-3 text-xs border border-[var(--border-default)] hover:border-[var(--border-strong)] rounded-lg bg-white text-[var(--text-primary)] focus:outline-none focus:border-[var(--action-primary)] focus:ring-1 focus:ring-[var(--border-focus)]/20 transition-colors"
                     />
+                    {dateOutsidePeriod && <p id="activity-date-error" className="mt-1 text-xs text-[var(--status-error)]">Choose a date within the selected reporting period.</p>}
                   </div>
 
                 </div>

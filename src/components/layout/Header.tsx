@@ -132,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenFlowMap }) => {
 
           {/* Center: Centered Brand Logo */}
           <div
-            onClick={() => navigateToScreen('10_activity_dashboard')}
+            onClick={() => navigateToScreen('overview')}
             className="flex items-center cursor-pointer select-none group"
           >
             <img

@@ -30,6 +30,17 @@ import {
 } from '../data/mockData';
 import { EmissionFactor } from '../data/emissionFactorsData';
 
+const workspaceHash = {
+  overview: '#overview',
+  '10_activity_dashboard': '#activity-ledger',
+} as const;
+
+function readWorkspaceScreen(): ScreenId {
+  return typeof window !== 'undefined' && window.location.hash === workspaceHash['10_activity_dashboard']
+    ? '10_activity_dashboard'
+    : 'overview';
+}
+
 export interface ToastMessage {
   id: string;
   type: 'success' | 'info' | 'warning' | 'error';
@@ -232,7 +243,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [currentRole, setCurrentRole] = useState<UserRole>('TENANT_ADMIN');
-  const [currentScreen, setCurrentScreen] = useState<ScreenId>('10_activity_dashboard');
+  const [currentScreen, setCurrentScreen] = useState<ScreenId>(readWorkspaceScreen);
   const [currentFlow, setCurrentFlow] = useState<FlowId | null>(null);
 
   const [sites, setSites] = useState<Site[]>(() => {
@@ -482,7 +493,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
+  useEffect(() => {
+    function syncWorkspaceScreen() {
+      const { hash } = window.location;
+      if (hash === '' || hash === workspaceHash.overview || hash === workspaceHash['10_activity_dashboard']) {
+        setCurrentScreen(readWorkspaceScreen());
+      }
+    }
+    window.addEventListener('popstate', syncWorkspaceScreen);
+    return () => window.removeEventListener('popstate', syncWorkspaceScreen);
+  }, []);
+
   const navigateToScreen = (screen: ScreenId, flow?: FlowId) => {
+    const { hash, pathname, search } = window.location;
+    if (screen === 'overview' || screen === '10_activity_dashboard') {
+      const nextHash = workspaceHash[screen];
+      if (nextHash !== hash) window.history.pushState(window.history.state, '', nextHash);
+    } else if (hash === workspaceHash.overview || hash === workspaceHash['10_activity_dashboard']) {
+      window.history.replaceState(window.history.state, '', pathname + search);
+    }
     setCurrentScreen(screen);
     if (flow) {
       setCurrentFlow(flow);
@@ -788,15 +817,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       ...target,
       status: 'Approved',
       approvedAt: new Date().toISOString().replace('T', ' ').substring(0, 16),
-      approvedBy: 'S. Iyer (Reviewer)',
+      approvedBy: currentUser.name,
       reviewerComment: comment || 'Verified against supporting evidence documentation.',
     };
 
     setRecords((prev) => prev.map((r) => (r.id === id ? updated : r)));
 
     addAuditLog({
-      userName: 'S. Iyer',
-      role: 'Reviewer / Approver',
+      userName: currentUser.name,
+      role: currentRole,
       action: 'Approved Activity Record',
       previousValue: `Status: ${target.status}`,
       newValue: 'Status: Approved',
@@ -823,8 +852,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRecords((prev) => prev.map((r) => (r.id === id ? updated : r)));
 
     addAuditLog({
-      userName: 'S. Iyer',
-      role: 'Reviewer / Approver',
+      userName: currentUser.name,
+      role: currentRole,
       action: 'Sent Back Activity Record to Data Entry',
       previousValue: `Status: ${target.status}`,
       newValue: 'Status: Sent Back',

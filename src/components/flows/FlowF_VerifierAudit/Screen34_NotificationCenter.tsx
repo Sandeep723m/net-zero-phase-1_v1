@@ -93,7 +93,7 @@ export const Screen34_NotificationCenter: React.FC = () => {
       {/* Header & Meta */}
       <PageHeader
         breadcrumbs={[
-          { label: 'Overview', onClick: () => navigateToScreen('10_activity_dashboard') },
+          { label: 'Overview', onClick: () => navigateToScreen('overview') },
           { label: 'Notification Center' },
         ]}
         title="Notification Center"

@@ -224,6 +224,7 @@ export type ScreenId =
   | '07_emission_sources'
   | '08_users_roles'
   | '09_tenant_settings'
+  | 'overview'
   | '10_activity_dashboard'
   | '11_entry_form'
   | '12_import_upload'

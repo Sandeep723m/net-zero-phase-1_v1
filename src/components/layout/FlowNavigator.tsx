@@ -61,7 +61,7 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
       description: 'Activity data creation, supporting evidence document attachment, submission for review, reviewer approval or correction loop, and period lock.',
       icon: TableProperties,
       steps: [
-        { screen: '10_activity_dashboard', label: 'Activity Dashboard' },
+        { screen: '10_activity_dashboard', label: 'Activity Ledger' },
         { screen: '11_entry_form', label: 'Activity Data Ingestion' },
         { screen: '16_attach_evidence', label: 'Attach Evidence' },
         { screen: '23_submission_queue', label: 'Submission Queue' },
@@ -78,7 +78,7 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
       description: 'File upload, source-to-target column mapping, validation engine, interactive error detail fix view, and submission for review.',
       icon: FileSpreadsheet,
       steps: [
-        { screen: '10_activity_dashboard', label: 'Activity Dashboard' },
+        { screen: '10_activity_dashboard', label: 'Activity Ledger' },
         { screen: '12_import_upload', label: 'Upload File' },
         { screen: '13_column_mapping', label: 'Column Mapping' },
         { screen: '14_import_validation', label: 'Validation Results' },
@@ -93,7 +93,7 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
       description: 'AI extraction pipeline: Upload utility bill, automated extraction with confidence scoring, human review verification control point, and pre-filled entry form.',
       icon: ScanLine,
       steps: [
-        { screen: '10_activity_dashboard', label: 'Activity Dashboard' },
+        { screen: '10_activity_dashboard', label: 'Activity Ledger' },
         { screen: '17_bill_upload', label: 'Upload Bill' },
         { screen: '18_human_review', label: 'Human Review' },
         { screen: '11_entry_form', label: 'Pre-filled Entry Form' },
@@ -146,7 +146,7 @@ export const FlowNavigator: React.FC<FlowNavigatorProps> = ({ isOpen, onClose })
     { name: 'Emission Sources Setup', category: 'Configuration', screen: '07_emission_sources' },
     { name: 'User & Role Management', category: 'Administration', screen: '08_users_roles' },
     { name: 'Tenant Settings', category: 'Administration', screen: '09_tenant_settings' },
-    { name: 'Activity Data Dashboard', category: 'Data Collection', screen: '10_activity_dashboard' },
+    { name: 'Activity Data Ledger', category: 'Data Collection', screen: '10_activity_dashboard' },
     { name: 'Activity Data Ingestion', category: 'Data Collection', screen: '11_entry_form' },
     { name: 'Bulk Import Upload', category: 'Data Collection', screen: '12_import_upload' },
     { name: 'Column Mapping Engine', category: 'Data Collection', screen: '13_column_mapping' },

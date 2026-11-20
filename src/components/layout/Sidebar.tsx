@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { ScreenId, UserRole } from '../../types';
+import { isPendingReview, isWithinPeriod } from '../flows/FlowB_ActivityData/ledgerRecords';
 import tulaLogo from '../../assets/Tula Carbon Dot Grid Logo.png';
 import {
   House,
@@ -30,6 +31,8 @@ import {
   Target,
   Play,
   ChevronDown,
+  ChevronsUpDown,
+  Moon,
   LogOut,
   Menu,
   PanelLeftClose,
@@ -47,15 +50,13 @@ interface NavGroup {
   label: string;
   icon: React.ElementType;
   screens: ScreenId[];
-  initiallyOpen?: boolean;
 }
 
 const mainGroups: NavGroup[] = [
   {
     label: 'Activity data',
     icon: TableProperties,
-    screens: ['11_entry_form', '16_attach_evidence', '23_submission_queue'],
-    initiallyOpen: true,
+    screens: ['10_activity_dashboard', '11_entry_form', '16_attach_evidence', '12_import_upload', '23_submission_queue'],
   },
   {
     label: 'Calculations',
@@ -85,6 +86,11 @@ const navFocusClass = 'focus-visible:outline-2 focus-visible:-outline-offset-2 f
 export const Sidebar: React.FC = () => {
   const {
     currentScreen,
+    activePeriod,
+    activeFilterStatus,
+    setActiveFilterStatus,
+    setActiveFilterSite,
+    setSearchQuery,
     navigateToScreen,
     records,
     verifierQueries,
@@ -95,11 +101,40 @@ export const Sidebar: React.FC = () => {
     isMobileMenuOpen,
     setIsMobileMenuOpen,
   } = useApp();
-  const [roleMenuOpen, setRoleMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [profileInfo, setProfileInfo] = useState<'support' | 'feedback' | null>(null);
+  const [darkMode, setDarkMode] = useState(() => typeof window !== 'undefined' && localStorage.getItem('tula_appearance') === 'dark');
+  const profileMenu = useRef<HTMLDivElement>(null);
+  const profileTrigger = useRef<HTMLButtonElement>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [groupOverrides, setGroupOverrides] = useState<Record<string, { open: boolean; screen: ScreenId }>>({});
 
-  const pendingReviews = records.filter((record) => record.status === 'Submitted').length;
+  function closeProfileMenu() {
+    setProfileMenuOpen(false);
+    setProfileInfo(null);
+  }
+
+  useEffect(() => {
+    if (!profileMenuOpen) return;
+    function dismissOutside(event: PointerEvent) {
+      if (!profileMenu.current?.contains(event.target as Node)) closeProfileMenu();
+    }
+    document.addEventListener('pointerdown', dismissOutside);
+    return () => document.removeEventListener('pointerdown', dismissOutside);
+  }, [profileMenuOpen]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const previousTheme = root.getAttribute('data-theme');
+    root.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+    localStorage.setItem('tula_appearance', darkMode ? 'dark' : 'light');
+    return () => {
+      if (previousTheme === null) root.removeAttribute('data-theme');
+      else root.setAttribute('data-theme', previousTheme);
+    };
+  }, [darkMode]);
+
+  const pendingReviews = records.filter((record) => isPendingReview(record) && isWithinPeriod(record, activePeriod) && (currentUser.siteScope.includes('all') || currentUser.siteScope.includes(record.siteId))).length;
   const openQueries = verifierQueries.filter((query) => query.status === 'Open').length;
   const unreadNotifications = notifications.filter((notification) => !notification.isRead).length;
 
@@ -112,7 +147,7 @@ export const Sidebar: React.FC = () => {
 
   const switchRole = (role: UserRole) => {
     setCurrentRole(role);
-    setRoleMenuOpen(false);
+    closeProfileMenu();
     setIsMobileMenuOpen(false);
     if (role === 'VERIFIER') navigateToScreen('31_verifier_dashboard', 'FLOW_F');
     else if (role === 'DATA_ENTRY') navigateToScreen('10_activity_dashboard', 'FLOW_B');
@@ -137,8 +172,10 @@ export const Sidebar: React.FC = () => {
     ];
   } else if (currentRole === 'DATA_ENTRY') {
     availableItems = [
-      { id: '10_activity_dashboard', label: 'Overview', icon: House },
-      { id: '11_entry_form', label: 'Activity data', icon: TableProperties },
+      { id: 'overview', label: 'Overview', icon: House },
+      { id: '10_activity_dashboard', label: 'Activity ledger', icon: TableProperties },
+      { id: '11_entry_form', label: 'Add activity', icon: TableProperties },
+      { id: '12_import_upload', label: 'Imports', icon: FileText },
       { id: '16_attach_evidence', label: 'Evidence & documents', icon: Files },
       { id: '23_submission_queue', label: 'My submissions', icon: Inbox },
       { id: '22_factors_reference', label: 'Emission factors', icon: Zap },
@@ -146,9 +183,10 @@ export const Sidebar: React.FC = () => {
     ];
   } else if (currentRole === 'REVIEWER') {
     availableItems = [
-      { id: '10_activity_dashboard', label: 'Overview', icon: House },
-      { id: '24_review_approve', label: 'Review & approvals', icon: CheckCircle2, badge: pendingReviews || undefined },
-      { id: '23_submission_queue', label: 'Submission queue', icon: Inbox },
+      { id: 'overview', label: 'Overview', icon: House },
+      { id: '10_activity_dashboard', label: 'Activity ledger', icon: TableProperties },
+      { id: '24_review_approve', label: 'Batch approvals', icon: CheckCircle2 },
+      { id: '23_submission_queue', label: 'Submissions', icon: Inbox },
       { id: '19_run_calculation', label: 'Run calculations', icon: Play },
       { id: '20_results_summary', label: 'Calculation ledger', icon: Calculator },
       { id: '21_drill_down', label: 'Results analysis', icon: Eye },
@@ -164,15 +202,17 @@ export const Sidebar: React.FC = () => {
     ];
   } else {
     availableItems = [
-      { id: '10_activity_dashboard', label: 'Overview', icon: House },
-      { id: '11_entry_form', label: 'Activity data', icon: TableProperties },
+      { id: 'overview', label: 'Overview', icon: House },
+      { id: '10_activity_dashboard', label: 'Activity ledger', icon: TableProperties },
+      { id: '11_entry_form', label: 'Add activity', icon: TableProperties },
+      { id: '12_import_upload', label: 'Imports', icon: FileText },
       { id: '16_attach_evidence', label: 'Evidence & documents', icon: Files },
       { id: '19_run_calculation', label: 'Run calculations', icon: Play },
       { id: '20_results_summary', label: 'Calculation ledger', icon: Calculator },
       { id: '21_drill_down', label: 'Results analysis', icon: Eye },
       { id: '22_factors_reference', label: 'Emission factors', icon: Zap },
-      { id: '24_review_approve', label: 'Review & approvals', icon: CheckCircle2, badge: pendingReviews || undefined },
-      { id: '23_submission_queue', label: 'Submission queue', icon: Inbox },
+      { id: '24_review_approve', label: 'Batch approvals', icon: CheckCircle2 },
+      { id: '23_submission_queue', label: 'Submissions', icon: Inbox },
       { id: '26_period_lock', label: 'Period close', icon: Calendar },
       { id: '31_verifier_dashboard', label: 'Verifier workspace', icon: ShieldCheck, badge: openQueries || undefined },
       { id: '35_audit_trail', label: 'Audit trail', icon: History },
@@ -190,27 +230,35 @@ export const Sidebar: React.FC = () => {
   }
 
   const goTo = (screen: ScreenId) => {
+    closeProfileMenu();
     navigateToScreen(screen);
     setIsMobileMenuOpen(false);
   };
 
-  const overviewScreen = currentRole === 'VERIFIER' ? '31_verifier_dashboard' : '10_activity_dashboard';
+  const overviewScreen = currentRole === 'VERIFIER' ? '31_verifier_dashboard' : 'overview';
   const home = availableItems.find((item) => item.id === overviewScreen);
   const groupedScreens = new Set([...mainGroups, workspaceGroup].flatMap((group) => group.screens));
   const settings = availableItems.find((item) => item.id === '09_tenant_settings');
   const workspaceItems = availableItems.filter((item) => item !== home && item !== settings && !groupedScreens.has(item.id));
 
-  function renderItem(item: NavItem, nested = false) {
+  function renderItem(item: NavItem, nested = false, ledgerStatus = 'all') {
     const Icon = item.icon;
-    const active = currentScreen === item.id;
+    const active = currentScreen === item.id && (item.id !== '10_activity_dashboard' || (activeFilterStatus === 'pending') === (ledgerStatus === 'pending'));
     return (
       <button
         key={item.id}
         type="button"
-        onClick={() => goTo(item.id)}
+        onClick={() => {
+          if (item.id === '10_activity_dashboard') {
+            setActiveFilterStatus(ledgerStatus);
+            setActiveFilterSite('all');
+            setSearchQuery('');
+          }
+          goTo(item.id);
+        }}
         aria-current={active ? 'page' : undefined}
         title={isCollapsed ? item.label : undefined}
-        className={`${navFocusClass} flex w-full items-center gap-2 rounded-md px-2 py-1 text-left text-[13px] ${nested ? 'min-h-7' : 'min-h-8'} ${isCollapsed ? 'md:justify-center' : ''} ${active ? 'bg-[var(--bg-surface)] font-semibold text-[var(--text-primary)] shadow-xs' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)]'}`}
+        className={`${navFocusClass} flex w-full items-center gap-2 rounded-md px-2 py-1 text-left text-[13px] ${nested ? 'min-h-7' : 'min-h-8'} ${isCollapsed ? 'md:justify-center' : ''} ${active ? 'bg-[var(--bg-surface)] font-semibold text-[var(--action-primary)] shadow-xs' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)]'}`}
       >
         {!nested && <Icon className="size-4 shrink-0" strokeWidth={1.75} aria-hidden="true" />}
         <span className={`min-w-0 flex-1 ${isCollapsed ? 'md:sr-only' : ''}`}>{item.label}</span>
@@ -228,7 +276,7 @@ export const Sidebar: React.FC = () => {
     const override = groupOverrides[group.label];
     const open = hasActiveItem && override?.screen !== currentScreen
       ? true
-      : override?.open ?? group.initiallyOpen ?? false;
+      : override?.open ?? false;
     const Icon = group.icon;
 
     return (
@@ -259,6 +307,21 @@ export const Sidebar: React.FC = () => {
     );
   }
 
+  const profileActionClass = `${navFocusClass} flex min-h-9 w-full items-center gap-2.5 rounded-md px-2 text-left text-[13px] text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]`;
+
+  function renderAvatar() {
+    return <span className="grid size-8 shrink-0 place-items-center rounded-full bg-[var(--bg-subtle)] text-[11px] font-semibold text-[var(--action-primary)]" aria-hidden="true">{currentUser.avatarInitials}</span>;
+  }
+
+  function renderIdentity(className = '') {
+    return (
+      <span className={`min-w-0 flex-1 ${className}`}>
+        <span className="block truncate text-xs font-semibold text-[var(--text-primary)]">{currentUser.name}</span>
+        <span className="block truncate text-[11px] text-[var(--text-secondary)]" title={currentUser.email}>{currentUser.email}</span>
+      </span>
+    );
+  }
+
   return <>
     <button type="button" onClick={() => {
       setIsCollapsed(false);
@@ -269,7 +332,7 @@ export const Sidebar: React.FC = () => {
     {isMobileMenuOpen && <button type="button" aria-label="Close navigation backdrop" onClick={() => setIsMobileMenuOpen(false)} className="fixed inset-0 z-40 bg-black/40 md:hidden" />}
     <aside
       id="app-sidebar"
-      className={`fixed inset-y-0 left-0 z-50 flex w-56 max-w-[86vw] shrink-0 flex-col border-r border-[var(--border-subtle)] bg-[var(--bg-subtle)]/80 shadow-xl backdrop-blur-xl md:visible md:relative md:inset-auto md:z-20 md:h-full md:min-h-0 md:max-w-none md:translate-x-0 md:shadow-none motion-safe:transition-[width,transform,visibility] motion-safe:duration-200 ${isMobileMenuOpen ? 'visible translate-x-0' : 'invisible -translate-x-full'} ${isCollapsed ? 'md:w-14' : 'md:w-48 lg:w-52'}`}
+      className={`fixed inset-y-0 left-0 z-50 flex w-56 max-w-[86vw] shrink-0 flex-col border-r border-[var(--border-subtle)] bg-[var(--bg-subtle)]/80 shadow-xl backdrop-blur-xl md:visible md:relative md:inset-auto md:z-20 md:h-full md:min-h-0 md:max-w-none md:translate-x-0 md:shadow-none motion-safe:transition-[width,transform,visibility] motion-safe:duration-200 ${isMobileMenuOpen ? 'visible translate-x-0' : 'invisible -translate-x-full'} ${isCollapsed ? 'md:w-14' : 'md:w-56 lg:w-60'}`}
     >
       <div className={`flex items-center justify-between gap-2 px-3 pt-3 pb-2 ${isCollapsed ? 'md:justify-center' : ''}`}>
         <img src={tulaLogo} alt="Tula Carbon" className={`h-6 w-auto max-w-28 object-contain object-left ${isCollapsed ? 'md:hidden' : ''}`} />
@@ -279,51 +342,101 @@ export const Sidebar: React.FC = () => {
         <button type="button" onClick={() => setIsMobileMenuOpen(false)} className={`${navFocusClass} grid size-8 place-items-center rounded-md text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] md:hidden`} aria-label="Close navigation"><X className="size-4" /></button>
       </div>
 
-      <nav aria-label="Main navigation" className="flex-1 space-y-5 overflow-y-auto overscroll-contain px-2.5 py-2">
-        <section aria-labelledby="sidebar-main-heading">
-          <h2 id="sidebar-main-heading" className={`mb-1.5 px-2 text-[10px] font-medium tracking-wide text-[var(--text-secondary)] uppercase ${isCollapsed ? 'md:sr-only' : ''}`}>Main menu</h2>
-          <div className="space-y-0.5">
-            {home && renderItem(home)}
-            {mainGroups.map(renderGroup)}
-            {settings && renderItem(settings)}
-          </div>
-        </section>
-        <section aria-labelledby="sidebar-workspace-heading">
-          <h2 id="sidebar-workspace-heading" className={`mb-1.5 px-2 text-[10px] font-medium tracking-wide text-[var(--text-secondary)] uppercase ${isCollapsed ? 'md:sr-only' : ''}`}>Workspace</h2>
-          <div className="space-y-0.5">
-            {renderGroup(workspaceGroup)}
-            {workspaceItems.map((item) => renderItem(item))}
-          </div>
-        </section>
+      <nav aria-label="Main navigation" className="flex-1 space-y-4 overflow-y-auto overscroll-contain px-2.5 py-2">
+        {[
+          { label: 'Workspace', content: <>{home && renderItem(home)}{renderGroup(workspaceGroup)}{workspaceItems.map((item) => renderItem(item))}</> },
+          { label: 'Data management', content: renderGroup(mainGroups[0]) },
+          {
+            label: 'Validation & assurance',
+            content: <>
+              {(currentRole === 'TENANT_ADMIN' || currentRole === 'REVIEWER') && renderItem({ id: '10_activity_dashboard', label: 'Review queue', icon: Inbox, badge: pendingReviews || undefined }, false, 'pending')}
+              {renderGroup(mainGroups[2])}
+            </>,
+          },
+          { label: 'Analysis', content: <>{renderGroup(mainGroups[1])}{renderGroup(mainGroups[3])}</> },
+        ].map(({ label, content }) => (
+          <section key={label} aria-label={label} className="has-[>div:empty]:hidden">
+            <h2 className={`mb-1.5 px-2 text-[10px] font-medium tracking-wide text-[var(--text-secondary)] uppercase ${isCollapsed ? 'md:sr-only' : ''}`}>{label}</h2>
+            <div className="space-y-0.5">{content}</div>
+          </section>
+        ))}
+        {settings && renderItem(settings)}
       </nav>
 
-      <div className="relative border-t border-[var(--border-subtle)] px-2.5 py-2">
-        {roleMenuOpen && <div className={`absolute bottom-full z-10 mb-2 rounded-md border border-[var(--border-default)] bg-[var(--bg-surface)] p-1.5 shadow-md ${isCollapsed ? 'right-2.5 left-2.5 md:right-auto md:w-40' : 'right-2.5 left-2.5'}`}>
-          {roles.map((role) => <button key={role.role} type="button" onClick={() => switchRole(role.role)} className={`${navFocusClass} w-full rounded-md px-2 py-1.5 text-left text-xs ${role.role === currentRole ? 'bg-[var(--bg-subtle)] font-semibold text-[var(--action-primary)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-canvas)]'}`}>{role.label}</button>)}
-        </div>}
-        <button type="button" onClick={() => setRoleMenuOpen((open) => !open)} aria-expanded={roleMenuOpen} className={`${navFocusClass} flex w-full items-center gap-2 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-2 py-1.5 text-left hover:border-[var(--border-default)] ${isCollapsed ? 'md:justify-center md:px-0' : ''}`} title={currentUser.name}>
-          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[var(--bg-subtle)] text-[10px] font-semibold text-[var(--action-primary)]" aria-hidden="true">{currentUser.avatarInitials}</span>
-          <span className={`min-w-0 flex-1 ${isCollapsed ? 'md:sr-only' : ''}`}><span className="block truncate text-xs font-semibold text-[var(--text-primary)]">{currentUser.name}</span><span className="block truncate text-[10px] text-[var(--text-secondary)]">{roles.find((role) => role.role === currentRole)?.label}</span></span>
-          <ChevronDown className={`size-3 shrink-0 text-[var(--text-secondary)] transition-transform ${roleMenuOpen ? 'rotate-180' : ''} ${isCollapsed ? 'md:hidden' : ''}`} aria-hidden="true" />
+      <div
+        ref={profileMenu}
+        className="relative border-t border-[var(--border-subtle)] px-2.5 py-2.5"
+        onBlur={(event) => {
+          if (profileMenuOpen && !event.currentTarget.contains(event.relatedTarget)) closeProfileMenu();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && profileMenuOpen) {
+            event.stopPropagation();
+            closeProfileMenu();
+            profileTrigger.current?.focus();
+          }
+        }}
+      >
+        <button
+          ref={profileTrigger}
+          type="button"
+          onClick={() => profileMenuOpen ? closeProfileMenu() : setProfileMenuOpen(true)}
+          aria-label={`Account menu for ${currentUser.name}`}
+          aria-expanded={profileMenuOpen}
+          aria-controls="sidebar-profile-menu"
+          className={`${navFocusClass} flex min-h-11 w-full items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-2 py-1.5 text-left shadow-xs hover:border-[var(--border-default)] ${isCollapsed ? 'md:justify-center md:px-0' : ''}`}
+          title="Account menu"
+        >
+          {renderAvatar()}
+          {renderIdentity(isCollapsed ? 'md:sr-only' : '')}
+          <ChevronsUpDown className={`size-3.5 shrink-0 text-[var(--text-secondary)] ${isCollapsed ? 'md:hidden' : ''}`} aria-hidden="true" />
         </button>
-        <div className="mt-2 grid gap-0.5">
-          {[
-            { label: 'Support', icon: LifeBuoy },
-            { label: 'Feedback', icon: MessageSquare },
-          ].map(({ label, icon: Icon }) => (
-            <button key={label} type="button" disabled title={`${label} is not configured`} className={`flex min-h-7 w-full items-center gap-2 rounded-md px-2 text-xs text-[var(--text-secondary)] ${isCollapsed ? 'md:justify-center md:px-0' : ''}`}>
-              <Icon className="size-3.5 shrink-0" aria-hidden="true" /><span className={isCollapsed ? 'md:sr-only' : ''}>{label}</span>
-            </button>
-          ))}
-          {[
-            { screen: '09_tenant_settings' as const, label: 'Settings', icon: Settings },
-            { screen: '01_login' as const, label: 'Sign out', icon: LogOut },
-          ].filter((action) => action.screen !== settings?.id).map(({ screen, label, icon: Icon }) => (
-            <button key={screen} type="button" onClick={() => goTo(screen)} title={label} className={`${navFocusClass} flex min-h-7 items-center gap-1.5 rounded-md px-2 text-xs text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] ${isCollapsed ? 'md:w-full md:justify-center md:px-0' : ''}`}>
-              <Icon className="size-3.5 shrink-0" aria-hidden="true" /><span className={isCollapsed ? 'md:sr-only' : ''}>{label}</span>
-            </button>
-          ))}
-        </div>
+
+        {profileMenuOpen && (
+          <div
+            id="sidebar-profile-menu"
+            aria-label="Account menu"
+            className={`absolute bottom-full left-2.5 z-30 mb-1 max-h-[65dvh] overflow-y-auto rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-primary)] shadow-lg ${isCollapsed ? 'right-2.5 md:right-auto md:w-56' : 'right-2.5'}`}
+          >
+            <div className="flex items-center gap-2.5 border-b border-[var(--border-subtle)] px-3 py-3">
+              {renderAvatar()}
+              {renderIdentity()}
+            </div>
+            <div className="space-y-0.5 p-1.5">
+              <button type="button" className={profileActionClass} onClick={() => goTo('09_tenant_settings')}>
+                <Settings className="size-4 shrink-0" aria-hidden="true" />Settings
+              </button>
+              <button type="button" className={profileActionClass} aria-expanded={profileInfo === 'support'} onClick={() => setProfileInfo(profileInfo === 'support' ? null : 'support')}>
+                <LifeBuoy className="size-4 shrink-0" aria-hidden="true" />Help &amp; Support
+              </button>
+              {profileInfo === 'support' && <p className="px-2 pb-2 text-xs leading-4 text-[var(--text-secondary)]">Contact your workspace administrator for help with access or settings.</p>}
+              <button type="button" className={profileActionClass} aria-expanded={profileInfo === 'feedback'} onClick={() => setProfileInfo(profileInfo === 'feedback' ? null : 'feedback')}>
+                <MessageSquare className="size-4 shrink-0" aria-hidden="true" />Feedback
+              </button>
+              {profileInfo === 'feedback' && <p className="px-2 pb-2 text-xs leading-4 text-[var(--text-secondary)]">Feedback submission is unavailable in this workspace.</p>}
+              <button type="button" className={profileActionClass} role="switch" aria-checked={darkMode} aria-label="Appearance: dark mode" onClick={() => setDarkMode((enabled) => !enabled)}>
+                <Moon className="size-4 shrink-0" aria-hidden="true" />
+                <span className="flex-1">Appearance</span>
+                <span aria-hidden="true" className={`relative h-4 w-7 shrink-0 rounded-full ${darkMode ? 'bg-[var(--action-primary)]' : 'bg-[var(--border-strong)]'}`}>
+                  <span className={`absolute top-0.5 left-0.5 size-3 rounded-full bg-white motion-safe:transition-transform ${darkMode ? 'translate-x-3' : ''}`} />
+                </span>
+              </button>
+              <details>
+                <summary className={`${profileActionClass} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}>
+                  <Users className="size-4 shrink-0" aria-hidden="true" /><span className="flex-1">Switch role</span><ChevronDown className="size-3 shrink-0" aria-hidden="true" />
+                </summary>
+                <div className="space-y-0.5 pl-5">
+                  {roles.map((role) => <button key={role.role} type="button" onClick={() => switchRole(role.role)} aria-pressed={role.role === currentRole} className={`${profileActionClass} aria-pressed:bg-[var(--bg-subtle)] aria-pressed:text-[var(--action-primary)]`}>{role.label}</button>)}
+                </div>
+              </details>
+            </div>
+            <div className="border-t border-[var(--border-subtle)] p-1.5">
+              <button type="button" className={profileActionClass} onClick={() => goTo('01_login')}>
+                <LogOut className="size-4 shrink-0" aria-hidden="true" />Sign out
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </aside>
   </>;
