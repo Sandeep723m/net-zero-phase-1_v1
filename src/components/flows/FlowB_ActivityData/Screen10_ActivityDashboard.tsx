@@ -215,7 +215,7 @@ export const Screen10_ActivityDashboard: React.FC<LedgerProps> = ({ overview }) 
           </div>
         )}
 
-        <section aria-label="Activity data controls" className={`flex flex-wrap justify-between gap-x-4 ${overview ? '' : 'border-y border-[var(--border-subtle)]'}`}>
+        <section aria-label="Activity data controls" className={`flex flex-wrap justify-between gap-x-4 border-b border-[var(--border-subtle)] ${overview ? '' : 'border-t'}`}>
           <div role="group" aria-label="Filter by activity status" className="flex max-w-full items-stretch gap-4 overflow-x-auto">
             {statusTabs.map(({ value, label, icon: Icon }) => (
               <button
@@ -231,135 +231,105 @@ export const Screen10_ActivityDashboard: React.FC<LedgerProps> = ({ overview }) 
               </button>
             ))}
           </div>
-          <div className="flex w-full flex-wrap items-center gap-2 border-t border-[var(--border-subtle)] py-3">
-            <label className="relative block w-full min-w-0 sm:max-w-xs">
-              <span className="sr-only">Search activity records</span>
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--text-secondary)]" aria-hidden="true" />
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(event) => {
-                  setSearchQuery(event.target.value);
-                  setPage(1);
-                }}
-                placeholder="Search activity records"
-                className="h-9 w-full rounded-md border border-[var(--border-default)] bg-[var(--bg-surface)] pl-9 pr-3 text-sm placeholder:text-[var(--text-secondary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--border-focus)]"
-              />
-            </label>
-            <div className="relative ml-auto flex items-center gap-2">
-              <details name="activity-ledger-panel">
-                <summary className={disclosureClass}><ListFilter className="size-3.5" aria-hidden="true" />Sort</summary>
-                <div className={`${panelClass} w-40 space-y-0.5`}>
-                  {sortOptions.map(({ value, label }) => (
-                    <button
-                      key={value}
-                      type="button"
-                      aria-pressed={sortField === value}
-                      className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-xs hover:bg-[var(--bg-canvas)] aria-pressed:text-[var(--action-primary)]"
-                      onClick={(event) => {
-                        toggleSort(value);
-                        const disclosure = event.currentTarget.closest('details');
-                        disclosure?.querySelector('summary')?.focus();
-                        disclosure?.removeAttribute('open');
-                      }}
-                    >
-                      {label}
-                      {sortField === value && (sortAscending ? <ArrowUp className="size-3.5" aria-label="Ascending" /> : <ArrowDown className="size-3.5" aria-label="Descending" />)}
-                    </button>
-                  ))}
-                </div>
-              </details>
-              <details name="activity-ledger-panel">
-                <summary className={`${disclosureClass} ${extraFiltersActive ? 'text-[var(--action-primary)]' : ''}`}><Filter className="size-3.5" aria-hidden="true" />Filter{extraFiltersActive && <span className="size-1.5 rounded-full bg-[var(--action-primary)]" />}</summary>
-                <div className={`${panelClass} w-56`}>
-                  <label className="block space-y-1 text-xs font-medium">
-                    <span>Facility</span>
-                    <select className={selectClass} value={facilityFilter} onChange={(event) => {
-                      setFacilityFilter(event.target.value);
-                      setPage(1);
-                    }}>
-                      <option value="all">All facilities</option>
-                      {allowedSites.map((site) => <option key={site.id} value={site.id}>{site.name}</option>)}
-                    </select>
-                  </label>
-                  <label className="block space-y-1 text-xs font-medium">
-                    <span>Scope</span>
-                    <select className={selectClass} value={scopeFilter} onChange={(event) => {
-                      setScopeFilter(event.target.value);
-                      setPage(1);
-                    }}>
-                      <option value="all">All scopes</option>
-                      {scopes.map((scope) => <option key={scope}>{scope}</option>)}
-                    </select>
-                  </label>
-                  <label className="block space-y-1 text-xs font-medium">
-                    <span>Status</span>
-                    <select className={selectClass} value={activeFilterStatus} onChange={(event) => updateStatus(event.target.value)}>
-                      {statusTabs.map(({ value, label }) => <option key={value} value={value}>{value === 'all' ? 'All statuses' : label}</option>)}
-                      <option value="Locked">Locked</option>
-                      <option value="pending">Pending review</option>
-                      <option value="attention">Needs attention</option>
-                      <option value="Sent Back">Sent back</option>
-                    </select>
-                  </label>
-                  <label className="block space-y-1 text-xs font-medium">
-                    <span>Evidence</span>
-                    <select className={selectClass} value={evidenceFilter} onChange={(event) => { setEvidenceFilter(event.target.value); setPage(1); }}>
-                      <option value="all">Any evidence status</option>
-                      <option value="attached">Attached</option>
-                      <option value="missing">Missing</option>
-                    </select>
-                  </label>
-                  <label className="block space-y-1 text-xs font-medium">
-                    <span>Validation</span>
-                    <select className={selectClass} value={validationFilter} onChange={(event) => { setValidationFilter(event.target.value); setPage(1); }}>
-                      <option value="all">Any validation status</option>
-                      <option value="issues">Has issues</option>
-                      <option value="no-issues">No flagged issues</option>
-                    </select>
-                  </label>
-
-                </div>
-              </details>
-              {(extraFiltersActive || activeFilterStatus !== 'all' || searchTerm) && (
-                <button type="button" className={controlClass} onClick={clearFilters}>Clear filters</button>
-              )}
-            </div>
-          </div>
         </section>
 
-        <section aria-label="Activity records" className={`overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] ${overview ? 'mt-0' : 'mt-3'}`}>
-          <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-3">
+        <section aria-label="Activity records" className="mt-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-3 pt-3 pb-5">
             {overview && <h2 id="overview-ledger-heading" className="text-xl leading-[26px] font-semibold">Activity data ledger</h2>}
-            <div className="ml-auto flex flex-wrap items-center gap-2 text-xs text-[var(--text-secondary)]">
-              {checkedCount > 0 && (
-                <>
-                  <button type="button" className={controlClass} onClick={exportSelection}>Export selected</button>
-                  <button type="button" className={controlClass} onClick={() => setCheckedIds(new Set())} aria-label={`Clear selection of ${checkedCount} records`}>
-                    {checkedCount} selected <span aria-hidden="true">×</span>
-                  </button>
-                </>
-              )}
-              <label className="relative flex items-center gap-1.5">
-                Showing
-                <span className="relative">
-                  <select
-                    aria-label="Records per page"
-                    value={pageSize}
-                    onChange={(event) => {
-                      setPageSize(Number(event.target.value));
-                      setPage(1);
-                    }}
-                    className={`${controlClass} h-7 appearance-none pl-2 pr-6`}
-                  >
-                    {pageSizes.map((size) => <option key={size} value={size}>{size}</option>)}
-                  </select>
-                  <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 size-3 -translate-y-1/2" aria-hidden="true" />
-                </span>
+            <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto sm:flex-1">
+              <label className="relative block w-full min-w-0 sm:max-w-xs">
+                <span className="sr-only">Search activity records</span>
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--text-secondary)]" aria-hidden="true" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => {
+                    setSearchQuery(event.target.value);
+                    setPage(1);
+                  }}
+                  placeholder="Search activity records"
+                  className="h-9 w-full rounded-md border border-[var(--border-default)] bg-[var(--bg-surface)] pl-9 pr-3 text-sm placeholder:text-[var(--text-secondary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--border-focus)]"
+                />
               </label>
-              <span aria-live="polite" className="tabular-nums">
-                {pageCount ? `${pageStart + 1}–${pageStart + pageRecords.length} of ${sortedRecords.length} results` : '0 results'}
-              </span>
+              <div className="relative flex shrink-0 items-center gap-2">
+                <details name="activity-ledger-panel">
+                  <summary className={disclosureClass}><ListFilter className="size-3.5" aria-hidden="true" />Sort</summary>
+                  <div className={`${panelClass} w-40 space-y-0.5`}>
+                    {sortOptions.map(({ value, label }) => (
+                      <button
+                        key={value}
+                        type="button"
+                        aria-pressed={sortField === value}
+                        className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-xs hover:bg-[var(--bg-canvas)] aria-pressed:text-[var(--action-primary)]"
+                        onClick={(event) => {
+                          toggleSort(value);
+                          const disclosure = event.currentTarget.closest('details');
+                          disclosure?.querySelector('summary')?.focus();
+                          disclosure?.removeAttribute('open');
+                        }}
+                      >
+                        {label}
+                        {sortField === value && (sortAscending ? <ArrowUp className="size-3.5" aria-label="Ascending" /> : <ArrowDown className="size-3.5" aria-label="Descending" />)}
+                      </button>
+                    ))}
+                  </div>
+                </details>
+                <details name="activity-ledger-panel">
+                  <summary className={`${disclosureClass} ${extraFiltersActive ? 'text-[var(--action-primary)]' : ''}`}><Filter className="size-3.5" aria-hidden="true" />Filter{extraFiltersActive && <span className="size-1.5 rounded-full bg-[var(--action-primary)]" />}</summary>
+                  <div className={`${panelClass} w-56`}>
+                    <label className="block space-y-1 text-xs font-medium">
+                      <span>Facility</span>
+                      <select className={selectClass} value={facilityFilter} onChange={(event) => {
+                        setFacilityFilter(event.target.value);
+                        setPage(1);
+                      }}>
+                        <option value="all">All facilities</option>
+                        {allowedSites.map((site) => <option key={site.id} value={site.id}>{site.name}</option>)}
+                      </select>
+                    </label>
+                    <label className="block space-y-1 text-xs font-medium">
+                      <span>Scope</span>
+                      <select className={selectClass} value={scopeFilter} onChange={(event) => {
+                        setScopeFilter(event.target.value);
+                        setPage(1);
+                      }}>
+                        <option value="all">All scopes</option>
+                        {scopes.map((scope) => <option key={scope}>{scope}</option>)}
+                      </select>
+                    </label>
+                    <label className="block space-y-1 text-xs font-medium">
+                      <span>Status</span>
+                      <select className={selectClass} value={activeFilterStatus} onChange={(event) => updateStatus(event.target.value)}>
+                        {statusTabs.map(({ value, label }) => <option key={value} value={value}>{value === 'all' ? 'All statuses' : label}</option>)}
+                        <option value="Locked">Locked</option>
+                        <option value="pending">Pending review</option>
+                        <option value="attention">Needs attention</option>
+                        <option value="Sent Back">Sent back</option>
+                      </select>
+                    </label>
+                    <label className="block space-y-1 text-xs font-medium">
+                      <span>Evidence</span>
+                      <select className={selectClass} value={evidenceFilter} onChange={(event) => { setEvidenceFilter(event.target.value); setPage(1); }}>
+                        <option value="all">Any evidence status</option>
+                        <option value="attached">Attached</option>
+                        <option value="missing">Missing</option>
+                      </select>
+                    </label>
+                    <label className="block space-y-1 text-xs font-medium">
+                      <span>Validation</span>
+                      <select className={selectClass} value={validationFilter} onChange={(event) => { setValidationFilter(event.target.value); setPage(1); }}>
+                        <option value="all">Any validation status</option>
+                        <option value="issues">Has issues</option>
+                        <option value="no-issues">No flagged issues</option>
+                      </select>
+                    </label>
+
+                  </div>
+                </details>
+                {(extraFiltersActive || activeFilterStatus !== 'all' || searchTerm) && (
+                  <button type="button" className={controlClass} onClick={clearFilters}>Clear filters</button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -454,28 +424,60 @@ export const Screen10_ActivityDashboard: React.FC<LedgerProps> = ({ overview }) 
             </table>
           </div>
 
-          <nav aria-label="Activity ledger pagination" className="flex flex-wrap items-center justify-center gap-1.5 border-t border-[var(--border-subtle)] px-3 py-4">
-            <button type="button" aria-label="Previous page" className={`${controlClass} border-transparent`} disabled={page === 1} onClick={() => setPage(page - 1)}>
-              <ArrowLeft className="size-3.5" aria-hidden="true" />
-            </button>
-            {pageNumbers.map((number, index) => (
-              <React.Fragment key={number}>
-                {index > 0 && number - pageNumbers[index - 1] > 1 && <span className="px-1 text-xs text-[var(--text-secondary)]" aria-hidden="true">…</span>}
-                <button
-                  type="button"
-                  className={`${controlClass} min-w-8 tabular-nums aria-[current=page]:border-[var(--bg-subtle)] aria-[current=page]:bg-[var(--bg-subtle)] aria-[current=page]:text-[var(--action-primary)]`}
-                  aria-label={`Page ${number}`}
-                  aria-current={page === number ? 'page' : undefined}
-                  onClick={() => setPage(number)}
-                >
-                  {number}
-                </button>
-              </React.Fragment>
-            ))}
-            <button type="button" aria-label="Next page" className={`${controlClass} border-transparent`} disabled={page >= pageCount} onClick={() => setPage(page + 1)}>
-              <ArrowRight className="size-3.5" aria-hidden="true" />
-            </button>
-          </nav>
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-[var(--border-subtle)] px-3 py-3">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--text-secondary)]">
+              {checkedCount > 0 && (
+                <>
+                  <button type="button" className={controlClass} onClick={exportSelection}>Export selected</button>
+                  <button type="button" className={controlClass} onClick={() => setCheckedIds(new Set())} aria-label={`Clear selection of ${checkedCount} records`}>
+                    {checkedCount} selected <span aria-hidden="true">×</span>
+                  </button>
+                </>
+              )}
+              <label className="relative flex items-center gap-1.5">
+                Showing
+                <span className="relative">
+                  <select
+                    aria-label="Records per page"
+                    value={pageSize}
+                    onChange={(event) => {
+                      setPageSize(Number(event.target.value));
+                      setPage(1);
+                    }}
+                    className={`${controlClass} h-7 appearance-none pl-2 pr-6`}
+                  >
+                    {pageSizes.map((size) => <option key={size} value={size}>{size}</option>)}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 size-3 -translate-y-1/2" aria-hidden="true" />
+                </span>
+              </label>
+              <span aria-live="polite" className="tabular-nums">
+                {pageCount ? `${pageStart + 1}–${pageStart + pageRecords.length} of ${sortedRecords.length} results` : '0 results'}
+              </span>
+            </div>
+            <nav aria-label="Activity ledger pagination" className="ml-auto flex flex-wrap items-center gap-1.5">
+              <button type="button" aria-label="Previous page" className={`${controlClass} border-transparent`} disabled={page === 1} onClick={() => setPage(page - 1)}>
+                <ArrowLeft className="size-3.5" aria-hidden="true" />
+              </button>
+              {pageNumbers.map((number, index) => (
+                <React.Fragment key={number}>
+                  {index > 0 && number - pageNumbers[index - 1] > 1 && <span className="px-1 text-xs text-[var(--text-secondary)]" aria-hidden="true">…</span>}
+                  <button
+                    type="button"
+                    className={`${controlClass} min-w-8 tabular-nums aria-[current=page]:border-[var(--bg-subtle)] aria-[current=page]:bg-[var(--bg-subtle)] aria-[current=page]:text-[var(--action-primary)]`}
+                    aria-label={`Page ${number}`}
+                    aria-current={page === number ? 'page' : undefined}
+                    onClick={() => setPage(number)}
+                  >
+                    {number}
+                  </button>
+                </React.Fragment>
+              ))}
+              <button type="button" aria-label="Next page" className={`${controlClass} border-transparent`} disabled={page >= pageCount} onClick={() => setPage(page + 1)}>
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </button>
+            </nav>
+          </div>
         </section>
       </div>
       {detailRecord && <ActivityRecordDetails record={detailRecord} onClose={() => setDetailId(null)} />}

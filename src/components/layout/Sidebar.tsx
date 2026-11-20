@@ -335,7 +335,7 @@ export const Sidebar: React.FC = () => {
       className={`fixed inset-y-0 left-0 z-50 flex w-56 max-w-[86vw] shrink-0 flex-col border-r border-[var(--border-subtle)] bg-[var(--bg-subtle)]/80 shadow-xl backdrop-blur-xl md:visible md:relative md:inset-auto md:z-20 md:h-full md:min-h-0 md:max-w-none md:translate-x-0 md:shadow-none motion-safe:transition-[width,transform,visibility] motion-safe:duration-200 ${isMobileMenuOpen ? 'visible translate-x-0' : 'invisible -translate-x-full'} ${isCollapsed ? 'md:w-14' : 'md:w-56 lg:w-60'}`}
     >
       <div className={`flex items-center justify-between gap-2 px-3 pt-3 pb-2 ${isCollapsed ? 'md:justify-center' : ''}`}>
-        <img src={tulaLogo} alt="Tula Carbon" className={`h-6 w-auto max-w-28 object-contain object-left ${isCollapsed ? 'md:hidden' : ''}`} />
+        <img src={tulaLogo} alt="Tula Carbon" className={`h-7 w-auto max-w-32 object-contain object-left ${isCollapsed ? 'md:hidden' : ''}`} />
         <button type="button" onClick={() => setIsCollapsed((collapsed) => !collapsed)} className={`${navFocusClass} hidden size-7 shrink-0 place-items-center rounded-md text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] md:grid`} aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
           {isCollapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
         </button>
