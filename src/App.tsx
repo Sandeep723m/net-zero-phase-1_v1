@@ -164,7 +164,7 @@ const MainAppContent: React.FC = () => {
       <div className="h-full min-h-0 flex overflow-hidden rounded-none md:rounded-[24px] border-0 md:border md:border-[#dedfe2] bg-white shadow-none md:shadow-[0_8px_32px_rgba(30,30,35,0.08)]">
         <Sidebar />
 
-        <main className={`flex-1 overflow-y-auto bg-white px-4 sm:px-6 lg:px-8 pt-16 md:pt-6 pb-6 min-w-0 w-full ${currentScreen === '10_activity_dashboard' ? 'scrollbar-hidden' : ''}`}>
+        <main className={`min-w-0 flex-1 overflow-y-auto bg-white ${currentScreen === '10_activity_dashboard' ? 'pt-16 md:pt-0' : 'px-4 pt-16 pb-6 sm:px-6 md:pt-6 lg:px-8'}`}>
           {renderActiveScreen()}
         </main>
       </div>
