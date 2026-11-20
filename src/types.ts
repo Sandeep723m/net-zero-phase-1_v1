@@ -225,6 +225,7 @@ export type ScreenId =
   | '08_users_roles'
   | '09_tenant_settings'
   | 'overview'
+  | 'brand_guidelines'
   | '10_activity_dashboard'
   | '11_entry_form'
   | '12_import_upload'

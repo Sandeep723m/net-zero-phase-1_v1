@@ -30,15 +30,18 @@ import {
 } from '../data/mockData';
 import { EmissionFactor } from '../data/emissionFactorsData';
 
-const workspaceHash = {
+const workspaceHash: Partial<Record<ScreenId, string>> = {
   overview: '#overview',
   '10_activity_dashboard': '#activity-ledger',
-} as const;
+  brand_guidelines: '#brand-design-system',
+};
+
+function screenForHash(hash: string) {
+  return (Object.keys(workspaceHash) as ScreenId[]).find((screen) => workspaceHash[screen] === hash);
+}
 
 function readWorkspaceScreen(): ScreenId {
-  return typeof window !== 'undefined' && window.location.hash === workspaceHash['10_activity_dashboard']
-    ? '10_activity_dashboard'
-    : 'overview';
+  return (typeof window !== 'undefined' && screenForHash(window.location.hash)) || 'overview';
 }
 
 export interface ToastMessage {
@@ -496,7 +499,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     function syncWorkspaceScreen() {
       const { hash } = window.location;
-      if (hash === '' || hash === workspaceHash.overview || hash === workspaceHash['10_activity_dashboard']) {
+      if (hash === '' || screenForHash(hash)) {
         setCurrentScreen(readWorkspaceScreen());
       }
     }
@@ -506,10 +509,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const navigateToScreen = (screen: ScreenId, flow?: FlowId) => {
     const { hash, pathname, search } = window.location;
-    if (screen === 'overview' || screen === '10_activity_dashboard') {
-      const nextHash = workspaceHash[screen];
+    const nextHash = workspaceHash[screen];
+    if (nextHash) {
       if (nextHash !== hash) window.history.pushState(window.history.state, '', nextHash);
-    } else if (hash === workspaceHash.overview || hash === workspaceHash['10_activity_dashboard']) {
+    } else if (screenForHash(hash)) {
       window.history.replaceState(window.history.state, '', pathname + search);
     }
     setCurrentScreen(screen);

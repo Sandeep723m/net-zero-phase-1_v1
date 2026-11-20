@@ -5,6 +5,7 @@ import { isPendingReview, isWithinPeriod } from '../flows/FlowB_ActivityData/led
 import tulaLogo from '../../assets/Tula Carbon Dot Grid Logo.png';
 import {
   House,
+  Palette,
   ChartNoAxesCombined,
   TableProperties,
   Files,
@@ -344,7 +345,7 @@ export const Sidebar: React.FC = () => {
 
       <nav aria-label="Main navigation" className="flex-1 space-y-4 overflow-y-auto overscroll-contain px-2.5 py-2">
         {[
-          { label: 'Workspace', content: <>{home && renderItem(home)}{renderGroup(workspaceGroup)}{workspaceItems.map((item) => renderItem(item))}</> },
+          { label: 'Workspace', content: <>{home && renderItem(home)}{renderGroup(workspaceGroup)}{workspaceItems.map((item) => renderItem(item))}{renderItem({ id: 'brand_guidelines', label: 'Brand & design system', icon: Palette })}</> },
           { label: 'Data management', content: renderGroup(mainGroups[0]) },
           {
             label: 'Validation & assurance',

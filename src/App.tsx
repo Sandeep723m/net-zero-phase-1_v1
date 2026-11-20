@@ -14,6 +14,7 @@ import { Screen08_UsersRoles } from './components/flows/FlowA_Onboarding/Screen0
 import { Screen09_TenantSettings } from './components/flows/FlowA_Onboarding/Screen09_TenantSettings';
 
 // Flow B — Manual Activity Data & Approval
+import { BrandGuidelines } from './components/brand/BrandGuidelines.tsx';
 import { InventoryOverview } from './components/flows/FlowB_ActivityData/InventoryOverview';
 import { Screen10_ActivityDashboard } from './components/flows/FlowB_ActivityData/Screen10_ActivityDashboard';
 import { Screen11_EntryForm } from './components/flows/FlowB_ActivityData/Screen11_EntryForm';
@@ -82,6 +83,8 @@ const MainAppContent: React.FC = () => {
         return <Screen09_TenantSettings />;
 
       // Flow B
+      case 'brand_guidelines':
+        return <BrandGuidelines />;
       case 'overview':
         return <InventoryOverview />;
       case '10_activity_dashboard':
