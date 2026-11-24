@@ -7,6 +7,7 @@ import {
   House,
   Palette,
   ChartNoAxesCombined,
+  BarChart3,
   TableProperties,
   Files,
   Calculator,
@@ -72,7 +73,7 @@ const mainGroups: NavGroup[] = [
   {
     label: 'Analytics & reports',
     icon: ChartNoAxesCombined,
-    screens: ['21_drill_down', '36_scenario_builder', '37_benchmarking', '27_report_builder', '28_report_preview'],
+    screens: ['visual_report', '21_drill_down', '36_scenario_builder', '37_benchmarking', '27_report_builder', '28_report_preview'],
   },
 ];
 
@@ -164,6 +165,7 @@ export const Sidebar: React.FC = () => {
       { id: '33_raise_query', label: 'Assurance queries', icon: HelpCircle },
       { id: '35_audit_trail', label: 'Audit trail', icon: History },
       { id: '22_factors_reference', label: 'Emission factors', icon: Zap },
+      { id: 'visual_report', label: 'Visual report', icon: BarChart3 },
       { id: '37_benchmarking', label: 'Benchmarks', icon: Target },
       { id: '28_report_preview', label: 'Report disclosures', icon: FileText },
       { id: '04_org_profile', label: 'Organisation profile', icon: Building2 },
@@ -196,6 +198,7 @@ export const Sidebar: React.FC = () => {
       { id: '33_raise_query', label: 'Verifier queries', icon: HelpCircle, badge: openQueries || undefined },
       { id: '35_audit_trail', label: 'Audit trail', icon: History },
       { id: '36_scenario_builder', label: 'Scenarios', icon: SlidersHorizontal },
+      { id: 'visual_report', label: 'Visual report', icon: BarChart3 },
       { id: '37_benchmarking', label: 'Benchmarks', icon: Target },
       { id: '27_report_builder', label: 'Reports & exports', icon: FileText },
       { id: '34_reviewer_notification', label: 'Notifications', icon: Bell, badge: unreadNotifications || undefined },
@@ -218,6 +221,7 @@ export const Sidebar: React.FC = () => {
       { id: '31_verifier_dashboard', label: 'Verifier workspace', icon: ShieldCheck, badge: openQueries || undefined },
       { id: '35_audit_trail', label: 'Audit trail', icon: History },
       { id: '36_scenario_builder', label: 'Scenarios', icon: SlidersHorizontal },
+      { id: 'visual_report', label: 'Visual report', icon: BarChart3 },
       { id: '37_benchmarking', label: 'Benchmarks', icon: Target },
       { id: '27_report_builder', label: 'Reports & exports', icon: FileText },
       { id: '34_reviewer_notification', label: 'Notifications', icon: Bell, badge: unreadNotifications || undefined },
@@ -336,7 +340,9 @@ export const Sidebar: React.FC = () => {
       className={`fixed inset-y-0 left-0 z-50 flex w-56 max-w-[86vw] shrink-0 flex-col border-r border-[var(--border-subtle)] bg-[var(--bg-subtle)]/80 shadow-xl backdrop-blur-xl md:visible md:relative md:inset-auto md:z-20 md:h-full md:min-h-0 md:max-w-none md:translate-x-0 md:shadow-none motion-safe:transition-[width,transform,visibility] motion-safe:duration-200 ${isMobileMenuOpen ? 'visible translate-x-0' : 'invisible -translate-x-full'} ${isCollapsed ? 'md:w-14' : 'md:w-56 lg:w-60'}`}
     >
       <div className={`flex items-center justify-between gap-2 px-3 pt-3 pb-2 ${isCollapsed ? 'md:justify-center' : ''}`}>
-        <img src={tulaLogo} alt="Tula Carbon" className={`h-7 w-auto max-w-32 object-contain object-left ${isCollapsed ? 'md:hidden' : ''}`} />
+        <button type="button" onClick={() => goTo(overviewScreen)} aria-label="Tula Carbon Overview" className={`${navFocusClass} shrink-0 rounded-md ${isCollapsed ? 'md:hidden' : ''}`}>
+          <img src={tulaLogo} alt="" className="h-7 w-auto max-w-32 object-contain object-left" />
+        </button>
         <button type="button" onClick={() => setIsCollapsed((collapsed) => !collapsed)} className={`${navFocusClass} hidden size-7 shrink-0 place-items-center rounded-md text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] md:grid`} aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
           {isCollapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
         </button>

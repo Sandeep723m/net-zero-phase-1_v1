@@ -92,7 +92,7 @@ function SwatchCard({ swatch: { name, hex, detail }, print }: { swatch: Swatch; 
 
 export function BrandGuidelines() {
   return (
-    <div className="mx-auto w-full max-w-[1440px] space-y-10 pb-8 text-[var(--text-primary)]">
+    <div className="mx-auto w-full max-w-[1440px] space-y-10 text-[var(--text-primary)]">
       <header className="overflow-hidden rounded-xl border border-[var(--border-default)]">
         <div aria-hidden="true" className="grid h-2 grid-cols-6">
           {paletteGroups[0].swatches.map(({ name, hex }) => <div key={name} style={{ backgroundColor: hex }} />)}
@@ -108,7 +108,11 @@ export function BrandGuidelines() {
         </div>
         <nav aria-label="Brand guidelines sections" className="flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--border-subtle)] px-5 py-2 sm:px-8">
           {sections.map(({ id, label }) => (
-            <button key={id} type="button" onClick={() => document.getElementById(id)?.focus()} className={`${focus} rounded-sm py-2 text-sm font-medium text-[var(--action-primary)] hover:underline`}>{label}</button>
+            <button key={id} type="button" onClick={() => {
+              const section = document.getElementById(id);
+              section?.focus({ preventScroll: true });
+              section?.scrollIntoView({ block: 'start', inline: 'nearest' });
+            }} className={`${focus} rounded-sm py-2 text-sm font-medium text-[var(--action-primary)] hover:underline`}>{label}</button>
           ))}
         </nav>
       </header>

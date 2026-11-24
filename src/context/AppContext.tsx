@@ -34,6 +34,7 @@ const workspaceHash: Partial<Record<ScreenId, string>> = {
   overview: '#overview',
   '10_activity_dashboard': '#activity-ledger',
   brand_guidelines: '#brand-design-system',
+  visual_report: '#visual-report',
 };
 
 function screenForHash(hash: string) {

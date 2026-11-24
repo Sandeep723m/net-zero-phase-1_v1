@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Bell, Mail, Plus } from 'lucide-react';
+import { ArrowRight, BarChart3, Bell, Mail, Plus } from 'lucide-react';
 import { useApp } from '../../../context/AppContext';
 import { Screen10_ActivityDashboard } from './Screen10_ActivityDashboard';
 import { hasValidationIssue, isPendingReview, isWithinPeriod, needsAttention } from './ledgerRecords';
@@ -76,6 +76,9 @@ export function InventoryOverview() {
           <button type="button" title="Mail – verifier queries" aria-label="Mail – verifier queries" onClick={() => navigateToScreen('33_raise_query', 'FLOW_F')} className={`${selectClass} grid size-9 place-items-center px-0 hover:bg-[var(--bg-canvas)]`}>
             <Mail className="size-4" aria-hidden="true" />
           </button>
+          <a href="https://tula-karbon-ze-d1.vercel.app/" className="enterprise-btn-coral">
+            <BarChart3 className="size-4" aria-hidden="true" />Analytic report
+          </a>
           {(currentRole === 'TENANT_ADMIN' || currentRole === 'DATA_ENTRY') && activePeriod && !activePeriod.locked && (
             <button type="button" className="enterprise-btn-primary" onClick={() => {
               setActiveFilterSite(facilityId);

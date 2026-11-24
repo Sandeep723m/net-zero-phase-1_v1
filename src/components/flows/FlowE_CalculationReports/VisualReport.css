@@ -1,0 +1,53 @@
+.visual-report {
+  --visual-report-scope-2: var(--color-brand-orange-500);
+  --visual-report-scope-3: #2563EB;
+}
+
+:is([data-theme="dark"], .dark) .visual-report {
+  --visual-report-scope-2: var(--scope-2);
+  --visual-report-scope-3: var(--scope-3);
+}
+
+.visual-report-scope-state[data-highlighted="true"] {
+  background-color: color-mix(in srgb, var(--report-item-color) 10%, var(--bg-surface));
+  border-color: color-mix(in srgb, var(--report-item-color) 62%, var(--border-default));
+}
+
+.visual-report-scope-arc {
+  pointer-events: visibleStroke;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .visual-report-scope-arc {
+    transition: opacity var(--motion-control) ease, stroke-width var(--motion-control) ease;
+  }
+
+  .visual-report-card {
+    animation: visual-report-enter 240ms ease-out backwards;
+    transition: border-color var(--motion-control) ease, box-shadow var(--motion-control) ease;
+  }
+
+  .visual-report-meter {
+    animation: visual-report-meter 600ms ease-out backwards;
+    transform-origin: left center;
+  }
+
+  .visual-report-ring {
+    animation: visual-report-ring 420ms ease-out backwards;
+  }
+
+  @keyframes visual-report-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes visual-report-meter {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes visual-report-ring {
+    from { opacity: 0; transform: scale(.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}

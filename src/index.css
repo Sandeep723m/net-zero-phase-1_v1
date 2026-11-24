@@ -107,7 +107,7 @@
     --coral-50: #FFF1E8; --coral-100: #FFE0CC; --coral-400: #FF9B5B; --coral-500: #F46A1F;
   }
 
-  [data-theme="dark"] {
+  [data-theme="dark"], .dark {
     color-scheme: dark;
     --bg-canvas: #111016; --bg-surface: #1B1822; --bg-subtle: #251F2C; --bg-elevated: #251F2C;
     --text-primary: #F6F3FA; --text-secondary: #C8C1D0; --text-tertiary: #A69EAF;
@@ -183,8 +183,8 @@ header.glass-shell, #app-sidebar.glass-shell, #mobile-app-sidebar.glass-shell { 
 .enterprise-btn-secondary:hover, .btn-cta-secondary:hover { background: var(--bg-subtle); border-color: var(--border-strong); color: var(--action-primary); }
 .enterprise-btn-accent { color: var(--action-primary); background: #F1EBFF; border: 1px solid #E3D8FA; }
 .enterprise-btn-accent:hover { background: #E3D8FA; }
-.enterprise-btn-coral { color: #FFFFFF; background: #A83F00; border: 1px solid #A83F00; }
-.enterprise-btn-coral:hover { background: #873300; }
+.enterprise-btn-coral { color: var(--color-white); background: #8A3E00; border: 1px solid #8A3E00; }
+.enterprise-btn-coral:hover { background: color-mix(in srgb, #8A3E00 90%, var(--color-ink)); }
 .icon-squircle { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; flex-shrink: 0; }
 .icon-squircle-purple { background: #F1EBFF; color: #5625B8; border: 1px solid #E3D8FA; }
 .icon-squircle-coral { background: #FFF1E8; color: #A83F00; border: 1px solid #FFE0CC; }

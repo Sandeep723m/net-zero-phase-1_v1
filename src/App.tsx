@@ -14,6 +14,7 @@ import { Screen08_UsersRoles } from './components/flows/FlowA_Onboarding/Screen0
 import { Screen09_TenantSettings } from './components/flows/FlowA_Onboarding/Screen09_TenantSettings';
 
 // Flow B — Manual Activity Data & Approval
+import { VisualReport } from './components/flows/FlowE_CalculationReports/VisualReport';
 import { BrandGuidelines } from './components/brand/BrandGuidelines.tsx';
 import { InventoryOverview } from './components/flows/FlowB_ActivityData/InventoryOverview';
 import { Screen10_ActivityDashboard } from './components/flows/FlowB_ActivityData/Screen10_ActivityDashboard';
@@ -83,6 +84,8 @@ const MainAppContent: React.FC = () => {
         return <Screen09_TenantSettings />;
 
       // Flow B
+      case 'visual_report':
+        return <VisualReport />;
       case 'brand_guidelines':
         return <BrandGuidelines />;
       case 'overview':
@@ -166,11 +169,11 @@ const MainAppContent: React.FC = () => {
   }
 
   return (
-    <div className="h-screen bg-[var(--bg-canvas)] p-0 md:p-3 lg:p-5 overflow-hidden">
+    <div className="fixed inset-0 overflow-hidden bg-[var(--bg-canvas)] p-0 md:p-3 lg:p-5">
       <div className="h-full min-h-0 flex overflow-hidden rounded-none md:rounded-[24px] border-0 md:border md:border-[var(--border-default)] bg-[var(--bg-surface)] shadow-none md:shadow-[0_8px_32px_rgba(30,30,35,0.08)]">
         <Sidebar />
 
-        <main className={`min-w-0 flex-1 overflow-y-auto bg-[var(--bg-surface)] pt-16 ${currentScreen === '10_activity_dashboard' ? 'md:pt-0' : 'pb-6 md:pt-6'} ${currentScreen === 'overview' ? 'px-3 sm:px-4 lg:px-6' : currentScreen === '10_activity_dashboard' ? '' : 'px-4 sm:px-6 lg:px-8'}`}>
+        <main className={`min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-none pt-16 ${currentScreen === 'visual_report' ? 'bg-[var(--bg-canvas)]' : 'bg-[var(--bg-surface)]'} ${currentScreen === '10_activity_dashboard' ? 'md:pt-0' : 'pb-6 md:pt-6'} ${(currentScreen === 'overview' || currentScreen === 'visual_report') ? 'px-3 sm:px-4 lg:px-6' : currentScreen === '10_activity_dashboard' ? '' : 'px-4 sm:px-6 lg:px-8'}`}>
           {renderActiveScreen()}
         </main>
       </div>
